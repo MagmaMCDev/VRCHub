@@ -831,7 +831,7 @@ public partial class MainWindow : Window
                 Patch_Status.Content = "Installing Patch";
             });
         };
-        VRCPatch.OnPatchInstall += () =>
+        VRCPatch.OnPatchInstalled += () =>
         {
             Application.Current.Dispatcher.Invoke(() =>
             {

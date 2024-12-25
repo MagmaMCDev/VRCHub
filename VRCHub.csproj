@@ -11,7 +11,7 @@
     <DebugType>none</DebugType>
     <ApplicationIcon>Resources\VRCHUB.ico</ApplicationIcon>
     <SignToolCert>ZER0</SignToolCert>
-    <Version>0.5.0</Version>
+    <Version>0.5.1</Version>
     <FileVersion>$(Version)</FileVersion>
     <AssemblyVersion>$(Version).0</AssemblyVersion>
     <NeutralLanguage>en-US</NeutralLanguage>
@@ -55,7 +55,7 @@
   <ItemGroup>
     <PackageReference Include="Hardcodet.NotifyIcon.Wpf" Version="1.1.0" />
     <PackageReference Include="System.Drawing.Common" Version="9.0.0-preview.6.24327.6" />
-    <Reference Include="ZER0.KeyLibrary">
+    <Reference Include="ZER0.KeyLibrary">   
       <HintPath>..\ZER0.KeyLibrary\publish\ZER0.Core.dll</HintPath>
       <DocumentationFile>..\ZER0.KeyLibrary\publish\ZER0.Core.xml</DocumentationFile>
     </Reference>

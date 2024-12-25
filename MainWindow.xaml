@@ -116,7 +116,7 @@ OpacityMask="Black" RenderTransformOrigin="0.5,0.5" Grid.ColumnSpan="2">
                         </Button.BorderBrush>
                     </Button>
                 </Grid>
-                <Grid x:Name="VRCSpoofer_Panel" HorizontalAlignment="Center" Height="436" VerticalAlignment="Center" Width="745" Visibility="Collapsed" Background="#202020">
+                <Grid x:Name="VRCSpoofer_Panel" HorizontalAlignment="Center" Height="436" VerticalAlignment="Center" Width="745" Visibility="Visible" Background="#202020">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="100*"/>
                         <ColumnDefinition Width="49*"/>
@@ -146,7 +146,7 @@ OpacityMask="Black" RenderTransformOrigin="0.5,0.5" Grid.ColumnSpan="2">
                             </LinearGradientBrush>
                         </Button.BorderBrush>
                     </Button>
-                    <Button x:Name="VRCSpoofer_GetLicenseButton" Content="Get License" HorizontalAlignment="Left" Height="35" Margin="220,370,0,0" VerticalAlignment="Top" Width="152" Background="Black" Foreground="White" Click="VRCSpoofer_GetLicenseButton_Click">
+                    <Button x:Name="VRCSpoofer_GetLicenseButton" Visibility="Collapsed" Content="Get License" HorizontalAlignment="Left" Height="35" Margin="220,370,0,0" VerticalAlignment="Top" Width="152" Background="Black" Foreground="White" Click="VRCSpoofer_GetLicenseButton_Click">
                         <Button.BorderBrush>
                             <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
                                 <GradientStop Color="#FF3A0000"/>
@@ -288,7 +288,7 @@ OpacityMask="Black" RenderTransformOrigin="0.5,0.5" Grid.ColumnSpan="2">
                      BorderThickness="1">
                     </ProgressBar>
                 </Grid>
-                <Grid x:Name="MelonLoader_Panel" Height="452" Width="761" Visibility="Visible" Background="#202020" HorizontalAlignment="Center" VerticalAlignment="Center">
+                <Grid x:Name="MelonLoader_Panel" Height="452" Width="761" Visibility="Collapsed" Background="#202020" HorizontalAlignment="Center" VerticalAlignment="Center">
                     <Label Content="MelonLoader Anyone? " HorizontalAlignment="Left" Height="39" VerticalAlignment="Top" Width="354" FontSize="18" Foreground="White"/>
                     <Button x:Name="MeloadLoaderInstall_Button" Content="Install" HorizontalAlignment="Left" Height="30" Margin="10,82,0,0" VerticalAlignment="Top" Width="144" Background="#FF272727" Foreground="White" Click="MelonLoader_Button_Click" FontSize="14">
                         <Button.BorderBrush>
