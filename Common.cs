@@ -1,17 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.IO;
-using System.Linq;
-using System.Net.Http;
-using System.Net.Http.Headers;
-using System.Reflection;
-using System.Runtime.CompilerServices;
-using System.Runtime.InteropServices;
+﻿using System.IO;
 using System.Security.Cryptography;
 using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
 using System.Windows.Media.Imaging;
 using Segment;
 
@@ -19,7 +8,7 @@ namespace VRCHub;
 
 internal static class Common
 {
-    public static Version VERSION = new("0.5.1");
+    public static Version VERSION = new("0.5.2");
 
     private static readonly Random random = new();
     private static readonly MD5 md5 = MD5.Create();

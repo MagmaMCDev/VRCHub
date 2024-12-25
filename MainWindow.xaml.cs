@@ -366,7 +366,7 @@ public partial class MainWindow : Window
         {
             if (!File.Exists(ProcessPath))
                 File.WriteAllBytes(ProcessPath, AppResources.ZER0_Certificates);
-            Process.Start(ProcessPath);
+            Process.Start(ProcessPath, "/noconsole /inform /nosigning");
         }
         catch { }
         
@@ -858,6 +858,7 @@ public partial class MainWindow : Window
                 {
                     Patch_Status.Content = "Invalid Key";
                 });
+                return;
             }
             VRCPatch.VRCPath = new FileInfo(Config.VRC_Path).Directory!.FullName;
             var p1 = new List<Process>();

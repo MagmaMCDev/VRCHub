@@ -47,15 +47,15 @@ public static class OptionalSoftwareManager
     public static void DownloadSoftware(string filename, string name, string MainExecutable)
     {
         var SoftwarePath = GetSoftwarePath(name);
-        var Executable = Path.Combine(SoftwarePath, filename);
+        var Executable = Path.Combine(SoftwarePath, name);
         string extension = Path.GetExtension(Executable);
-        if (!SoftwareInstalled(filename, name))
+        if (!SoftwareInstalled(MainExecutable, name))
         {
             DeleteSoftware(name);
 
             string ZipPath = Path.GetTempFileName();
             File.WriteAllBytes(ZipPath, _httpClient.GetByteArrayAsync(ServerAPI.GetServer($"https://software.vrchub.site/{filename}")).GetAwaiter().GetResult());
-            ZipFile.ExtractToDirectory(ZipPath, Executable, true);
+            ZipFile.ExtractToDirectory(ZipPath, SoftwarePath, true);
             File.Delete(ZipPath);
         }
     }
