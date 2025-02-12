@@ -32,7 +32,7 @@
                 </LinearGradientBrush>
             </Button.BorderBrush>
         </Button>
-        <Button x:Name="VRCSpooferButton" Content="VRCSpoofer" HorizontalAlignment="Left" Height="30" Margin="17,54,0,0" VerticalAlignment="Top" Width="105" Background="#FF272727" Foreground="White" Click="VRCSpooferButton_Click">
+        <Button x:Name="VRCSpooferButton" Content="HWID Spoofer" HorizontalAlignment="Left" Height="30" Margin="17,54,0,0" VerticalAlignment="Top" Width="105" Background="#FF272727" Foreground="White" Click="VRCSpooferButton_Click">
             <Button.BorderBrush>
                 <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
                     <GradientStop Color="#FF770000"/>
@@ -107,7 +107,7 @@ OpacityMask="Black" RenderTransformOrigin="0.5,0.5" Grid.ColumnSpan="2">
                             </LinearGradientBrush>
                         </Button.BorderBrush>
                     </Button>
-                    <Button x:Name="VRCFX_GetLicenseButton" Content="Get License" HorizontalAlignment="Left" Height="35" Margin="220,370,0,0" VerticalAlignment="Top" Width="152" Background="Black" Foreground="White" Click="VRCFX_GetLicenseButton_Click">
+                    <Button x:Name="VRCFX_GetLicenseButton" Content="Purchase" HorizontalAlignment="Left" Height="35" Margin="220,370,0,0" VerticalAlignment="Top" Width="152" Background="Black" Foreground="White" Click="VRCFX_GetLicenseButton_Click">
                         <Button.BorderBrush>
                             <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
                                 <GradientStop Color="#FF3A0000"/>
@@ -157,6 +157,11 @@ OpacityMask="Black" RenderTransformOrigin="0.5,0.5" Grid.ColumnSpan="2">
                 </Grid>
                 <ScrollViewer x:Name="Datapacks_Panel" VerticalScrollBarVisibility="Hidden" HorizontalScrollBarVisibility="Disabled" Visibility="Collapsed" CanContentScroll="True" HorizontalAlignment="Center" Height="453" Canvas.Left="1" Canvas.Top="1" VerticalAlignment="Top">
                     <Canvas x:Name="Datapacks_Canvas" Height="452" Width="750" Background="#202020"/>
+                </ScrollViewer>
+                <ScrollViewer x:Name="AccountManager_Panel" VerticalScrollBarVisibility="Hidden" HorizontalScrollBarVisibility="Disabled" Visibility="Visible" CanContentScroll="True" HorizontalAlignment="Center" Height="453" Canvas.Left="1" Canvas.Top="1" VerticalAlignment="Top">
+                    <Canvas x:Name="AccountManager_Canvas" Height="452" Width="750" Background="#202020">
+                        <local:AccountProfile Canvas.Left="10" HorizontalAlignment="Center" Canvas.Top="10" VerticalAlignment="Top"/>
+                    </Canvas>
                 </ScrollViewer>
                 <Grid x:Name="Splashscreen_Panel" Height="452" VerticalAlignment="Top" Width="761" Visibility="Hidden" Background="#202020">
                     <Image x:Name="Splashscreen_CurrentImage" HorizontalAlignment="Left" Height="245" Margin="144,64,0,0" VerticalAlignment="Top" Width="430"/>
@@ -312,7 +317,7 @@ OpacityMask="Black" RenderTransformOrigin="0.5,0.5" Grid.ColumnSpan="2">
                 </Grid>
             </Canvas>
         </Border>
-        <Button x:Name="QuickLauncherButton" Content="Quick Launcher" HorizontalAlignment="Left" Height="30" Margin="17,334,0,0" VerticalAlignment="Top" Width="105" Background="#FF272727" Foreground="White" Click="QuickLauncherButton_Click">
+        <Button x:Name="QuickLauncherButton" Content="Quick Launcher" HorizontalAlignment="Left" Height="30" Margin="17,264,0,0" VerticalAlignment="Top" Width="105" Background="#FF272727" Foreground="White" Click="QuickLauncherButton_Click">
             <Button.BorderBrush>
                 <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
                     <GradientStop Color="#FF770000"/>
@@ -320,7 +325,7 @@ OpacityMask="Black" RenderTransformOrigin="0.5,0.5" Grid.ColumnSpan="2">
                 </LinearGradientBrush>
             </Button.BorderBrush>
         </Button>
-        <Button x:Name="SplashScreenButton" Content="Splash Screen" HorizontalAlignment="Left" Height="30" Margin="17,124,0,0" VerticalAlignment="Top" Width="105" Background="#FF272727" Foreground="White" Click="SplashScreenButton_Click">
+        <Button x:Name="SplashScreenButton" Content="Splash Screen" HorizontalAlignment="Left" Height="30" Margin="17,194,0,0" VerticalAlignment="Top" Width="105" Background="#FF272727" Foreground="White" Click="SplashScreenButton_Click">
             <Button.BorderBrush>
                 <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
                     <GradientStop Color="#FF770000"/>
@@ -336,7 +341,7 @@ OpacityMask="Black" RenderTransformOrigin="0.5,0.5" Grid.ColumnSpan="2">
                 </LinearGradientBrush>
             </Button.BorderBrush>
         </Button>
-        <Button x:Name="DatapackCreator" Content="Datapack Creator" HorizontalAlignment="Left" Height="30" Margin="17,159,0,0" VerticalAlignment="Top" Width="105" Background="#FF272727" Foreground="White" Click="DatapackCreator_Click">
+        <Button x:Name="DatapackCreator" Content="Datapack Creator" HorizontalAlignment="Left" Height="30" Margin="17,124,0,0" VerticalAlignment="Top" Width="105" Background="#FF272727" Foreground="White" Click="DatapackCreator_Click">
             <Button.BorderBrush>
                 <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
                     <GradientStop Color="#FF770000"/>
@@ -344,7 +349,7 @@ OpacityMask="Black" RenderTransformOrigin="0.5,0.5" Grid.ColumnSpan="2">
                 </LinearGradientBrush>
             </Button.BorderBrush>
         </Button>
-        <Button x:Name="SplashScreenButton_Copy1" Content="Patch Game" HorizontalAlignment="Left" Height="30" Margin="17,194,0,0" VerticalAlignment="Top" Width="105" Background="#FF272727" Foreground="White" Click="PatchGame_Click">
+        <Button x:Name="SplashScreenButton_Copy1" Content="Patch Game" HorizontalAlignment="Left" Height="30" Margin="17,194,0,0" VerticalAlignment="Top" Width="105" Background="#FF272727" Foreground="White" Click="PatchGame_Click" Visibility="Collapsed">
             <Button.BorderBrush>
                 <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
                     <GradientStop Color="#FF770000"/>
@@ -360,7 +365,7 @@ OpacityMask="Black" RenderTransformOrigin="0.5,0.5" Grid.ColumnSpan="2">
                 </LinearGradientBrush>
             </Button.BorderBrush>
         </Button>
-        <Button x:Name="SplashScreenButton_Copy2" Content="Injector" HorizontalAlignment="Left" Height="30" Margin="17,264,0,0" VerticalAlignment="Top" Width="105" Background="#FF272727" Foreground="White" IsEnabled="False">
+        <Button x:Name="AccountManagerButton" Content="Account Manager" HorizontalAlignment="Left" Height="30" Margin="17,159,0,0" VerticalAlignment="Top" Width="105" Background="#FF272727" Foreground="White" Click="AccountManager_Click">
             <Button.BorderBrush>
                 <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
                     <GradientStop Color="#FF770000"/>

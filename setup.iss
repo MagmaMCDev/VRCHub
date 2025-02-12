@@ -2,7 +2,7 @@
 ; SEE THE DOCUMENTATION FOR DETAILS ON CREATING INNO SETUP SCRIPT FILES!
 
 #define MyAppName "VRCHub"
-#define MyAppVersion "0.5.0"
+#define MyAppVersion "0.5.2"
 #define MyAppPublisher "Zer0, MagmaMC"
 #define MyAppURL "https://vrchub.site"
 #define MyAppExeName "VRCHub.exe"
@@ -32,9 +32,9 @@ DisableProgramGroupPage=yes
 ; Uncomment the following line to run in non administrative install mode (install for current user only.)
 ;PrivilegesRequired=lowest
 PrivilegesRequiredOverridesAllowed=commandline
-OutputDir=C:\Users\MagmaMC\Desktop
+OutputDir=C:\Users\Magma\Desktop
 OutputBaseFilename=VRCHub Setup
-SetupIconFile=C:\Users\MagmaMC\Pictures\Images\VRCHUB.ico
+SetupIconFile=C:\Users\Magma\Pictures\Images\VRCHUB.ico
 Compression=lzma2/fast
 SolidCompression=yes
 WizardStyle=modern
@@ -45,11 +45,11 @@ Name: "english"; MessagesFile: "compiler:Default.isl"
 Source: "M:\VisualStudio\VRChat\VRCHub\bin\publish\{#MyAppExeName}"; DestDir: "{app}"; Flags: ignoreversion 64bit
 Source: "M:\VisualStudio\VRChat\VRCDataMod\publish\VRCDataMod.exe"; DestDir: "{app}"; Flags: ignoreversion
 Source: "M:\VisualStudio\VRChat\VRCHub\bin\publish\ZER0.Core.xml"; DestDir: "{app}"; Flags: ignoreversion
-Source: "C:\Users\MagmaMC\Pictures\Images\Package.ico"; DestDir: "{app}"; Flags: ignoreversion
+Source: "C:\Users\Magma\Pictures\Images\Package.ico"; DestDir: "{app}"; Flags: ignoreversion
 Source: "M:\VisualStudio\VRChat\VRCHub\bin\publish\*"; DestDir: "{app}"; Flags: recursesubdirs createallsubdirs ignoreversion
 
 [Tasks]
-Name: "create_start_menu_shortcut"; Description: "Create a Start Menu shortcut"; GroupDescription: "Additional tasks:"; Flags: checkedonce
+Name: "create_start_menu_shortcut"; Description: "Create a Start Menu shortcut"; GroupDescription: "Additional tasks:"
 Name: "create_desktop_shortcut"; Description: "Create a Desktop shortcut"; GroupDescription: "Additional tasks:"; Flags: checkedonce
 
 [Icons]

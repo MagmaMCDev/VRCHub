@@ -390,6 +390,7 @@ public partial class MainWindow : Window
         DatapackCreator_Panel.Visibility = Visibility.Collapsed;
         Patch_Panel.Visibility = Visibility.Collapsed;
         MelonLoader_Panel.Visibility = Visibility.Collapsed;
+        AccountManager_Panel.Visibility = Visibility.Collapsed;
     }
     private async void VRCFX_DownloadButton_Click(object sender, RoutedEventArgs? e)
     {
@@ -427,7 +428,7 @@ public partial class MainWindow : Window
     {
         if (Config.SendAnalytics)
             Analytics.Client.Track(Environment.MachineName, "VRCFX Get License");
-        OpenURL("https://hdzero.mysellix.io/pay/9b069c-20bb91bd74-877091");
+        MessageBox.Show("You can Purchase a key by creating a ticket in the discord.");
     }
     #endregion
 
@@ -444,6 +445,7 @@ public partial class MainWindow : Window
         DatapackCreator_Panel.Visibility = Visibility.Collapsed;
         Patch_Panel.Visibility = Visibility.Collapsed;
         MelonLoader_Panel.Visibility = Visibility.Collapsed;
+        AccountManager_Panel.Visibility = Visibility.Collapsed;
     }
     private void VRCSpoofer_GetLicenseButton_Click(object sender, RoutedEventArgs? e)
     {
@@ -458,22 +460,22 @@ public partial class MainWindow : Window
             return;
 
         if (Config.SendAnalytics)
-            Analytics.Client.Track(Environment.MachineName, "VRCSpoofer Downloaded");
+            Analytics.Client.Track(Environment.MachineName, "Spoofer Downloaded");
         PauseButton(VRCSpoofer_DownloadButton, "Installing");
 
         await Task.Run(() =>
         {
             try
             {
-                OptionalSoftwareManager.DownloadSoftware("ZER0.VRCSpoofer.exe", "VRCSpoofer");
-                OptionalSoftwareManager.InstallSoftware("ZER0.VRCSpoofer.exe", "VRCSpoofer");
+                OptionalSoftwareManager.DownloadSoftware("ZER0Spoofer.exe", "HWIDSpoofer");
+                OptionalSoftwareManager.InstallSoftware("ZER0Spoofer.exe", "HWIDSpoofer");
             }
             catch { }
             try
             {
-                ProcessStartInfo psi = new(Path.Combine(OptionalSoftwareManager.GetSoftwarePath("VRCSpoofer"), "ZER0.VRCSpoofer.exe"))
+                ProcessStartInfo psi = new(Path.Combine(OptionalSoftwareManager.GetSoftwarePath("HWIDSpoofer"), "ZER0Spoofer.exe"))
                 {
-                    WorkingDirectory = OptionalSoftwareManager.GetSoftwarePath("VRCSpoofer"),
+                    WorkingDirectory = OptionalSoftwareManager.GetSoftwarePath("HWIDSpoofer"),
                     UseShellExecute = true
                 };
                 Process.Start(psi);
@@ -498,6 +500,7 @@ public partial class MainWindow : Window
         DatapackCreator_Panel.Visibility = Visibility.Collapsed;
         Patch_Panel.Visibility = Visibility.Collapsed;
         MelonLoader_Panel.Visibility = Visibility.Collapsed;
+        AccountManager_Panel.Visibility = Visibility.Collapsed;
     }
 
     #endregion
@@ -538,6 +541,7 @@ public partial class MainWindow : Window
         DatapackCreator_Panel.Visibility = Visibility.Collapsed;
         Patch_Panel.Visibility = Visibility.Collapsed;
         MelonLoader_Panel.Visibility = Visibility.Collapsed;
+        AccountManager_Panel.Visibility = Visibility.Collapsed;
     }
     private void SplashScreenResetButton_Click(object sender, RoutedEventArgs e)
     {
@@ -568,6 +572,7 @@ public partial class MainWindow : Window
         DatapackCreator_Panel.Visibility = Visibility.Collapsed;
         Patch_Panel.Visibility = Visibility.Collapsed;
         MelonLoader_Panel.Visibility = Visibility.Collapsed;
+        AccountManager_Panel.Visibility = Visibility.Collapsed;
     }
 
     private void Settings_VRCPath_TextChanged(object sender, TextChangedEventArgs e)
@@ -713,6 +718,7 @@ public partial class MainWindow : Window
         DatapackCreator_Panel.Visibility = Visibility.Visible;
         Patch_Panel.Visibility = Visibility.Collapsed;
         MelonLoader_Panel.Visibility = Visibility.Collapsed;
+        AccountManager_Panel.Visibility = Visibility.Collapsed;
     }
 
     private void Datapack_InputPath_DoubleClicked(object sender, MouseButtonEventArgs e)
@@ -787,6 +793,7 @@ public partial class MainWindow : Window
         DatapackCreator_Panel.Visibility = Visibility.Collapsed;
         Patch_Panel.Visibility = Visibility.Visible;
         MelonLoader_Panel.Visibility = Visibility.Collapsed;
+        AccountManager_Panel.Visibility = Visibility.Collapsed;
     }
     private void SetupEvents()
     {
@@ -938,6 +945,7 @@ public partial class MainWindow : Window
         DatapackCreator_Panel.Visibility = Visibility.Collapsed;
         Patch_Panel.Visibility = Visibility.Collapsed;
         MelonLoader_Panel.Visibility = Visibility.Visible;
+        AccountManager_Panel.Visibility = Visibility.Collapsed;
         new Thread(() =>
         {
             if (!MelonDebounce)
@@ -953,6 +961,9 @@ public partial class MainWindow : Window
 
     private void MelonLoader_Button_Click(object sender, RoutedEventArgs e)
     {
+        MessageBoxResult res = MessageBox.Show("It is highly not recommened to not install melonloader on windows\nFeel free to create a ticket in the discord if you have any questions", "MelonLoader", MessageBoxButton.OKCancel);
+        if (res != MessageBoxResult.OK)
+            return;
         Thread PatchThread = new(async () =>
         {
 
@@ -977,5 +988,18 @@ public partial class MainWindow : Window
             MessageBox.Show("Installed Melon Loader Sucessfully");
         });
         PatchThread.Start();
+    }
+
+    private void AccountManager_Click(object sender, RoutedEventArgs e)
+    {
+        VRCFX_Panel.Visibility = Visibility.Collapsed;
+        VRCSpoofer_Panel.Visibility = Visibility.Collapsed;
+        Datapacks_Panel.Visibility = Visibility.Collapsed;
+        Splashscreen_Panel.Visibility = Visibility.Collapsed;
+        Settings_Panel.Visibility = Visibility.Collapsed;
+        DatapackCreator_Panel.Visibility = Visibility.Collapsed;
+        Patch_Panel.Visibility = Visibility.Collapsed;
+        MelonLoader_Panel.Visibility = Visibility.Collapsed;
+        AccountManager_Panel.Visibility = Visibility.Visible;
     }
 }

@@ -8,7 +8,7 @@ namespace VRCHub;
 
 internal static class Common
 {
-    public static Version VERSION = new("0.5.2");
+    public static Version VERSION = new("1.0.0");
 
     private static readonly Random random = new();
     private static readonly MD5 md5 = MD5.Create();

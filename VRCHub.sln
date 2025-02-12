@@ -7,6 +7,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "VRCHub", "VRCHub.csproj", "
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "VRCHubAutoUpdater", "..\VRCHubAutoUpdater\VRCHubAutoUpdater.vcxproj", "{FE9DCFEA-D1AE-43E1-948F-329BA27CA18C}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "VRCHubNative", "VRCHubNative\VRCHubNative.vcxproj", "{59CFC817-B8C9-4210-AF75-60BBEAED4C33}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -41,6 +43,18 @@ Global
 		{FE9DCFEA-D1AE-43E1-948F-329BA27CA18C}.Release|x64.Build.0 = Release|x64
 		{FE9DCFEA-D1AE-43E1-948F-329BA27CA18C}.Release|x86.ActiveCfg = Release|Win32
 		{FE9DCFEA-D1AE-43E1-948F-329BA27CA18C}.Release|x86.Build.0 = Release|Win32
+		{59CFC817-B8C9-4210-AF75-60BBEAED4C33}.Debug|Any CPU.ActiveCfg = Debug|x64
+		{59CFC817-B8C9-4210-AF75-60BBEAED4C33}.Debug|Any CPU.Build.0 = Debug|x64
+		{59CFC817-B8C9-4210-AF75-60BBEAED4C33}.Debug|x64.ActiveCfg = Debug|x64
+		{59CFC817-B8C9-4210-AF75-60BBEAED4C33}.Debug|x64.Build.0 = Debug|x64
+		{59CFC817-B8C9-4210-AF75-60BBEAED4C33}.Debug|x86.ActiveCfg = Debug|Win32
+		{59CFC817-B8C9-4210-AF75-60BBEAED4C33}.Debug|x86.Build.0 = Debug|Win32
+		{59CFC817-B8C9-4210-AF75-60BBEAED4C33}.Release|Any CPU.ActiveCfg = Release|x64
+		{59CFC817-B8C9-4210-AF75-60BBEAED4C33}.Release|Any CPU.Build.0 = Release|x64
+		{59CFC817-B8C9-4210-AF75-60BBEAED4C33}.Release|x64.ActiveCfg = Release|x64
+		{59CFC817-B8C9-4210-AF75-60BBEAED4C33}.Release|x64.Build.0 = Release|x64
+		{59CFC817-B8C9-4210-AF75-60BBEAED4C33}.Release|x86.ActiveCfg = Release|Win32
+		{59CFC817-B8C9-4210-AF75-60BBEAED4C33}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
