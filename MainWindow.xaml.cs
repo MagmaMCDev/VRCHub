@@ -24,6 +24,11 @@ using System.Globalization;
 using System.Windows.Data;
 using System;
 using System.Reflection;
+using System.Windows.Media.Animation;
+using Control = System.Windows.Controls.Control;
+using System.Data.Common;
+using System.Windows.Shapes;
+using System.Windows.Media;
 namespace VRCHub;
 /// <summary>
 /// Interaction logic for MainWindow.xaml
@@ -33,11 +38,11 @@ public partial class MainWindow : Window
     private Process? VRCQuickLauncher;
     private static readonly Random random = new();
 
-    private const ushort controlHeight = 195;
-    private const ushort controlWidth = 250;
+    private const ushort controlHeight = 165;
+    private const ushort controlWidth = 235;
     private const ushort verticalSpacing = 10;
-    private const ushort horizontalSpacing = 5;
-    private const ushort initialTop = 20;
+    private const ushort horizontalSpacing = 10;
+    private const ushort initialTop = 10;
     private const ushort initialLeft = 10;
     private const byte controlsPerRow = 3;
 
@@ -281,7 +286,7 @@ public partial class MainWindow : Window
                     {
                         if (datapackControl.RequirePatch.Visibility == Visibility.Visible)
                         {
-                            MessageBoxResult messageBoxResult = MessageBox.Show("This Datapack Requires The Patch To Function Please Make Sure To have it installed", "VRChub", MessageBoxButton.OKCancel, MessageBoxImage.Warning);
+                            MessageBoxResult messageBoxResult = MessageBox.Show("This Datapack Requires A Patch To Function Please Make Sure You have One installed", "VRChub", MessageBoxButton.OKCancel, MessageBoxImage.Warning);
                             ResumeButon(datapackControl.Datapack_Install);
                             if (messageBoxResult == MessageBoxResult.Cancel)
                                 return;
@@ -373,7 +378,7 @@ public partial class MainWindow : Window
         await Task.Delay(600);
         await _splashScreen!.EndAsync();
         await Task.Delay(75);
-        Show();
+        Show(); Datapacks_Click(this, null);
     }
 
     #region VRCFX
@@ -501,6 +506,56 @@ public partial class MainWindow : Window
         Patch_Panel.Visibility = Visibility.Collapsed;
         MelonLoader_Panel.Visibility = Visibility.Collapsed;
         AccountManager_Panel.Visibility = Visibility.Collapsed;
+        int i = -1;
+        foreach (Control datapackControl in Datapacks_Canvas.Children)
+        {
+            i++;
+            var row = i / controlsPerRow;
+            var column = i % controlsPerRow;
+            float topPosition = initialTop + (controlHeight + verticalSpacing) * row;
+            float leftPosition = initialLeft + (controlWidth + horizontalSpacing) * column;
+
+            // Get current position and prevent NaN
+            double currentLeft = 0;
+            double currentTop = ((Datapacks_Canvas.Children.Count + controlsPerRow) * 4) * initialTop + (controlHeight + verticalSpacing);
+            currentLeft = leftPosition;
+            if (double.IsNaN(currentTop)) currentTop = topPosition;
+
+            // Set the final position immediately
+            Canvas.SetLeft(datapackControl, leftPosition);
+            Canvas.SetTop(datapackControl, topPosition);
+
+            // Animate X position
+            var XPositionAnimation = new DoubleAnimation
+            {
+                From = currentLeft,
+                To = leftPosition,
+                Duration = TimeSpan.FromSeconds(0.5),
+                FillBehavior = FillBehavior.Stop
+            };
+            var easingFunction = new CubicEase { EasingMode = EasingMode.EaseOut };
+            var YPositionAnimation = new DoubleAnimation
+            {
+                From = currentTop,
+                To = topPosition,
+                Duration = TimeSpan.FromSeconds(0.225 * (i+1)),
+                EasingFunction = easingFunction,
+                FillBehavior = FillBehavior.Stop
+            };
+
+            // Apply animations
+            datapackControl.BeginAnimation(Canvas.LeftProperty, XPositionAnimation);
+            datapackControl.BeginAnimation(Canvas.TopProperty, YPositionAnimation);
+
+            // Adjust canvas size if needed
+            var newCanvasHeight = topPosition + controlHeight + initialTop;
+            if (Datapacks_Canvas.Height < newCanvasHeight)
+                Datapacks_Canvas.Height = newCanvasHeight;
+
+            var newCanvasWidth = leftPosition + controlWidth + initialLeft;
+            if (Datapacks_Canvas.Width < newCanvasWidth)
+                Datapacks_Canvas.Width = newCanvasWidth;
+        }
     }
 
     #endregion
@@ -992,6 +1047,14 @@ public partial class MainWindow : Window
 
     private void AccountManager_Click(object sender, RoutedEventArgs e)
     {
+        const ushort Height = 130;
+        const ushort Width = 265;
+        const ushort vSpacing = 10;
+        const ushort hSpacing = 10;
+        const ushort initialTop = 20;
+        const ushort initialLeft = 10;
+        const byte PerRow = 2;
+
         VRCFX_Panel.Visibility = Visibility.Collapsed;
         VRCSpoofer_Panel.Visibility = Visibility.Collapsed;
         Datapacks_Panel.Visibility = Visibility.Collapsed;
@@ -1001,5 +1064,30 @@ public partial class MainWindow : Window
         Patch_Panel.Visibility = Visibility.Collapsed;
         MelonLoader_Panel.Visibility = Visibility.Collapsed;
         AccountManager_Panel.Visibility = Visibility.Visible;
+
+        /*
+        var AccountControl = new AccountProfile();
+        AccountControl.StatusMessage.Content = "...";
+        AccountControl.AgeVerified.Source = GetImageSource(MaterialIcons._18Plus);
+        AccountControl.Tag.Source = GetImageSource(MaterialIcons.Developer);
+        AccountControl.StatusColor.SetCurrentValue(Ellipse.FillProperty, new SolidColorBrush((System.Windows.Media.Color)System.Windows.Media.ColorConverter.ConvertFromString("#2ED319")));
+
+        AccountControl.HorizontalAlignment = System.Windows.HorizontalAlignment.Left;
+
+
+        var row = AccountManager_Canvas.Children.Count / PerRow;
+        var column = AccountManager_Canvas.Children.Count % PerRow;
+
+        AccountManager_Canvas.Children.Add(AccountControl);
+
+        float topPosition = initialTop + (Height + vSpacing) * row;
+        float leftPosition = initialLeft + (Width + hSpacing) * column;
+        Canvas.SetLeft(AccountControl, leftPosition);
+        Canvas.SetTop(AccountControl, topPosition);
+
+        var newCanvasHeight = topPosition + Height + initialTop;
+        if (AccountManager_Canvas.Height < newCanvasHeight)
+            AccountManager_Canvas.Height = newCanvasHeight;
+        */
     }
 }

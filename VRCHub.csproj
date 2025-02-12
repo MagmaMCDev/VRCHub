@@ -82,12 +82,21 @@
     <Compile Update="AccountProfile.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Update="MaterialIcons.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>MaterialIcons.resx</DependentUpon>
+    </Compile>
   </ItemGroup>
 
   <ItemGroup>
     <EmbeddedResource Update="AppResources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>AppResources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Update="MaterialIcons.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>MaterialIcons.Designer.cs</LastGenOutput>
     </EmbeddedResource>
   </ItemGroup>
 

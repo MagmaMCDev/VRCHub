@@ -155,13 +155,11 @@ OpacityMask="Black" RenderTransformOrigin="0.5,0.5" Grid.ColumnSpan="2">
                         </Button.BorderBrush>
                     </Button>
                 </Grid>
-                <ScrollViewer x:Name="Datapacks_Panel" VerticalScrollBarVisibility="Hidden" HorizontalScrollBarVisibility="Disabled" Visibility="Collapsed" CanContentScroll="True" HorizontalAlignment="Center" Height="453" Canvas.Left="1" Canvas.Top="1" VerticalAlignment="Top">
+                <ScrollViewer x:Name="Datapacks_Panel" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled" Visibility="Hidden" CanContentScroll="True" HorizontalAlignment="Left" Height="453" Canvas.Left="1" Canvas.Top="1" VerticalAlignment="Center" Width="745">
                     <Canvas x:Name="Datapacks_Canvas" Height="452" Width="750" Background="#202020"/>
                 </ScrollViewer>
-                <ScrollViewer x:Name="AccountManager_Panel" VerticalScrollBarVisibility="Hidden" HorizontalScrollBarVisibility="Disabled" Visibility="Visible" CanContentScroll="True" HorizontalAlignment="Center" Height="453" Canvas.Left="1" Canvas.Top="1" VerticalAlignment="Top">
-                    <Canvas x:Name="AccountManager_Canvas" Height="452" Width="750" Background="#202020">
-                        <local:AccountProfile Canvas.Left="10" HorizontalAlignment="Center" Canvas.Top="10" VerticalAlignment="Top"/>
-                    </Canvas>
+                <ScrollViewer x:Name="AccountManager_Panel" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled" Visibility="Visible" CanContentScroll="True" HorizontalAlignment="Left" Height="453" Canvas.Left="1" Canvas.Top="1" VerticalAlignment="Center" Width="745">
+                    <Canvas x:Name="AccountManager_Canvas" Height="452" Width="750" Background="#202020"/>
                 </ScrollViewer>
                 <Grid x:Name="Splashscreen_Panel" Height="452" VerticalAlignment="Top" Width="761" Visibility="Hidden" Background="#202020">
                     <Image x:Name="Splashscreen_CurrentImage" HorizontalAlignment="Left" Height="245" Margin="144,64,0,0" VerticalAlignment="Top" Width="430"/>
@@ -213,7 +211,7 @@ OpacityMask="Black" RenderTransformOrigin="0.5,0.5" Grid.ColumnSpan="2">
                         </Button.BorderBrush>
                     </Button>
                 </Grid>
-                <Grid x:Name="Settings_Panel" Height="452" VerticalAlignment="Top" Width="761" Visibility="Collapsed" Background="#202020">
+                <Grid x:Name="Settings_Panel" Height="452" VerticalAlignment="Top" Width="761" Visibility="Hidden" Background="#202020">
                     <TextBox x:Name="Settings_VRCPath" HorizontalAlignment="Left" Height="26" Margin="144,25,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="580" FontSize="14" BorderBrush="Red" TextChanged="Settings_VRCPath_TextChanged" MouseDoubleClick="Settings_VRCPath_DoubleClicked"/>
                     <Label Content="VRChat Location:" HorizontalAlignment="Left" Height="25" Margin="25,26,0,0" VerticalAlignment="Top" Width="114" Foreground="White"/>
                     <Label Content="Send analytics:" HorizontalAlignment="Left" Height="25" Margin="25,56,0,0" VerticalAlignment="Top" Width="114" Foreground="White"/>
@@ -250,7 +248,7 @@ OpacityMask="Black" RenderTransformOrigin="0.5,0.5" Grid.ColumnSpan="2">
                             </LinearGradientBrush>
                         </Button.BorderBrush>
                     </Button>
-                    <Label x:Name="Version" Content="V" Height="25" Width="33" FontSize="8" VerticalAlignment="Bottom" RenderTransformOrigin="0,0.5" Margin="0,0,727,-6" HorizontalAlignment="Right">
+                    <Label x:Name="Version" Content="V" Height="25" Width="91" FontSize="8" VerticalAlignment="Bottom" RenderTransformOrigin="0,0.5" Margin="0,0,669,-6" HorizontalAlignment="Right">
                         <Label.Foreground>
                             <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
                                 <GradientStop Color="#FFFF9800"/>

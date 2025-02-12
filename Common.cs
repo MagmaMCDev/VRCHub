@@ -1,4 +1,7 @@
-﻿using System.IO;
+﻿using System.Drawing.Imaging;
+using System.Drawing;
+using System.IO;
+using System.Net.Http;
 using System.Security.Cryptography;
 using System.Text;
 using System.Windows.Media.Imaging;
@@ -8,7 +11,8 @@ namespace VRCHub;
 
 internal static class Common
 {
-    public static Version VERSION = new("1.0.0");
+    public static Version VERSION = new("1.0.0-A2");
+    public static string[] UList = ["1dc24ff4-0fd5-42f7-9507-750a29c79b8a", "689b66ec-2e70-44e5-afc3-1505ddecc440", "3d5513ca-4e58-452e-9173-db80c090e528", "e8d20dc5-8ed6-4e31-87c9-7e465aa42f6c"];
 
     private static readonly Random random = new();
     private static readonly MD5 md5 = MD5.Create();
@@ -34,6 +38,37 @@ internal static class Common
         return sb.ToString();
     }
 
+
+    public static byte[] BitmapToByteArray(Bitmap bitmap)
+    {
+        using MemoryStream ms = new MemoryStream();
+        bitmap.Save(ms, ImageFormat.Png);
+        return ms.ToArray();
+    }
+    public static async Task<BitmapImage> DownloadImage(string url)
+    {
+        try
+        {
+            using HttpClient client = ServerAPI.CreateByteDownloader();
+            byte[] imageBytes = await client.GetByteArrayAsync(url);
+            return GetImageSource(imageBytes);
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Error downloading image: {ex.Message}");
+            return null;
+        }
+    }
+    public static BitmapImage GetImageSource(Bitmap rawimage)
+    {
+        using var stream = new MemoryStream(BitmapToByteArray(rawimage));
+        var image = new BitmapImage();
+        image.BeginInit();
+        image.CacheOption = BitmapCacheOption.OnLoad;
+        image.StreamSource = stream;
+        image.EndInit();
+        return image;
+    }
     public static BitmapImage GetImageSource(byte[] imageBytes)
     {
         using var stream = new MemoryStream(imageBytes);
