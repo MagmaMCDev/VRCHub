@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace VRCHub {
+namespace VRCHub.Resources {
     using System;
     
     
@@ -39,7 +39,7 @@ namespace VRCHub {
         internal static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("VRCHub.AppResources", typeof(AppResources).Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("VRCHub.VRCHub.Resources.AppResources", typeof(AppResources).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;
@@ -61,12 +61,22 @@ namespace VRCHub {
         }
         
         /// <summary>
-        ///   Looks up a localized resource of type System.Byte[].
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static byte[] SplashScreen {
+        internal static System.Drawing.Bitmap SplashScreen {
             get {
                 object obj = ResourceManager.GetObject("SplashScreen", resourceCulture);
-                return ((byte[])(obj));
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap Spoofer_Example1 {
+            get {
+                object obj = ResourceManager.GetObject("Spoofer_Example1", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
             }
         }
         
@@ -81,32 +91,22 @@ namespace VRCHub {
         }
         
         /// <summary>
-        ///   Looks up a localized resource of type System.Byte[].
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static byte[] VRCFX_Example1 {
+        internal static System.Drawing.Bitmap VRCFX_Example1 {
             get {
                 object obj = ResourceManager.GetObject("VRCFX_Example1", resourceCulture);
-                return ((byte[])(obj));
+                return ((System.Drawing.Bitmap)(obj));
             }
         }
         
         /// <summary>
-        ///   Looks up a localized resource of type System.Byte[].
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static byte[] VRCFX_Example2 {
+        internal static System.Drawing.Bitmap VRCFX_Example2 {
             get {
                 object obj = ResourceManager.GetObject("VRCFX_Example2", resourceCulture);
-                return ((byte[])(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Byte[].
-        /// </summary>
-        internal static byte[] VRCSpoofer_Example1 {
-            get {
-                object obj = ResourceManager.GetObject("VRCSpoofer_Example1", resourceCulture);
-                return ((byte[])(obj));
+                return ((System.Drawing.Bitmap)(obj));
             }
         }
         

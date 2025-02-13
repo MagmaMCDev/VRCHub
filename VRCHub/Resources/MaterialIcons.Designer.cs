@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace VRCHub {
+namespace VRCHub.Resources {
     using System;
     
     
@@ -39,7 +39,7 @@ namespace VRCHub {
         internal static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("VRCHub.MaterialIcons", typeof(MaterialIcons).Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("VRCHub.VRCHub.Resources.MaterialIcons", typeof(MaterialIcons).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;

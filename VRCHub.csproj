@@ -52,6 +52,9 @@
     <Page Remove="_backup\**" />
   </ItemGroup>
   <ItemGroup>
+    <ApplicationDefinition Remove="App.xaml" />
+  </ItemGroup>
+  <ItemGroup>
     <None Remove="Resources\VRCFX_Example1.png" />
     <None Remove="Resources\VRCFX_Example2.png" />
   </ItemGroup>
@@ -90,6 +93,10 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Page Include="App.xaml" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Compile Update="NotificationCenter.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -106,6 +113,16 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>MaterialIcons.resx</DependentUpon>
     </Compile>
+    <Compile Update="VRCHub\Resources\AppResources.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>AppResources.resx</DependentUpon>
+    </Compile>
+    <Compile Update="VRCHub\Resources\MaterialIcons.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>MaterialIcons.resx</DependentUpon>
+    </Compile>
   </ItemGroup>
 
   <ItemGroup>
@@ -114,6 +131,14 @@
       <LastGenOutput>AppResources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Update="MaterialIcons.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>MaterialIcons.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Update="VRCHub\Resources\AppResources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>AppResources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Update="VRCHub\Resources\MaterialIcons.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>MaterialIcons.Designer.cs</LastGenOutput>
     </EmbeddedResource>

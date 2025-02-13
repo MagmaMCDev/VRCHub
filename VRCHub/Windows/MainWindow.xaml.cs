@@ -25,6 +25,7 @@ using Button = System.Windows.Controls.Button;
 using SaveFileDialog = Microsoft.Win32.SaveFileDialog;
 using Control = System.Windows.Controls.Control;
 using System.Windows.Threading;
+using VRCHub.Resources;
 
 namespace VRCHub;
 /// <summary>
@@ -220,7 +221,7 @@ public partial class MainWindow : Window
             Version.Content += VERSION.ToString();
             VRCFX_Promotion1.Source = GetImageSource(AppResources.VRCFX_Example1);
             VRCFX_Promotion2.Source = GetImageSource(AppResources.VRCFX_Example2);
-            VRCSpoofer_Promotion1.Source = GetImageSource(AppResources.VRCSpoofer_Example1);
+            VRCSpoofer_Promotion1.Source = GetImageSource(AppResources.Spoofer_Example1);
 
             Config.LoadConfig();
 

@@ -7,6 +7,7 @@ using BlurEffect = System.Windows.Media.Effects.BlurEffect;
 using System.Windows.Forms;
 using UserControl = System.Windows.Controls.UserControl;
 using static VRCHub.Common;
+using VRCHub.Resources;
 namespace VRCHub;
 public delegate void NotificationEventHandler(string message);
 /// <summary>
