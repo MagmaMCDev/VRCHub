@@ -1,6 +1,7 @@
 ﻿using System.Diagnostics;
 using System.Drawing;
 using System.IO;
+using System.IO.Compression;
 using System.Net.Http;
 using System.Net.Http.Json;
 using System.Windows;
@@ -8,28 +9,23 @@ using System.Windows.Controls;
 using System.Windows.Forms;
 using System.Windows.Input;
 using System.Windows.Media.Imaging;
+using System.Windows.Media.Animation;
+using System.Windows.Shapes;
+using System.Windows.Media;
 using Microsoft.Win32;
+using ZER0.VRChat.Patch;
 using Segment;
-using ZER0.Core;
+using static VRCHub.Common;
+
 using Application = System.Windows.Application;
 using MessageBox = System.Windows.MessageBox;
 using OpenFileDialog = Microsoft.Win32.OpenFileDialog;
 using Path = System.IO.Path;
-using static VRCHub.Common;
 using Button = System.Windows.Controls.Button;
 using SaveFileDialog = Microsoft.Win32.SaveFileDialog;
-using System.IO.Compression;
-using ZER0.VRChat.Patch;
-using System.Globalization;
-using System.Windows.Data;
-using System;
-using System.Reflection;
-using System.Windows.Media.Animation;
 using Control = System.Windows.Controls.Control;
-using System.Data.Common;
-using System.Windows.Shapes;
-using System.Windows.Media;
-using Microsoft.VisualBasic;
+using System.Windows.Threading;
+
 namespace VRCHub;
 /// <summary>
 /// Interaction logic for MainWindow.xaml
@@ -131,7 +127,7 @@ public partial class MainWindow : Window
         string Base = SplashScreen.BaseText;
         SplashScreen.BaseText = $"Checking Server Status 0/{ServerAPI.Servers.Length}";
         _splashScreen = SplashScreen.Create();
-        await Task.Run(async () =>
+        await Task.Run(() =>
         {
             byte index = 0;
             foreach (var server in ServerAPI.Servers)
@@ -1014,7 +1010,7 @@ public partial class MainWindow : Window
             Application.Current.Dispatcher.Invoke(() => MelonLoaderStatus.Content = "Loading..");
             string Status = new HttpClient().GetStringAsync(GetServer("https://software.vrchub.site/VRCMelon/Status")).GetAwaiter().GetResult();
             Application.Current.Dispatcher.Invoke(() => MelonLoaderStatus.Content = Status);
-            Thread.Sleep(1500);
+            Thread.Sleep(5000);
             MelonDebounce = true;
         }).Start();
     }
@@ -1107,11 +1103,11 @@ public partial class MainWindow : Window
             AccountManager_Canvas.Height = newCanvasHeight;
 
     }
-    bool NotificationDebounce = true;
-    System.Windows.Threading.DispatcherTimer delay;
+    private bool NotificationDebounce = true;
 
+    private DispatcherTimer? delay;
     static readonly Thickness startMargin = new(992, 435, -362, 0);
-    static readonly Thickness endMargin = new(630, 434, 0, 0);
+    static readonly Thickness endMargin = new(630, 435, 0, 0);
     static readonly ThicknessAnimation StartAnimation = new()
     {
         From = startMargin,
@@ -1131,8 +1127,10 @@ public partial class MainWindow : Window
     {
         if (delay == null)
         {
-            delay = new System.Windows.Threading.DispatcherTimer();
-            delay.Interval = TimeSpan.FromSeconds(1);
+            delay = new()
+            {
+                Interval = TimeSpan.FromSeconds(1)
+            };
             delay.Tick += (s, e) =>
             {
                 Notification.BeginAnimation(Control.MarginProperty, EndAnimation);

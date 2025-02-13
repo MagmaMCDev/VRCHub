@@ -30,9 +30,25 @@
     <Exec Command="Sign &quot;$(PublishDir)VRCHub.dll&quot; &quot;$(SignToolCert)&quot;" />
   </Target>
   <ItemGroup>
+    <Compile Remove="Publish-Datapacks\**" />
+    <Compile Remove="VRCHubNative\**" />
+    <Compile Remove="Website\**" />
+    <Compile Remove="x64\**" />
     <Compile Remove="_backup\**" />
+    <EmbeddedResource Remove="Publish-Datapacks\**" />
+    <EmbeddedResource Remove="VRCHubNative\**" />
+    <EmbeddedResource Remove="Website\**" />
+    <EmbeddedResource Remove="x64\**" />
     <EmbeddedResource Remove="_backup\**" />
+    <None Remove="Publish-Datapacks\**" />
+    <None Remove="VRCHubNative\**" />
+    <None Remove="Website\**" />
+    <None Remove="x64\**" />
     <None Remove="_backup\**" />
+    <Page Remove="Publish-Datapacks\**" />
+    <Page Remove="VRCHubNative\**" />
+    <Page Remove="Website\**" />
+    <Page Remove="x64\**" />
     <Page Remove="_backup\**" />
   </ItemGroup>
   <ItemGroup>

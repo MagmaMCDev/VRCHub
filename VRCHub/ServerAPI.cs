@@ -1,5 +1,6 @@
 ﻿using System.Net.Http;
 using System.Net.Http.Json;
+using System.Security.Policy;
 
 namespace VRCHub;
 public class ServerAPI: IDisposable
@@ -71,6 +72,7 @@ public class ServerAPI: IDisposable
         bool Status = false;
         try
         {
+            Console.Write("[INIT] ");
             using var request = new HttpRequestMessage(HttpMethod.Head, GetServer(server));
             using var response = HTTP!.SendAsync(request).GetAwaiter().GetResult();
             if (response.IsSuccessStatusCode)
