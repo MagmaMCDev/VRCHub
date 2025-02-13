@@ -74,6 +74,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Compile Update="NotificationCenter.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Update="AppResources.Designer.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>

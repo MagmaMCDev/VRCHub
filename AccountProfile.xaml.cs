@@ -8,19 +8,18 @@ using System.Windows.Forms;
 using UserControl = System.Windows.Controls.UserControl;
 using static VRCHub.Common;
 namespace VRCHub;
+public delegate void NotificationEventHandler(string message);
 /// <summary>
 /// Interaction logic for DatapackControl.xaml
 /// </summary>
 public partial class AccountProfile : UserControl
 {
-    public event Action? InstallClicked;
-    public event Action? UninstallClicked;
+
+    public static event NotificationEventHandler? NotificationEvent;
     public AccountProfile()
     {
         InitializeComponent();
         PasswordVisiblity.Source = GetImageSource(BitmapToByteArray(MaterialIcons.visibility_off));
-        //Datapack_Install.Click += (s, e) => InstallClicked?.Invoke();
-        //Datapack_Uninstall.Click += (s, e) => UninstallClicked?.Invoke();
     }
     bool showpass = false;
     private void Pa(object sender, MouseButtonEventArgs e)
@@ -38,14 +37,27 @@ public partial class AccountProfile : UserControl
 
     private void Username_Click(object sender, MouseButtonEventArgs e)
     {
-        Clipboard.SetText((string)Username.Content);
+        try
+        {
+            Clipboard.SetText((string)Username.Content);
+            NotificationEvent?.Invoke("Copied Username to clipboard!");
+        }
+        catch { }
     }
     private void Password_Click(object sender, MouseButtonEventArgs e)
     {
-        Clipboard.SetText((string)Password.Content);
+        try
+        {
+            Clipboard.SetText((string)Password.Content);
+            NotificationEvent?.Invoke("Copied Password to clipboard!");
+        } catch { }
     }
     private void Email_Click(object sender, MouseButtonEventArgs e)
     {
-        Clipboard.SetText((string)Email.Content);
+        try
+        {
+            Clipboard.SetText((string)Email.Content);
+            NotificationEvent?.Invoke("Copied Email to clipboard!");
+        } catch { }
     }
 }

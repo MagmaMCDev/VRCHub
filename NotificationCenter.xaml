@@ -1,0 +1,14 @@
+﻿<UserControl  x:Class="VRCHub.NotificationCenter"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:VRCHub"
+             mc:Ignorable="d" Width="285" Height="60">
+    <Grid>
+        <Rectangle Fill="#33000000"/>
+        <Rectangle Margin="0,55,0,0" Fill="#FFFF0069"/>
+        <Label x:Name="Message" Content="Label" Foreground="White"/>
+
+    </Grid>
+</UserControl>

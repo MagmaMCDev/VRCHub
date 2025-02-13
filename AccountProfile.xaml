@@ -4,7 +4,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:VRCHub"
-             mc:Ignorable="d" Width="265" Height="130">
+             mc:Ignorable="d" Width="300" Height="130">
     <Border x:Name="BorderColor" BorderBrush="Red" BorderThickness="1" CornerRadius="12,12,12,12" >
         <Border CornerRadius="12" BorderBrush="Black" BorderThickness="2" >
             <Grid VerticalAlignment="Center" Height="150" Margin="0,0,0,0">
@@ -13,20 +13,20 @@
                         <BlurEffect Radius="4"/>
                     </Image.Effect>
                 </Image>
-                <Rectangle HorizontalAlignment="Left" Height="1" Margin="9,30,0,0" Stroke="Red" VerticalAlignment="Top" Width="224" Fill="Red"/>
-                <Rectangle HorizontalAlignment="Left" Height="1" Margin="9,52,0,0" Stroke="Red" VerticalAlignment="Top" Width="224" Fill="Red"/>
-                <Label x:Name="Username" Content="[Content:UserName]" HorizontalAlignment="Left" Height="31" VerticalAlignment="Top" Width="223" FontSize="16" Foreground="White" RenderTransformOrigin="0.5,0.5" MouseUp="Username_Click" Margin="5,4,0,0"/>
-                <Label x:Name="Password" Content="[Content:Password]" HorizontalAlignment="Left" Height="30" VerticalAlignment="Top" Width="193" Margin="35,108,0,0" FontSize="14" Foreground="White" RenderTransformOrigin="0.5,0.5" MouseUp="Password_Click">
+                <Rectangle HorizontalAlignment="Left" Height="1" Margin="9,30,0,0" Stroke="Red" VerticalAlignment="Top" Width="254" Fill="Red"/>
+                <Rectangle HorizontalAlignment="Left" Height="1" Margin="9,52,0,0" Stroke="Red" VerticalAlignment="Top" Width="254" Fill="Red"/>
+                <Label x:Name="Username" Content="[Content:UserName]" HorizontalAlignment="Left" Height="31" VerticalAlignment="Top" Width="253" FontSize="16" Foreground="White" RenderTransformOrigin="0.5,0.5" MouseUp="Username_Click" Margin="5,4,0,0"/>
+                <Label x:Name="Password" Content="[Content:Password]" HorizontalAlignment="Left" Height="30" VerticalAlignment="Top" Width="193" Margin="36,107,0,0" FontSize="14" Foreground="White" RenderTransformOrigin="0.5,0.5" MouseUp="Password_Click">
                     <Label.Effect>
                         <BlurEffect Radius="10"/>
                     </Label.Effect>
                 </Label>
-                <Label x:Name="Email" Content="[Content:Email]" HorizontalAlignment="Left" Height="28" VerticalAlignment="Top" Width="224" Margin="4,45,0,0" Foreground="White" RenderTransformOrigin="0.5,0.5" FontSize="14" MouseUp="Email_Click"/>
-                <Image x:Name="PasswordVisiblity" HorizontalAlignment="Left" Height="24" Margin="4,111,0,0" VerticalAlignment="Top" Width="29" MouseDown="Pa"/>
+                <Label x:Name="Email" Content="[Content:Email]" HorizontalAlignment="Left" Height="28" VerticalAlignment="Top" Width="254" Margin="4,45,0,0" Foreground="White" RenderTransformOrigin="0.5,0.5" FontSize="14" MouseUp="Email_Click"/>
+                <Image x:Name="PasswordVisiblity" HorizontalAlignment="Left" Height="24" Margin="5,110,0,0" VerticalAlignment="Top" Width="29" MouseDown="Pa"/>
                 <Ellipse x:Name="StatusColor" HorizontalAlignment="Left" Height="10" Margin="10,37,0,0" VerticalAlignment="Top" Width="10" Fill="Red"/>
-                <Label x:Name="StatusMessage" Content="[Content:Status]" HorizontalAlignment="Left" Height="26" VerticalAlignment="Top" Width="99" Margin="17,27,0,0" Foreground="White" RenderTransformOrigin="0.5,0.5" FontSize="12"/>
-                <Image x:Name="Tag" HorizontalAlignment="Left" Height="23" Margin="153,30,0,0" VerticalAlignment="Top" Width="87" Source="/Resources/TrustRanks/Administrator.png"/>
-                <Image x:Name="AgeVerified" HorizontalAlignment="Left" Height="22" Margin="111,31,0,0" VerticalAlignment="Top" Width="46" Source="/Resources/TrustRanks/18Plus.png"/>
+                <Label x:Name="StatusMessage" Content="[Content:Status]" HorizontalAlignment="Left" Height="26" VerticalAlignment="Top" Width="127" Margin="17,27,0,0" Foreground="White" RenderTransformOrigin="0.5,0.5" FontSize="12"/>
+                <Image x:Name="Tag" HorizontalAlignment="Left" Height="23" Margin="182,30,0,0" VerticalAlignment="Top" Width="87" Source="/Resources/TrustRanks/Administrator.png"/>
+                <Image x:Name="AgeVerified" HorizontalAlignment="Left" Height="22" Margin="137,31,0,0" VerticalAlignment="Top" Width="46" Source="/Resources/TrustRanks/18Plus.png"/>
             </Grid>
         </Border>
     </Border>

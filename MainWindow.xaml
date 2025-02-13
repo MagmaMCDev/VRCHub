@@ -64,7 +64,7 @@
                 </LinearGradientBrush>
             </Border.BorderBrush>
             <Canvas Background="#202020">
-                <Grid x:Name="VRCFX_Panel" HorizontalAlignment="Center" Height="436" VerticalAlignment="Center" Width="745" Visibility="Collapsed" Background="#202020">
+                <Grid x:Name="VRCFX_Panel" HorizontalAlignment="Center" Height="436" VerticalAlignment="Center" Width="745" Visibility="Hidden" Background="#202020">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="100*"/>
                         <ColumnDefinition Width="49*"/>
@@ -116,7 +116,7 @@ OpacityMask="Black" RenderTransformOrigin="0.5,0.5" Grid.ColumnSpan="2">
                         </Button.BorderBrush>
                     </Button>
                 </Grid>
-                <Grid x:Name="VRCSpoofer_Panel" HorizontalAlignment="Center" Height="436" VerticalAlignment="Center" Width="745" Visibility="Visible" Background="#202020">
+                <Grid x:Name="VRCSpoofer_Panel" HorizontalAlignment="Center" Height="436" VerticalAlignment="Center" Width="745" Visibility="Hidden" Background="#202020">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="100*"/>
                         <ColumnDefinition Width="49*"/>
@@ -158,9 +158,29 @@ OpacityMask="Black" RenderTransformOrigin="0.5,0.5" Grid.ColumnSpan="2">
                 <ScrollViewer x:Name="Datapacks_Panel" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled" Visibility="Hidden" CanContentScroll="True" HorizontalAlignment="Left" Height="453" Canvas.Left="1" Canvas.Top="1" VerticalAlignment="Center" Width="745">
                     <Canvas x:Name="Datapacks_Canvas" Height="452" Width="750" Background="#202020"/>
                 </ScrollViewer>
-                <ScrollViewer x:Name="AccountManager_Panel" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled" Visibility="Visible" CanContentScroll="True" HorizontalAlignment="Left" Height="453" Canvas.Left="1" Canvas.Top="1" VerticalAlignment="Center" Width="745">
-                    <Canvas x:Name="AccountManager_Canvas" Height="452" Width="750" Background="#202020"/>
-                </ScrollViewer>
+                <Grid>
+                    <Rectangle Canvas.Left="10" Stroke="Black" Canvas.Top="-38" Margin="1,0,-23,408" RenderTransformOrigin="0.5,0.5">
+                        <Rectangle.RenderTransform>
+                            <TransformGroup>
+                                <ScaleTransform ScaleX="1" ScaleY="1"/>
+                                <SkewTransform/>
+                                <RotateTransform/>
+                                <TranslateTransform/>
+                            </TransformGroup>
+                        </Rectangle.RenderTransform>
+                    </Rectangle>
+                    <ScrollViewer x:Name="AccountManager_Panel" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled" Visibility="Visible" CanContentScroll="True" HorizontalAlignment="Center" Height="408" Canvas.Left="1" Canvas.Top="1" VerticalAlignment="Top" Width="738" Margin="0,45,0,0">
+                        <Canvas x:Name="AccountManager_Canvas" Height="408" Width="740" Background="#202020"/>
+                    </ScrollViewer>
+                    <Button x:Name="ManageAccountsButton" Content="Setup" Height="30" Width="105" Background="#FF272727" Foreground="White" HorizontalAlignment="Left" Canvas.Left="651" Canvas.Top="8" VerticalAlignment="Top" Margin="616,8,0,0" Click="ManageAccountsButton_Click">
+                        <Button.BorderBrush>
+                            <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                                <GradientStop Color="#FF770000"/>
+                                <GradientStop Color="Red" Offset="1"/>
+                            </LinearGradientBrush>
+                        </Button.BorderBrush>
+                    </Button>
+                </Grid>
                 <Grid x:Name="Splashscreen_Panel" Height="452" VerticalAlignment="Top" Width="761" Visibility="Hidden" Background="#202020">
                     <Image x:Name="Splashscreen_CurrentImage" HorizontalAlignment="Left" Height="245" Margin="144,64,0,0" VerticalAlignment="Top" Width="430"/>
                     <Label Content="VRChat Splash Screen Editor" HorizontalAlignment="Left" Height="39" VerticalAlignment="Top" Width="251" FontSize="18" Foreground="White"/>
@@ -323,7 +343,7 @@ OpacityMask="Black" RenderTransformOrigin="0.5,0.5" Grid.ColumnSpan="2">
                 </LinearGradientBrush>
             </Button.BorderBrush>
         </Button>
-        <Button x:Name="SplashScreenButton" Content="Splash Screen" HorizontalAlignment="Left" Height="30" Margin="17,194,0,0" VerticalAlignment="Top" Width="105" Background="#FF272727" Foreground="White" Click="SplashScreenButton_Click">
+        <Button x:Name="SplashScreenButton" HorizontalAlignment="Left" Height="30" Margin="17,194,0,0" VerticalAlignment="Top" Width="105" Background="#FF272727" Foreground="White" Click="SplashScreenButton_Click" Content="Splash Screen">
             <Button.BorderBrush>
                 <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
                     <GradientStop Color="#FF770000"/>
@@ -371,5 +391,6 @@ OpacityMask="Black" RenderTransformOrigin="0.5,0.5" Grid.ColumnSpan="2">
                 </LinearGradientBrush>
             </Button.BorderBrush>
         </Button>
+        <local:NotificationCenter x:Name="Notification" Margin="992,435,-362,0"/>
     </Grid>
 </Window>

@@ -29,6 +29,7 @@ using Control = System.Windows.Controls.Control;
 using System.Data.Common;
 using System.Windows.Shapes;
 using System.Windows.Media;
+using Microsoft.VisualBasic;
 namespace VRCHub;
 /// <summary>
 /// Interaction logic for MainWindow.xaml
@@ -405,12 +406,13 @@ public partial class MainWindow : Window
         if (Config.SendAnalytics)
             Analytics.Client.Track(Environment.MachineName, "VRCFX Downloaded");
         PauseButton(VRCFX_DownloadButton, "Installing");
-
+        ShowNotification("Started Download For VRCFX!");
         await Task.Run(() => 
         {
             try
             {
                 OptionalSoftwareManager.DownloadSoftware("VRCFX.zip", "VRCFX", "VRCFX.exe");
+                ShowNotification("Installing VRCFX!");
                 OptionalSoftwareManager.InstallSoftware("VRCFX.exe", "VRCFX");
             }
             catch { }
@@ -463,6 +465,7 @@ public partial class MainWindow : Window
     {
         if (ButtonPaused(VRCSpoofer_DownloadButton))
             return;
+        ShowNotification("Started Download For ZER0's Spoofer!");
 
         if (Config.SendAnalytics)
             Analytics.Client.Track(Environment.MachineName, "Spoofer Downloaded");
@@ -473,6 +476,7 @@ public partial class MainWindow : Window
             try
             {
                 OptionalSoftwareManager.DownloadSoftware("ZER0Spoofer.exe", "HWIDSpoofer");
+                ShowNotification("Installing ZER0's Spoofer!");
                 OptionalSoftwareManager.InstallSoftware("ZER0Spoofer.exe", "HWIDSpoofer");
             }
             catch { }
@@ -852,6 +856,7 @@ public partial class MainWindow : Window
     }
     private void SetupEvents()
     {
+        AccountProfile.NotificationEvent += ShowNotification;
         VRCPatch.OnPatchKeyStarted += () =>
         {
 
@@ -1048,11 +1053,11 @@ public partial class MainWindow : Window
     private void AccountManager_Click(object sender, RoutedEventArgs e)
     {
         const ushort Height = 130;
-        const ushort Width = 265;
-        const ushort vSpacing = 10;
-        const ushort hSpacing = 10;
-        const ushort initialTop = 20;
-        const ushort initialLeft = 10;
+        const ushort Width = 300;
+        const ushort vSpacing = 20;
+        const ushort hSpacing = 20;
+        const ushort initialTop = 10;
+        const ushort initialLeft = 45;
         const byte PerRow = 2;
 
         VRCFX_Panel.Visibility = Visibility.Collapsed;
@@ -1065,13 +1070,25 @@ public partial class MainWindow : Window
         MelonLoader_Panel.Visibility = Visibility.Collapsed;
         AccountManager_Panel.Visibility = Visibility.Visible;
 
-        /*
+
         var AccountControl = new AccountProfile();
+        AccountControl.Username.Content = "mawjob";
+        AccountControl.Email.Content = "mawjob@magma-mc.net";
+        AccountControl.Password.Content = "MagmaVR1";
         AccountControl.StatusMessage.Content = "...";
         AccountControl.AgeVerified.Source = GetImageSource(MaterialIcons._18Plus);
         AccountControl.Tag.Source = GetImageSource(MaterialIcons.Developer);
         AccountControl.StatusColor.SetCurrentValue(Ellipse.FillProperty, new SolidColorBrush((System.Windows.Media.Color)System.Windows.Media.ColorConverter.ConvertFromString("#2ED319")));
 
+        Task.Run(() =>
+        {
+            Task<byte[]> Image = api!.GetByteArrayAsync("https://api.vrchat.cloud/api/1/image/file_fef9c19b-4dc0-43ea-a441-63f8b33b98e6/1/512");
+            var Image2 = Image.GetAwaiter().GetResult();
+            Application.Current.Dispatcher.Invoke(() =>
+            {
+                AccountControl.ProfileImage.Source = GetImageSource(Image2);
+            });
+        });
         AccountControl.HorizontalAlignment = System.Windows.HorizontalAlignment.Left;
 
 
@@ -1088,6 +1105,60 @@ public partial class MainWindow : Window
         var newCanvasHeight = topPosition + Height + initialTop;
         if (AccountManager_Canvas.Height < newCanvasHeight)
             AccountManager_Canvas.Height = newCanvasHeight;
-        */
+
+    }
+    bool NotificationDebounce = true;
+    System.Windows.Threading.DispatcherTimer delay;
+
+    static readonly Thickness startMargin = new(992, 435, -362, 0);
+    static readonly Thickness endMargin = new(630, 434, 0, 0);
+    static readonly ThicknessAnimation StartAnimation = new()
+    {
+        From = startMargin,
+        To = endMargin,
+        Duration = TimeSpan.FromSeconds(0.5),
+        EasingFunction = new CubicEase { EasingMode = EasingMode.EaseOut }
+    };
+    static readonly ThicknessAnimation EndAnimation = new()
+    {
+        From = endMargin,
+        To = startMargin,
+        Duration = TimeSpan.FromSeconds(0.5),
+        EasingFunction = new CubicEase { EasingMode = EasingMode.EaseIn }
+    };
+
+    public void ShowNotification(string message)
+    {
+        if (delay == null)
+        {
+            delay = new System.Windows.Threading.DispatcherTimer();
+            delay.Interval = TimeSpan.FromSeconds(1);
+            delay.Tick += (s, e) =>
+            {
+                Notification.BeginAnimation(Control.MarginProperty, EndAnimation);
+                delay.Stop();
+                NotificationDebounce = true;
+            };
+        }
+        if (!NotificationDebounce)
+        {
+            Notification.Message.Content = message;
+            Notification.Margin = startMargin;
+            delay.Stop();
+            delay.Start();
+            return;
+        }
+
+        NotificationDebounce = false;
+        Notification.Message.Content = message;
+        Notification.Margin = startMargin;
+
+        Notification.BeginAnimation(Control.MarginProperty, StartAnimation);
+        delay.Start();
+    }
+
+    private void ManageAccountsButton_Click(object sender, RoutedEventArgs e)
+    {
+
     }
 }
