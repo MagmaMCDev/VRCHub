@@ -104,6 +104,7 @@ public partial class MainWindow : Window
         InitializeSplashScreen();
         InitializeMainWindowAsync();
         SetupEvents();
+        SetupAccountManager();
     }
     private static void SetupConsole(string[] args)
     {
@@ -682,7 +683,8 @@ public partial class MainWindow : Window
                         regKeys.Add(new RegKey
                         {
                             ObjectName = valueName,
-                            Value = value
+                            Value = value,
+
                         });
                     }
                 }
@@ -799,7 +801,7 @@ public partial class MainWindow : Window
 
     private void CreateDatapackButton_Clicked(object sender, RoutedEventArgs e)
     {
-        ProcessStartInfo PackCreator = new("DatapackCreator.exe")
+        ProcessStartInfo PackCreator = new("VRCHubNative.exe")
         {
             UseShellExecute = true,
             WindowStyle = ProcessWindowStyle.Hidden,
@@ -815,6 +817,7 @@ public partial class MainWindow : Window
         CreateDatapack_Button.IsEnabled = false;
         Thread DatapackThread = new(() =>
         {
+            PackCreator.Arguments += $"/create ";
             PackCreator.Arguments += $"\"{InputFile}\" ";
             PackCreator.Arguments += $"\"{OutputFile}\" ";
             PackCreator.Arguments += $"\"{WorldID}\" ";
@@ -837,7 +840,6 @@ public partial class MainWindow : Window
             Priority = ThreadPriority.BelowNormal
         };
         DatapackThread.Start();
-        // open exploerer and select output file if the folder is not already open in filke explorer
     }
     private void PatchGame_Click(object sender, RoutedEventArgs e)
     {
@@ -1154,6 +1156,11 @@ public partial class MainWindow : Window
 
         Notification.BeginAnimation(Control.MarginProperty, StartAnimation);
         delay.Start();
+    }
+
+    private void SetupAccountManager()
+    {
+        
     }
 
     private void ManageAccountsButton_Click(object sender, RoutedEventArgs e)

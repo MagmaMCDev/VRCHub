@@ -17,6 +17,14 @@ public static class Config
     /// </summary>
     public static bool SendAnalytics { get; set; } = true;
     public static RegKey[]? VRChatRegBackup { get; set; }
+    public static VRCUser[] AccountsCache
+    {
+        get; set;
+    } = [];
+    public static VRCAccount[] SavedAccounts
+    {
+        get; set;
+    } = [];
 
     private static readonly string ConfigPath = Path.Combine(JEF.Utils.Folders.LocalUserAppData, "VRCHub");
     private static readonly string ConfigFilename = Path.Combine(ConfigPath, "Config.json");
@@ -38,6 +46,7 @@ public static class Config
                     VRC_Path = config.VRC_Path ?? VRC_Path;
                     SendAnalytics = config.SendAnalytics;
                     VRChatRegBackup = config.VRChatRegBackup;
+                    SavedAccounts = config.SavedAccounts;
                 }
             }
         }
@@ -47,20 +56,23 @@ public static class Config
         }
     }
 
+    private static bool Writable = true;
     public static void SaveConfig()
     {
+        if (Writable)
+            return;
+        Writable = false;
         try
         {
             if (!Directory.Exists(ConfigPath))
-            {
                 Directory.CreateDirectory(ConfigPath);
-            }
 
             var config = new ConfigData
             {
                 VRC_Path = VRC_Path,
                 SendAnalytics = SendAnalytics,
-                VRChatRegBackup = VRChatRegBackup
+                VRChatRegBackup = VRChatRegBackup,
+                SavedAccounts = SavedAccounts
             };
 
             string json = JsonSerializer.Serialize(config, JsonConfig);
@@ -69,6 +81,9 @@ public static class Config
         catch (Exception ex)
         {
             Console.WriteLine($"Error saving config: {ex.Message}");
+        } finally
+        {
+            Writable = true;
         }
     }
 
@@ -82,6 +97,10 @@ public static class Config
         {
             get; set;
         }
+        public VRCAccount[] SavedAccounts
+        {
+            get; set;
+        } = [];
         public RegKey[]? VRChatRegBackup { get; set; }
     }
 }
@@ -93,3 +112,100 @@ public class RegKey
         get; set;
     }
 }
+#pragma warning disable IDE1006 // Naming Styles
+public class VRCAccount
+{
+    public string id
+    {
+        get; set;
+    } = "";
+    public string username
+    {
+        get; set;
+    } = "";
+    public string email
+    {
+        get; set;
+    } = "";
+
+    public string auth
+    {
+        get; set;
+    } = "";
+    public string twoauth
+    {
+        get; set;
+    } = "";
+}
+public class VRCUser
+{
+    public string? bio
+    {
+        get; set;
+    }
+    public string? currentAvatarImageUrl
+    {
+        get; set;
+    }
+    public string? currentAvatarThumbnailImageUrl
+    {
+        get; set;
+    }
+    public string date_joined
+    {
+        get; set;
+    } = "";
+    public string displayName
+    {
+        get; set;
+    } = "";
+    public string id
+    {
+        get; set;
+    } = "";
+    public string? isAdult
+    {
+        get; set;
+    }
+    public string? last_platform
+    {
+        get; set;
+    }
+    public string? profilePicOverride
+    {
+        get; set;
+    }
+    public string? profilePicOverrideThumbnail
+    {
+        get; set;
+    }
+    public string? pronouns
+    {
+        get; set;
+    }
+    public string? state
+    {
+        get; set;
+    }
+    public string? status
+    {
+        get; set;
+    }
+    public string? statusDescription
+    {
+        get; set;
+    }
+    public string[] tags
+    {
+        get; set;
+    } = [];
+    public string? userIcon
+    {
+        get; set;
+    }
+    public string username
+    {
+        get; set;
+    } = "";
+}
+#pragma warning restore IDE1006 // Naming Styles
