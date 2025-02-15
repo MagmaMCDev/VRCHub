@@ -28,11 +28,6 @@ using Control = System.Windows.Controls.Control;
 using System.Windows.Threading;
 using VRCHub.Resources;
 using VRCHub.Windows;
-using System.Runtime.InteropServices;
-using static System.Runtime.InteropServices.JavaScript.JSType;
-using OpenVRChatAPI;
-using System.Security.Principal;
-
 namespace VRCHub;
 /// <summary>
 /// Interaction logic for MainWindow.xaml
@@ -49,6 +44,7 @@ public partial class MainWindow : Window
     private const ushort initialTop = 10;
     private const ushort initialLeft = 10;
     private const byte controlsPerRow = 3;
+    public string SearchQuery = "";
 
     private SplashScreen? _splashScreen;
 
@@ -1103,7 +1099,8 @@ public partial class MainWindow : Window
                     Config.SavedAccounts.Remove(account);
             }); // how to wait before continueing
             foreach (var acc in Config.SavedAccounts)
-                AddAccount(acc);
+                AddAccount(acc, false);
+            FormatAccounts();
             if (Config.SavedAccounts.Any(value => value.main))
                 Application.Current.Dispatcher.Invoke(() => ManageAccountsButton.Content = "Add");
 
@@ -1158,14 +1155,11 @@ public partial class MainWindow : Window
                 return MaterialIcons.Visitor;
         }
     }
-    private void AddAccount(VRCAccount Account)
+    private SolidColorBrush GetColor(string color) =>
+        new((System.Windows.Media.Color)System.Windows.Media.ColorConverter.ConvertFromString(color));
+
+    private void FormatAccounts()
     {
-        VRCAPI.SetAuth(Account);
-        if (Account.UserData == null)
-        {
-            Account.UserData = VRCAPI.GetUser();
-            SimpleLogger.Warn("User Data Was Not Initialized!");
-        }
         const ushort Height = 130;
         const ushort Width = 300;
         const ushort vSpacing = 20;
@@ -1176,34 +1170,61 @@ public partial class MainWindow : Window
 
         Application.Current.Dispatcher.Invoke(() =>
         {
+            int i = 0;
+            foreach(AccountProfile profile in AccountManager_Canvas.Children)
+            {
+                if (!profile.Username.Content.ToString()!.ToLowerInvariant().Contains(SearchQuery.ToLowerInvariant()))
+                {
+                    profile.Visibility = Visibility.Hidden;
+                    continue;
+                }
+                else
+                    profile.Visibility = Visibility.Visible;
+
+                var row = i / PerRow;
+                var column = i % PerRow;
+                float topPosition = initialTop + (Height + vSpacing) * row;
+                float leftPosition = initialLeft + (Width + hSpacing) * column;
+                Canvas.SetLeft(profile, leftPosition);
+                Canvas.SetTop(profile, topPosition);
+                var newCanvasHeight = topPosition + Height + initialTop;
+                if (AccountManager_Canvas.Height < newCanvasHeight)
+                    AccountManager_Canvas.Height = newCanvasHeight;
+                i++;
+            }
+        });
+    }
+    private void AddAccount(VRCAccount Account, bool format = true)
+    {
+        VRCAPI.SetAuth(Account);
+        if (Account.UserData == null)
+        {
+            Account.UserData = VRCAPI.GetUser();
+            SimpleLogger.Warn("User Data Was Not Initialized!");
+        }
+
+        Application.Current.Dispatcher.Invoke(() =>
+        {
             var AccountControl = new AccountProfile();
-            AccountControl.Username.Content = Account.UserData.displayName;
+            AccountControl.Username.Content = Account.UserData!.displayName;
             AccountControl.Email.Content = Account.email;
             AccountControl.Password.Content = Account.password;
             AccountControl.StatusMessage.Content = Account.UserData.GetStatus();
             AccountControl.AgeVerified.Source = Account.UserData.Adult ? GetImageSource(MaterialIcons._18Plus) : null;
             AccountControl.Tag.Source = GetImageSource(GetRank(ref Account.UserData));
-            AccountControl.StatusColor.SetCurrentValue(Ellipse.FillProperty, new SolidColorBrush((System.Windows.Media.Color)System.Windows.Media.ColorConverter.ConvertFromString("#2ED319")));
+            if (Account.UserData.status == "join me")
+                AccountControl.StatusColor.SetCurrentValue(Ellipse.FillProperty, GetColor("#43c9fe"));
+            else if (Account.UserData.status == "active")
+                AccountControl.StatusColor.SetCurrentValue(Ellipse.FillProperty, GetColor("#2ED319"));
+            else if (Account.UserData.status == "ask me")
+                AccountControl.StatusColor.SetCurrentValue(Ellipse.FillProperty, GetColor("#ea8036"));
+            else if (Account.UserData.status == "do not disturb")
+                AccountControl.StatusColor.SetCurrentValue(Ellipse.FillProperty, GetColor("#5c0e0e"));
 
             string? Background = string.IsNullOrEmpty(Account.UserData.profilePicOverrideThumbnail) ? Account.UserData.currentAvatarThumbnailImageUrl : Account.UserData.profilePicOverrideThumbnail;
 
-            AccountControl.HorizontalAlignment = System.Windows.HorizontalAlignment.Left;
-
-
-            var row = AccountManager_Canvas.Children.Count / PerRow;
-            var column = AccountManager_Canvas.Children.Count % PerRow;
-
             AccountManager_Canvas.Children.Add(AccountControl);
-
-            float topPosition = initialTop + (Height + vSpacing) * row;
-            float leftPosition = initialLeft + (Width + hSpacing) * column;
-            Canvas.SetLeft(AccountControl, leftPosition);
-            Canvas.SetTop(AccountControl, topPosition);
-
-            var newCanvasHeight = topPosition + Height + initialTop;
-            if (AccountManager_Canvas.Height < newCanvasHeight)
-                AccountManager_Canvas.Height = newCanvasHeight;
-
+            AccountControl.HorizontalAlignment = System.Windows.HorizontalAlignment.Left;
             Task.Run(() =>
             {
                 if (Background == null)
@@ -1215,6 +1236,14 @@ public partial class MainWindow : Window
                     AccountControl.ProfileImage.Source = GetImageSource(Image2);
                 });
             });
+            if (format)
+                FormatAccounts();
         });
+    }
+
+    private void SearchBarKeyUp(object sender, System.Windows.Input.KeyEventArgs e)
+    {
+        SearchQuery = SearchBar.Text.ToString();
+        FormatAccounts();
     }
 }

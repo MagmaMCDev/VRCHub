@@ -8,7 +8,7 @@
     <Border x:Name="BorderColor" BorderBrush="Red" BorderThickness="1" CornerRadius="12,12,12,12" >
         <Border CornerRadius="12" BorderBrush="Black" BorderThickness="2" >
             <Grid VerticalAlignment="Center" Height="150" Margin="0,0,0,0">
-                <Image x:Name="ProfileImage" ClipToBounds="True" OpacityMask="#7F000000" Stretch="Fill" Margin="1,4,-1,-4">
+                <Image x:Name="ProfileImage" ClipToBounds="True" OpacityMask="#CC000000" Stretch="Fill" Margin="1,4,-1,-4">
                     <Image.Effect>
                         <BlurEffect Radius="4"/>
                     </Image.Effect>
