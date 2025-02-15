@@ -42,7 +42,7 @@ public partial class SplashScreen : Window, IDisposable
                 return _instance;
 
             _instance = new SplashScreen();
-            if (File.Exists(Config.VRC_Path))
+            if (File.Exists(Config.VRChatInstallPath))
                 _instance.Splash.Source = GetImageSource(File.ReadAllBytes(SplashscreenEditor.SplashScreenPath));
             else
                 _instance.Splash.Source = GetImageSource(AppResources.SplashScreen);

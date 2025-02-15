@@ -11,7 +11,7 @@ namespace VRCHub;
 
 internal static class Common
 {
-    public static Version VERSION = new("1.0.0-A3");
+    public static Version VERSION = new("1.0.0-A4");
     public static string[] UList = ["1dc24ff4-0fd5-42f7-9507-750a29c79b8a", "689b66ec-2e70-44e5-afc3-1505ddecc440", "3d5513ca-4e58-452e-9173-db80c090e528", "e8d20dc5-8ed6-4e31-87c9-7e465aa42f6c"];
 
     private static readonly Random random = new();
@@ -55,7 +55,7 @@ internal static class Common
         }
         catch (Exception ex)
         {
-            Console.WriteLine($"Error downloading image: {ex.Message}");
+            SimpleLogger.Error($"Failed downloading image: {ex.Message}");
             return null;
         }
     }

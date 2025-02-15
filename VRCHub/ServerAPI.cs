@@ -1,6 +1,7 @@
 ﻿using System.Net.Http;
 using System.Net.Http.Json;
 using System.Security.Policy;
+using static VRCHub.SimpleLogger;
 
 namespace VRCHub;
 public class ServerAPI: IDisposable
@@ -9,7 +10,7 @@ public class ServerAPI: IDisposable
         "https://vrchub.site", 
         "https://api.vrchub.site/API/2/Status",
         "https://datapacks.vrchub.site/List.php",
-        "https://software.vrchub.site/Hash/"
+        "https://software.vrchub.site/LatestBuild"
         ];
     public static bool usingProxy = false;
 
@@ -23,10 +24,10 @@ public class ServerAPI: IDisposable
                 url = url.Replace("datapacks.vrchub.site", "magmamc.dev/ServerProxy/vrchub/datapacks");
             else if (url.Contains("software.vrchub.site"))
                 url = url.Replace("software.vrchub.site", "magmamc.dev/ServerProxy/vrchub/software");
-            Console.WriteLine("[HTTP PROXY] " + url);
+            Log("[HTTP PROXY] " + url);
         }
         else
-            Console.WriteLine("[HTTP] " + url);
+            Log("[HTTP] " + url);
 
         return url;
     }
@@ -72,7 +73,6 @@ public class ServerAPI: IDisposable
         bool Status = false;
         try
         {
-            Console.Write("[INIT] ");
             using var request = new HttpRequestMessage(HttpMethod.Head, GetServer(server));
             using var response = HTTP!.SendAsync(request).GetAwaiter().GetResult();
             if (response.IsSuccessStatusCode)

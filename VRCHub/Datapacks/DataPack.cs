@@ -102,7 +102,7 @@ public class DataPack
         }
         catch (Exception ex)
         {
-            Console.WriteLine(ex.ToString());
+            SimpleLogger.Error(ex.ToString());
         }
         return false;
     }

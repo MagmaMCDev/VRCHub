@@ -68,5 +68,5 @@ public static class SplashscreenEditor
             return false;
         }
     }
-    public static string SplashScreenPath => Path.Combine(new FileInfo(Config.VRC_Path).Directory!.FullName, $"EasyAntiCheat\\SplashScreen.png");
+    public static string SplashScreenPath => Path.Combine(new FileInfo(Config.VRChatInstallPath).Directory!.FullName, $"EasyAntiCheat\\SplashScreen.png");
 }

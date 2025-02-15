@@ -16,6 +16,7 @@ using Microsoft.Win32;
 using ZER0.VRChat.Patch;
 using Segment;
 using static VRCHub.Common;
+using static VRCHub.ButtonManager;
 
 using Application = System.Windows.Application;
 using MessageBox = System.Windows.MessageBox;
@@ -26,6 +27,10 @@ using SaveFileDialog = Microsoft.Win32.SaveFileDialog;
 using Control = System.Windows.Controls.Control;
 using System.Windows.Threading;
 using VRCHub.Resources;
+using VRCHub.Windows;
+using System.Runtime.InteropServices;
+using static System.Runtime.InteropServices.JavaScript.JSType;
+using OpenVRChatAPI;
 
 namespace VRCHub;
 /// <summary>
@@ -45,43 +50,6 @@ public partial class MainWindow : Window
     private const byte controlsPerRow = 3;
 
     private SplashScreen? _splashScreen;
-
-    #region Button Manager
-    private class ButtonData(string text, bool paused)
-    {
-        public string BaseText = text;
-        public bool Paused = paused;
-    }
-    private readonly Dictionary<Button, ButtonData> ButtonToggles = [];
-    private void PauseButton(Button button, string? SetText = null)
-    {
-        Application.Current.Dispatcher.Invoke(() =>
-        {
-            if (!ButtonToggles.ContainsKey(button))
-                ButtonToggles.Add(button, new((string)button.Content, true));
-            if (SetText != null)
-                button.Content = SetText;
-        });
-    }
-    private bool ButtonPaused(Button button)
-    {
-        if (ButtonToggles.TryGetValue(button, out var value))
-            return value.Paused;
-        else
-            return false;
-    }
-    private void ResumeButon(Button button)
-    {
-        Application.Current.Dispatcher.Invoke(() =>
-        {
-            if (!ButtonToggles.TryGetValue(button, out var value))
-                ButtonToggles.Add(button, new((string)button.Content, false));
-            else
-                value.Paused = false;
-            button.Content = ButtonToggles[button].BaseText;
-        });
-    }
-    #endregion
 
     private static void NotifyDownloadStarted()
     {
@@ -112,6 +80,7 @@ public partial class MainWindow : Window
         {
             KERNAL32.AllocConsole();
             Console.SetOut(new System.IO.StreamWriter(Console.OpenStandardOutput()) { AutoFlush = true });
+            Console.OutputEncoding = System.Text.Encoding.UTF8;
         }
 
     }
@@ -227,12 +196,12 @@ public partial class MainWindow : Window
             Config.LoadConfig();
 
             Settings_SendAnalytics.IsChecked = Config.SendAnalytics;
-            Settings_VRCPath.Text = Config.VRC_Path;
+            Settings_VRCPath.Text = Config.VRChatInstallPath;
             if (Config.SendAnalytics)
                 Analytics.Client.Track(Environment.MachineName, "Application Loaded");
             Config.SaveConfig();
 
-            bool exists = File.Exists(Config.VRC_Path);
+            bool exists = File.Exists(Config.VRChatInstallPath);
             VRCFXButton.IsEnabled = exists;
             VRCSpooferButton.IsEnabled = exists;
             DatapacksButton.IsEnabled = exists;
@@ -634,8 +603,8 @@ public partial class MainWindow : Window
 
     private void Settings_VRCPath_TextChanged(object sender, TextChangedEventArgs e)
     {
-        Config.VRC_Path = Settings_VRCPath.Text;
-        var exists = File.Exists(Config.VRC_Path);
+        Config.VRChatInstallPath = Settings_VRCPath.Text;
+        var exists = File.Exists(Config.VRChatInstallPath);
         VRCFXButton.IsEnabled = exists;
         VRCSpooferButton.IsEnabled = exists;
         DatapacksButton.IsEnabled = exists;
@@ -926,7 +895,7 @@ public partial class MainWindow : Window
                 });
                 return;
             }
-            VRCPatch.VRCPath = new FileInfo(Config.VRC_Path).Directory!.FullName;
+            VRCPatch.VRCPath = new FileInfo(Config.VRChatInstallPath).Directory!.FullName;
             var p1 = new List<Process>();
             p1.AddRange(Process.GetProcessesByName("VRChat"));
             p1.AddRange(Process.GetProcessesByName("start_protected_game"));
@@ -983,7 +952,7 @@ public partial class MainWindow : Window
             Thread.Sleep(100);
             try
             {
-                File.Delete(Path.Combine(new FileInfo(Config.VRC_Path).Directory!.FullName, "Version.dll"));
+                File.Delete(Path.Combine(new FileInfo(Config.VRChatInstallPath).Directory!.FullName, "Version.dll"));
                 MessageBox.Show("Uninstalled Melon Loader Sucessfully");
             }
             catch { }
@@ -1041,9 +1010,9 @@ public partial class MainWindow : Window
             }
             Thread.Sleep(100);
             byte[] melon = await new HttpClient().GetByteArrayAsync(GetServer("https://software.vrchub.site/VRCMelon/Release.zip"));
-            if (File.Exists(Path.Combine(new FileInfo(Config.VRC_Path).Directory!.FullName, "dxgi.dll")))
-                File.SetAttributes(Path.Combine(new FileInfo(Config.VRC_Path).Directory!.FullName, "dxgi.dll"), FileAttributes.Normal);
-            ZipFile.ExtractToDirectory(new MemoryStream(melon), new FileInfo(Config.VRC_Path).Directory!.FullName, true);
+            if (File.Exists(Path.Combine(new FileInfo(Config.VRChatInstallPath).Directory!.FullName, "dxgi.dll")))
+                File.SetAttributes(Path.Combine(new FileInfo(Config.VRChatInstallPath).Directory!.FullName, "dxgi.dll"), FileAttributes.Normal);
+            ZipFile.ExtractToDirectory(new MemoryStream(melon), new FileInfo(Config.VRChatInstallPath).Directory!.FullName, true);
             MessageBox.Show("Installed Melon Loader Sucessfully");
         });
         PatchThread.Start();
@@ -1051,13 +1020,6 @@ public partial class MainWindow : Window
 
     private void AccountManager_Click(object sender, RoutedEventArgs e)
     {
-        const ushort Height = 130;
-        const ushort Width = 300;
-        const ushort vSpacing = 20;
-        const ushort hSpacing = 20;
-        const ushort initialTop = 10;
-        const ushort initialLeft = 45;
-        const byte PerRow = 2;
 
         VRCFX_Panel.Visibility = Visibility.Collapsed;
         VRCSpoofer_Panel.Visibility = Visibility.Collapsed;
@@ -1070,40 +1032,6 @@ public partial class MainWindow : Window
         AccountManager_Panel.Visibility = Visibility.Visible;
 
 
-        var AccountControl = new AccountProfile();
-        AccountControl.Username.Content = "mawjob";
-        AccountControl.Email.Content = "mawjob@magma-mc.net";
-        AccountControl.Password.Content = "MagmaVR1";
-        AccountControl.StatusMessage.Content = "...";
-        AccountControl.AgeVerified.Source = GetImageSource(MaterialIcons._18Plus);
-        AccountControl.Tag.Source = GetImageSource(MaterialIcons.Developer);
-        AccountControl.StatusColor.SetCurrentValue(Ellipse.FillProperty, new SolidColorBrush((System.Windows.Media.Color)System.Windows.Media.ColorConverter.ConvertFromString("#2ED319")));
-
-        Task.Run(() =>
-        {
-            Task<byte[]> Image = api!.GetByteArrayAsync("https://api.vrchat.cloud/api/1/image/file_fef9c19b-4dc0-43ea-a441-63f8b33b98e6/1/512");
-            var Image2 = Image.GetAwaiter().GetResult();
-            Application.Current.Dispatcher.Invoke(() =>
-            {
-                AccountControl.ProfileImage.Source = GetImageSource(Image2);
-            });
-        });
-        AccountControl.HorizontalAlignment = System.Windows.HorizontalAlignment.Left;
-
-
-        var row = AccountManager_Canvas.Children.Count / PerRow;
-        var column = AccountManager_Canvas.Children.Count % PerRow;
-
-        AccountManager_Canvas.Children.Add(AccountControl);
-
-        float topPosition = initialTop + (Height + vSpacing) * row;
-        float leftPosition = initialLeft + (Width + hSpacing) * column;
-        Canvas.SetLeft(AccountControl, leftPosition);
-        Canvas.SetTop(AccountControl, topPosition);
-
-        var newCanvasHeight = topPosition + Height + initialTop;
-        if (AccountManager_Canvas.Height < newCanvasHeight)
-            AccountManager_Canvas.Height = newCanvasHeight;
 
     }
     private bool NotificationDebounce = true;
@@ -1158,13 +1086,105 @@ public partial class MainWindow : Window
         delay.Start();
     }
 
-    private void SetupAccountManager()
+    private async void SetupAccountManager()
     {
+        await Task.Run(async () =>
+        {
+            await Task.Delay(250);
+            while(!Config.Loaded)
+                await Task.Delay(25);
+            Config.SavedAccounts ??= [];
+            var Accounts = Config.SavedAccounts;
+            foreach (var account in Accounts)
+            {
+                await Task.Delay(250);
+                if (!account.Validate())
+                    Config.SavedAccounts.Remove(account);
+                else
+                    AddAccount(account);
+            }
+            if (Config.SavedAccounts.Any(value => value.main))
+                Application.Current.Dispatcher.Invoke(() => ManageAccountsButton.Content = "Add");
+
+        });
         
     }
 
-    private void ManageAccountsButton_Click(object sender, RoutedEventArgs e)
+    private async void ManageAccountsButton_Click(object sender, RoutedEventArgs e)
     {
+        bool main = ManageAccountsButton.Content.ToString() != "Add";
+        var LoginWindow = new VRChatLoginWindow();
+        var auth = await LoginWindow.LoginAsync();
+        if (auth == null)
+            return;
+        VRCAccount account = new()
+        {
+            id = LoginWindow.UserData.id,
+            email = LoginWindow.Email,
+            username = LoginWindow.Username,
+            password = LoginWindow.Password,
+            auth = auth.auth,
+            twoFactorAuth = auth.twoFactorAuth,
+            main = main,
+        };
+        SimpleLogger.Debug("Logged User Sucessfully");
 
+        if (Config.SavedAccounts == null)
+            Config.SavedAccounts = [];
+        Config.SavedAccounts.Add(account);
+        Config.SaveConfig();
+    }
+    private void AddAccount(VRCAccount Account)
+    {
+        VRChat.Auth = Account;
+        VRCUser UserData = VRCAPI.GetUser()!;
+        const ushort Height = 130;
+        const ushort Width = 300;
+        const ushort vSpacing = 20;
+        const ushort hSpacing = 20;
+        const ushort initialTop = 10;
+        const ushort initialLeft = 45;
+        const byte PerRow = 2;
+
+        Application.Current.Dispatcher.Invoke(() =>
+        {
+            var AccountControl = new AccountProfile();
+            AccountControl.Username.Content = UserData.displayName;
+            AccountControl.Email.Content = Account.email;
+            AccountControl.Password.Content = Account.password;
+            AccountControl.StatusMessage.Content = UserData.GetStatus();
+            AccountControl.AgeVerified.Source = UserData.Adult ? GetImageSource(MaterialIcons._18Plus) : null;
+            AccountControl.Tag.Source = GetImageSource(MaterialIcons.Developer);
+            AccountControl.StatusColor.SetCurrentValue(Ellipse.FillProperty, new SolidColorBrush((System.Windows.Media.Color)System.Windows.Media.ColorConverter.ConvertFromString("#2ED319")));
+
+            string? Background = string.IsNullOrEmpty(UserData.profilePicOverrideThumbnail) ? UserData.currentAvatarThumbnailImageUrl : UserData.profilePicOverrideThumbnail;
+            Task.Run(() =>
+            {
+                if (Background == null)
+                    return;
+                Task<byte[]> Image = api!.GetByteArrayAsync(Background);
+                var Image2 = Image.GetAwaiter().GetResult();
+                Application.Current.Dispatcher.Invoke(() =>
+                {
+                    AccountControl.ProfileImage.Source = GetImageSource(Image2);
+                });
+            });
+            AccountControl.HorizontalAlignment = System.Windows.HorizontalAlignment.Left;
+
+
+            var row = AccountManager_Canvas.Children.Count / PerRow;
+            var column = AccountManager_Canvas.Children.Count % PerRow;
+
+            AccountManager_Canvas.Children.Add(AccountControl);
+
+            float topPosition = initialTop + (Height + vSpacing) * row;
+            float leftPosition = initialLeft + (Width + hSpacing) * column;
+            Canvas.SetLeft(AccountControl, leftPosition);
+            Canvas.SetTop(AccountControl, topPosition);
+
+            var newCanvasHeight = topPosition + Height + initialTop;
+            if (AccountManager_Canvas.Height < newCanvasHeight)
+                AccountManager_Canvas.Height = newCanvasHeight;
+        });
     }
 }

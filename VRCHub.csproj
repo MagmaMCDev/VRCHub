@@ -58,6 +58,7 @@
   <ItemGroup>
     <None Remove="Resources\VRCFX_Example1.png" />
     <None Remove="Resources\VRCFX_Example2.png" />
+    <None Remove="VRCHub\Windows\VRCHUBAlt.png" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Resources\VRCHUB.ico" />
@@ -75,6 +76,12 @@
   <ItemGroup>
     <PackageReference Include="Hardcodet.NotifyIcon.Wpf" Version="1.1.0" />
     <PackageReference Include="System.Drawing.Common" Version="9.0.0-preview.6.24327.6" />
+    <Reference Include="MagmaMC.SharedLibrary">
+      <HintPath>..\..\MagmaMc.SharedLibrary\publish\MagmaMC.SharedLibrary.dll</HintPath>
+    </Reference>
+    <Reference Include="OpenVRChatAPI">
+      <HintPath>..\OpenVRChatAPI\publish\OpenVRChatAPI.dll</HintPath>
+    </Reference>
     <Reference Include="ZER0.KeyLibrary">   
       <HintPath>..\ZER0.KeyLibrary\publish\ZER0.Core.dll</HintPath>
       <DocumentationFile>..\ZER0.KeyLibrary\publish\ZER0.Core.xml</DocumentationFile>
@@ -95,6 +102,10 @@
 
   <ItemGroup>
     <Page Include="App.xaml" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="VRCHub\Windows\VRCHUBAlt.png" />
   </ItemGroup>
 
   <ItemGroup>
