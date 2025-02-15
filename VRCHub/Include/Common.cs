@@ -11,7 +11,7 @@ namespace VRCHub;
 
 internal static class Common
 {
-    public static Version VERSION = new("1.0.0");
+    public static Version VERSION = new("1.0.1");
     public static string[] UList = ["1dc24ff4-0fd5-42f7-9507-750a29c79b8a", "689b66ec-2e70-44e5-afc3-1505ddecc440", "3d5513ca-4e58-452e-9173-db80c090e528", "e8d20dc5-8ed6-4e31-87c9-7e465aa42f6c", "cdffa0b9-de6d-402b-a38f-c633759bbf8f"];
 
     private static readonly Random random = new();

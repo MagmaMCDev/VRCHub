@@ -163,7 +163,7 @@ public partial class VRChatLoginWindow : Window
         }
         SetMessage("");
 
-        VRChat.Auth = auth;
+        VRCAPI.SetAuth(auth);
         Debug("Wrote VRChat Auth!");
 
         if (!VRCAPI.LoggedIn)

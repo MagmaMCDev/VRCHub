@@ -8,6 +8,7 @@ using System.Net;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Net.Http.Json;
+using System.Runtime.Intrinsics.Arm;
 using System.Text;
 using System.Text.Json;
 using System.Text.Json.Serialization;
@@ -50,6 +51,9 @@ public class VRCAuth
 }
 public class VRCAccount: OpenVRChatAPI.Models.VRCAuth
 {
+    [JsonIgnore]
+    public VRCUser? UserData;
+
     public string id
     {
         get; set;
@@ -72,21 +76,55 @@ public class VRCAccount: OpenVRChatAPI.Models.VRCAuth
     } = false;
     public void Login()
     {
-        VRChat.Auth = this;
+        VRCAPI.SetAuth(this);
+    }
+    public bool CheckAuth()
+    {
+        if (
+            string.IsNullOrWhiteSpace(auth) ||
+            string.IsNullOrWhiteSpace(twoFactorAuth))
+            return false;
+        using HttpClient Client = GetHttpClient();
+        using HttpResponseMessage content = Client.GetAsync("auth/user").GetAwaiter().GetResult();
+        return content.IsSuccessStatusCode;
+    }
+    public VRCUser? GetUser()
+    {
+        using HttpClient API = GetHttpClient();
+        try
+        {
+            return API.GetFromJsonAsync<VRCUser>("auth/user").GetResult();
+        }
+        catch { }
+        return null;
+
+    }
+    public HttpClient GetHttpClient()
+    {
+        HttpClientHandler ClientHandler = new HttpClientHandler();
+        ClientHandler.AllowAutoRedirect = true;
+        ClientHandler.CookieContainer = new CookieContainer();
+        ClientHandler.CookieContainer.Add(VRCAPI.APIWebsite, new Cookie("auth", auth));
+        ClientHandler.CookieContainer.Add(VRCAPI.APIWebsite, new Cookie("twoFactorAuth", twoFactorAuth));
+        HttpClient Client = new(ClientHandler);
+        Client.BaseAddress = VRCAPI.APIBase;
+        Client.DefaultRequestHeaders.Add("User-Agent", VRChat.User_Agent);
+        return Client;
     }
     public bool Validate()
     {
         SimpleLogger.Debug("Validating User: " + username);
-        var backup = VRChat.Auth;
-        VRChat.Auth = this;
-        bool authed = VRChat.CheckAuth();
-        if (backup != null)
-            VRChat.Auth = backup;
-        if (authed)
-            SimpleLogger.Debug("Validated User: " + username);
-        else
+        try
+        {
+            UserData = GetUser();
+        } catch { }
+        if (UserData == null)
+        {
             SimpleLogger.Warn("Unvalidated User: " + username);
-        return authed;
+            return false;
+        }
+        SimpleLogger.Debug("Validated User: " + username);
+        return true;
     }
 }
 public enum TrustRank
@@ -423,5 +461,14 @@ public static class VRCAPI
         catch { }
 
         return image;
+    }
+
+    public static void SetAuth(OpenVRChatAPI.Models.VRCAuth auth)
+    {
+        VRChat.Auth = auth;
+        VRChat.RenewHTTPClient();
+        foreach(var item in _httpClientBag)
+            item.Dispose();
+        _httpClientBag.Clear();
     }
 }

@@ -31,6 +31,7 @@ using VRCHub.Windows;
 using System.Runtime.InteropServices;
 using static System.Runtime.InteropServices.JavaScript.JSType;
 using OpenVRChatAPI;
+using System.Security.Principal;
 
 namespace VRCHub;
 /// <summary>
@@ -72,7 +73,6 @@ public partial class MainWindow : Window
         InitializeSplashScreen();
         InitializeMainWindowAsync();
         SetupEvents();
-        SetupAccountManager();
     }
     private static void SetupConsole(string[] args)
     {
@@ -1030,8 +1030,7 @@ public partial class MainWindow : Window
         Patch_Panel.Visibility = Visibility.Collapsed;
         MelonLoader_Panel.Visibility = Visibility.Collapsed;
         AccountManager_Panel.Visibility = Visibility.Visible;
-
-
+        SetupAccountManager();
 
     }
     private bool NotificationDebounce = true;
@@ -1086,23 +1085,25 @@ public partial class MainWindow : Window
         delay.Start();
     }
 
-    private async void SetupAccountManager()
+    bool setupAccounts = false;
+    private async void SetupAccountManager(bool force = false)
     {
+        if (setupAccounts && !force)
+            return;
         await Task.Run(async () =>
         {
-            await Task.Delay(250);
-            while(!Config.Loaded)
+            setupAccounts = true;
+            while (!Config.Loaded)
                 await Task.Delay(25);
             Config.SavedAccounts ??= [];
             var Accounts = Config.SavedAccounts;
-            foreach (var account in Accounts)
+            Parallel.ForEach(Accounts, account =>
             {
-                await Task.Delay(250);
                 if (!account.Validate())
                     Config.SavedAccounts.Remove(account);
-                else
-                    AddAccount(account);
-            }
+            }); // how to wait before continueing
+            foreach (var acc in Config.SavedAccounts)
+                AddAccount(acc);
             if (Config.SavedAccounts.Any(value => value.main))
                 Application.Current.Dispatcher.Invoke(() => ManageAccountsButton.Content = "Add");
 
@@ -1129,9 +1130,9 @@ public partial class MainWindow : Window
         };
         SimpleLogger.Debug("Logged User Sucessfully");
 
-        if (Config.SavedAccounts == null)
-            Config.SavedAccounts = [];
+        Config.SavedAccounts ??= [];
         Config.SavedAccounts.Add(account);
+        AddAccount(account);
         Config.SaveConfig();
     }
     private Bitmap GetRank(ref VRCUser user)
@@ -1159,8 +1160,12 @@ public partial class MainWindow : Window
     }
     private void AddAccount(VRCAccount Account)
     {
-        VRChat.Auth = Account;
-        VRCUser UserData = VRCAPI.GetUser()!;
+        VRCAPI.SetAuth(Account);
+        if (Account.UserData == null)
+        {
+            Account.UserData = VRCAPI.GetUser();
+            SimpleLogger.Warn("User Data Was Not Initialized!");
+        }
         const ushort Height = 130;
         const ushort Width = 300;
         const ushort vSpacing = 20;
@@ -1172,26 +1177,16 @@ public partial class MainWindow : Window
         Application.Current.Dispatcher.Invoke(() =>
         {
             var AccountControl = new AccountProfile();
-            AccountControl.Username.Content = UserData.displayName;
+            AccountControl.Username.Content = Account.UserData.displayName;
             AccountControl.Email.Content = Account.email;
             AccountControl.Password.Content = Account.password;
-            AccountControl.StatusMessage.Content = UserData.GetStatus();
-            AccountControl.AgeVerified.Source = UserData.Adult ? GetImageSource(MaterialIcons._18Plus) : null;
-            AccountControl.Tag.Source = GetImageSource(GetRank(ref UserData));
+            AccountControl.StatusMessage.Content = Account.UserData.GetStatus();
+            AccountControl.AgeVerified.Source = Account.UserData.Adult ? GetImageSource(MaterialIcons._18Plus) : null;
+            AccountControl.Tag.Source = GetImageSource(GetRank(ref Account.UserData));
             AccountControl.StatusColor.SetCurrentValue(Ellipse.FillProperty, new SolidColorBrush((System.Windows.Media.Color)System.Windows.Media.ColorConverter.ConvertFromString("#2ED319")));
 
-            string? Background = string.IsNullOrEmpty(UserData.profilePicOverrideThumbnail) ? UserData.currentAvatarThumbnailImageUrl : UserData.profilePicOverrideThumbnail;
-            Task.Run(() =>
-            {
-                if (Background == null)
-                    return;
-                Task<byte[]> Image = api!.GetByteArrayAsync(Background);
-                var Image2 = Image.GetAwaiter().GetResult();
-                Application.Current.Dispatcher.Invoke(() =>
-                {
-                    AccountControl.ProfileImage.Source = GetImageSource(Image2);
-                });
-            });
+            string? Background = string.IsNullOrEmpty(Account.UserData.profilePicOverrideThumbnail) ? Account.UserData.currentAvatarThumbnailImageUrl : Account.UserData.profilePicOverrideThumbnail;
+
             AccountControl.HorizontalAlignment = System.Windows.HorizontalAlignment.Left;
 
 
@@ -1208,6 +1203,18 @@ public partial class MainWindow : Window
             var newCanvasHeight = topPosition + Height + initialTop;
             if (AccountManager_Canvas.Height < newCanvasHeight)
                 AccountManager_Canvas.Height = newCanvasHeight;
+
+            Task.Run(() =>
+            {
+                if (Background == null)
+                    return;
+                Task<byte[]> Image = api!.GetByteArrayAsync(Background);
+                var Image2 = Image.GetAwaiter().GetResult();
+                Application.Current.Dispatcher.Invoke(() =>
+                {
+                    AccountControl.ProfileImage.Source = GetImageSource(Image2);
+                });
+            });
         });
     }
 }
