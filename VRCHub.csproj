@@ -32,21 +32,25 @@
   </Target>
   <ItemGroup>
     <Compile Remove="Publish-Datapacks\**" />
+    <Compile Remove="VRCDataMod\**" />
     <Compile Remove="VRCHubNative\**" />
     <Compile Remove="Website\**" />
     <Compile Remove="x64\**" />
     <Compile Remove="_backup\**" />
     <EmbeddedResource Remove="Publish-Datapacks\**" />
+    <EmbeddedResource Remove="VRCDataMod\**" />
     <EmbeddedResource Remove="VRCHubNative\**" />
     <EmbeddedResource Remove="Website\**" />
     <EmbeddedResource Remove="x64\**" />
     <EmbeddedResource Remove="_backup\**" />
     <None Remove="Publish-Datapacks\**" />
+    <None Remove="VRCDataMod\**" />
     <None Remove="VRCHubNative\**" />
     <None Remove="Website\**" />
     <None Remove="x64\**" />
     <None Remove="_backup\**" />
     <Page Remove="Publish-Datapacks\**" />
+    <Page Remove="VRCDataMod\**" />
     <Page Remove="VRCHubNative\**" />
     <Page Remove="Website\**" />
     <Page Remove="x64\**" />
@@ -56,6 +60,9 @@
     <ApplicationDefinition Remove="App.xaml" />
   </ItemGroup>
   <ItemGroup>
+    <None Remove=".gitattributes" />
+    <None Remove=".gitignore" />
+    <None Remove="FodyWeavers.xml" />
     <None Remove="Resources\VRCFX_Example1.png" />
     <None Remove="Resources\VRCFX_Example2.png" />
     <None Remove="VRCHub\Windows\VRCHUBAlt.png" />

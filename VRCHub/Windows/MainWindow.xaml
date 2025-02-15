@@ -116,12 +116,12 @@ OpacityMask="Black" RenderTransformOrigin="0.5,0.5" Grid.ColumnSpan="2">
                         </Button.BorderBrush>
                     </Button>
                 </Grid>
-                <Grid x:Name="VRCSpoofer_Panel" HorizontalAlignment="Center" Height="436" VerticalAlignment="Center" Width="745" Visibility="Hidden" Background="#202020">
+                <Grid x:Name="VRCSpoofer_Panel" Visibility="Collapsed" HorizontalAlignment="Center" Height="436" VerticalAlignment="Center" Width="745" Background="#202020">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="100*"/>
                         <ColumnDefinition Width="49*"/>
                     </Grid.ColumnDefinitions>
-                    <Image x:Name="VRCSpoofer_Promotion1" HorizontalAlignment="Left" Height="304" Margin="32,60,0,0" VerticalAlignment="Top" Width="566" Source="/Resources/VRCSpoofer_Example1.png" RenderTransformOrigin="0.5,0.5" Grid.ColumnSpan="2">
+                    <Image x:Name="VRCSpoofer_Promotion1" HorizontalAlignment="Left" Height="304" Margin="32,60,0,0" VerticalAlignment="Top" Width="566" Source="/Resources/Spoofer_Example1.png" RenderTransformOrigin="0.5,0.5" Grid.ColumnSpan="2">
                         <Image.RenderTransform>
                             <TransformGroup>
                                 <ScaleTransform/>
@@ -158,7 +158,7 @@ OpacityMask="Black" RenderTransformOrigin="0.5,0.5" Grid.ColumnSpan="2">
                 <ScrollViewer x:Name="Datapacks_Panel" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled" Visibility="Hidden" CanContentScroll="True" HorizontalAlignment="Left" Height="453" Canvas.Left="1" Canvas.Top="1" VerticalAlignment="Center" Width="745">
                     <Canvas x:Name="Datapacks_Canvas" Height="452" Width="750" Background="#202020"/>
                 </ScrollViewer>
-                <Grid x:Name="AccountManager_Panel" >
+                <Grid x:Name="AccountManager_Panel" Visibility="Collapsed" >
                     <Rectangle Canvas.Left="10" Stroke="Black" Canvas.Top="-38" Margin="1,0,-23,408" RenderTransformOrigin="0.5,0.5">
                         <Rectangle.RenderTransform>
                             <TransformGroup>
@@ -202,24 +202,24 @@ OpacityMask="Black" RenderTransformOrigin="0.5,0.5" Grid.ColumnSpan="2">
                         </Button.BorderBrush>
                     </Button>
                 </Grid>
-                <Grid x:Name="DatapackCreator_Panel" Height="452" VerticalAlignment="Top" Width="761" Visibility="Hidden" Background="#202020">
+                <Grid x:Name="DatapackCreator_Panel" Height="452" VerticalAlignment="Top" Width="761" Visibility="Collapsed" Background="#202020">
                     <Label Content="VRChat Datapack Creator" HorizontalAlignment="Left" Height="39" VerticalAlignment="Top" Width="251" FontSize="18" Foreground="White"/>
                     <Label Content="Input File:" HorizontalAlignment="Left" Height="25" Margin="12,44,0,0" VerticalAlignment="Top" Width="82" Foreground="White"/>
-                    <TextBox x:Name="Datapack_InputPath" HorizontalAlignment="Left" Height="26" Margin="109,44,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="580" FontSize="14" BorderBrush="Red" MouseDoubleClick="Datapack_InputPath_DoubleClicked"/>
+                    <TextBox x:Name="Datapack_InputPath" HorizontalAlignment="Left" Height="26" Margin="109,44,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="605" FontSize="14" BorderBrush="Red" MouseDoubleClick="Datapack_InputPath_DoubleClicked" Background="Black" Foreground="#FFF3F2F2"/>
                     <Label Content="Output Pack:" HorizontalAlignment="Left" Height="25" Margin="12,74,0,0" VerticalAlignment="Top" Width="82" Foreground="White"/>
-                    <TextBox x:Name="Datapack_OutputFile" HorizontalAlignment="Left" Height="26" Margin="109,74,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="580" FontSize="14" BorderBrush="Red" MouseDoubleClick="Datapack_OutputPath_DoubleClicked"/>
+                    <TextBox x:Name="Datapack_OutputFile" HorizontalAlignment="Left" Height="26" Margin="109,74,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="605" FontSize="14" BorderBrush="Red" MouseDoubleClick="Datapack_OutputPath_DoubleClicked" Background="Black" Foreground="#FFF3F2F2"/>
                     <Label Content="World ID:" HorizontalAlignment="Left" Height="25" Margin="12,104,0,0" VerticalAlignment="Top" Width="82" Foreground="White"/>
-                    <TextBox x:Name="Datapack_WorldID" HorizontalAlignment="Left" Height="26" Margin="109,105,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="580" FontSize="14" BorderBrush="Red"/>
+                    <TextBox x:Name="Datapack_WorldID" HorizontalAlignment="Left" Height="26" Margin="109,105,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="605" FontSize="14" BorderBrush="Red" Background="Black" Foreground="#FFF3F2F2"/>
                     <Label Content="World Name:" HorizontalAlignment="Left" Height="25" Margin="12,135,0,0" VerticalAlignment="Top" Width="82" Foreground="White"/>
-                    <TextBox x:Name="Datapack_WorldName" HorizontalAlignment="Left" Height="26" Margin="109,136,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="580" FontSize="14" BorderBrush="Red"/>
+                    <TextBox x:Name="Datapack_WorldName" HorizontalAlignment="Left" Height="26" Margin="109,136,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="605" FontSize="14" BorderBrush="Red" Background="Black" Foreground="#FFF3F2F2"/>
                     <Label Content="World Hash:" HorizontalAlignment="Left" Height="25" Margin="12,166,0,0" VerticalAlignment="Top" Width="82" Foreground="White"/>
-                    <TextBox x:Name="Datapack_WorldHash" HorizontalAlignment="Left" Height="26" Margin="109,167,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" FontSize="14" BorderBrush="Red"/>
+                    <TextBox x:Name="Datapack_WorldHash" HorizontalAlignment="Left" Height="26" Margin="109,167,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="152" FontSize="14" BorderBrush="Red" Background="Black" Foreground="#FFF3F2F2"/>
                     <Label Content="Author:" HorizontalAlignment="Left" Height="25" Margin="12,198,0,0" VerticalAlignment="Top" Width="82" Foreground="White"/>
-                    <TextBox x:Name="Datapack_Author" HorizontalAlignment="Left" Height="26" Margin="109,199,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" FontSize="14" BorderBrush="Red" />
+                    <TextBox x:Name="Datapack_Author" HorizontalAlignment="Left" Height="26" Margin="109,199,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="152" FontSize="14" BorderBrush="Red" Background="Black" Foreground="#FFF3F2F2" />
                     <Label Content="Version" HorizontalAlignment="Left" Height="26" Margin="12,230,0,0" VerticalAlignment="Top" Width="82" Foreground="White"/>
-                    <TextBox x:Name="Datapack_Version_Major" HorizontalAlignment="Left" Height="26" Margin="109,230,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="20" FontSize="14" BorderBrush="Red" Text="1"/>
-                    <TextBox x:Name="Datapack_Version_Min" HorizontalAlignment="Left" Height="26" Margin="145,230,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="20" FontSize="14" BorderBrush="Red" Text="0"/>
-                    <TextBox x:Name="Datapack_Version_Patch" HorizontalAlignment="Left" Height="26" Margin="181,230,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="20" FontSize="14" BorderBrush="Red" Text="0"/>
+                    <TextBox x:Name="Datapack_Version_Major" HorizontalAlignment="Left" Height="26" Margin="109,230,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="20" FontSize="14" BorderBrush="Red" Text="1" Background="Black" Foreground="#FFF3F2F2"/>
+                    <TextBox x:Name="Datapack_Version_Min" HorizontalAlignment="Left" Height="26" Margin="145,230,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="20" FontSize="14" BorderBrush="Red" Text="0" Background="Black" Foreground="#FFF3F2F2"/>
+                    <TextBox x:Name="Datapack_Version_Patch" HorizontalAlignment="Left" Height="26" Margin="181,230,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="20" FontSize="14" BorderBrush="Red" Text="0" Background="Black" Foreground="#FFF3F2F2"/>
                     <Label Content="." HorizontalAlignment="Left" Height="34" Margin="129,228,0,0" VerticalAlignment="Top" Width="16" Foreground="White" FontSize="18"/>
                     <Label Content="." HorizontalAlignment="Left" Height="34" Margin="165,229,0,0" VerticalAlignment="Top" Width="16" Foreground="White" FontSize="18"/>
                     <Button x:Name="CreateDatapack_Button" Content="Create Pack" HorizontalAlignment="Center" Height="30" Margin="0,412,0,0" VerticalAlignment="Top" Width="126" Background="#FF272727" Foreground="White" Click="CreateDatapackButton_Clicked" FontSize="14">
@@ -231,11 +231,11 @@ OpacityMask="Black" RenderTransformOrigin="0.5,0.5" Grid.ColumnSpan="2">
                         </Button.BorderBrush>
                     </Button>
                 </Grid>
-                <Grid x:Name="Settings_Panel" Height="452" VerticalAlignment="Top" Width="761" Visibility="Hidden" Background="#202020">
-                    <TextBox x:Name="Settings_VRCPath" HorizontalAlignment="Left" Height="26" Margin="144,25,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="580" FontSize="14" BorderBrush="Red" TextChanged="Settings_VRCPath_TextChanged" MouseDoubleClick="Settings_VRCPath_DoubleClicked"/>
-                    <Label Content="VRChat Location:" HorizontalAlignment="Left" Height="25" Margin="25,26,0,0" VerticalAlignment="Top" Width="114" Foreground="White"/>
-                    <Label Content="Send analytics:" HorizontalAlignment="Left" Height="25" Margin="25,56,0,0" VerticalAlignment="Top" Width="114" Foreground="White"/>
-                    <CheckBox x:Name="Settings_SendAnalytics" Content="" HorizontalAlignment="Left" Height="25" Margin="144,62,0,0" VerticalAlignment="Top" Width="30" FontSize="25" Background="Red" IsChecked="True" BorderBrush="Red" Foreground="White" Click="Settings_SendAnalytics_Clicked"/>
+                <Grid x:Name="Settings_Panel" Height="452" VerticalAlignment="Top" Width="761" Visibility="Visible" Background="#202020">
+                    <TextBox x:Name="Settings_VRCPath" HorizontalAlignment="Left" Height="26" Margin="144,25,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="580" FontSize="14" BorderBrush="Red" TextChanged="Settings_VRCPath_TextChanged" MouseDoubleClick="Settings_VRCPath_DoubleClicked" Background="Black" Foreground="White"/>
+                    <Label Content="VRChat Location:" HorizontalAlignment="Left" Height="25" Margin="27,26,0,0" VerticalAlignment="Top" Width="114" Foreground="White"/>
+                    <Label Content="Send analytics:" HorizontalAlignment="Left" Height="25" Margin="27,56,0,0" VerticalAlignment="Top" Width="114" Foreground="White"/>
+                    <CheckBox x:Name="Settings_SendAnalytics" Content="" HorizontalAlignment="Left" Height="34" Margin="144,53,0,0" VerticalAlignment="Top" Width="27" FontSize="25" Background="Red" IsChecked="True" BorderBrush="Red" Foreground="White" Click="Settings_SendAnalytics_Clicked"/>
                     <Label Content="Developed And Owned By ZER0" Height="25" Width="162" FontSize="10" VerticalAlignment="Bottom" RenderTransformOrigin="0,0.5" Margin="0,0,10,0" HorizontalAlignment="Right">
                         <Label.Foreground>
                             <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
@@ -244,7 +244,7 @@ OpacityMask="Black" RenderTransformOrigin="0.5,0.5" Grid.ColumnSpan="2">
                             </LinearGradientBrush>
                         </Label.Foreground>
                     </Label>
-                    <Button x:Name="Settings_BackupVRChat" Content="Backup VRChat Config" HorizontalAlignment="Left" Height="35" Margin="34,87,0,0" VerticalAlignment="Top" Width="165" Background="Black" Foreground="White" Click="BackupVRChatConfig">
+                    <Button x:Name="Settings_BackupVRChat" Content="Backup VRChat Config" HorizontalAlignment="Left" Height="35" Margin="32,87,0,0" VerticalAlignment="Top" Width="165" Background="Black" Foreground="White" Click="BackupVRChatConfig">
                         <Button.BorderBrush>
                             <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
                                 <GradientStop Color="#FF3A0000"/>
@@ -252,7 +252,7 @@ OpacityMask="Black" RenderTransformOrigin="0.5,0.5" Grid.ColumnSpan="2">
                             </LinearGradientBrush>
                         </Button.BorderBrush>
                     </Button>
-                    <Button x:Name="Settings_LoadVRChatConfig" Content="Load VRChat Config" HorizontalAlignment="Left" Height="35" Margin="34,127,0,0" VerticalAlignment="Top" Width="165" Background="Black" Foreground="White" Click="LoadVRChatConfig">
+                    <Button x:Name="Settings_LoadVRChatConfig" Content="Load VRChat Config" HorizontalAlignment="Left" Height="35" Margin="32,127,0,0" VerticalAlignment="Top" Width="165" Background="Black" Foreground="White" Click="LoadVRChatConfig">
                         <Button.BorderBrush>
                             <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
                                 <GradientStop Color="#FF3A0000"/>
@@ -260,7 +260,7 @@ OpacityMask="Black" RenderTransformOrigin="0.5,0.5" Grid.ColumnSpan="2">
                             </LinearGradientBrush>
                         </Button.BorderBrush>
                     </Button>
-                    <Button x:Name="Settings_ClearVRChatConfigBackup" Content="Clear VRChat Config Backup" HorizontalAlignment="Left" Height="35" Margin="34,167,0,0" VerticalAlignment="Top" Width="165" Background="Black" Click="ClearVRChatConfigBackup">
+                    <Button x:Name="Settings_ClearVRChatConfigBackup" Content="Clear VRChat Config Backup" HorizontalAlignment="Left" Height="35" Margin="32,167,0,0" VerticalAlignment="Top" Width="165" Background="Black" Click="ClearVRChatConfigBackup">
                         <Button.BorderBrush>
                             <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
                                 <GradientStop Color="#FF3A0000"/>
@@ -312,7 +312,7 @@ OpacityMask="Black" RenderTransformOrigin="0.5,0.5" Grid.ColumnSpan="2">
                     </ProgressBar>
                 </Grid>
                 <Grid x:Name="MelonLoader_Panel" Height="452" Width="761" Visibility="Collapsed" Background="#202020" HorizontalAlignment="Center" VerticalAlignment="Center">
-                    <Label Content="MelonLoader Anyone? " HorizontalAlignment="Left" Height="39" VerticalAlignment="Top" Width="354" FontSize="18" Foreground="White"/>
+                    <Label Content="MelonLoader For VRChat " HorizontalAlignment="Left" Height="39" VerticalAlignment="Top" Width="354" FontSize="18" Foreground="White"/>
                     <Button x:Name="MeloadLoaderInstall_Button" Content="Install" HorizontalAlignment="Left" Height="30" Margin="10,82,0,0" VerticalAlignment="Top" Width="144" Background="#FF272727" Foreground="White" Click="MelonLoader_Button_Click" FontSize="14">
                         <Button.BorderBrush>
                             <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">

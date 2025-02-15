@@ -1134,6 +1134,29 @@ public partial class MainWindow : Window
         Config.SavedAccounts.Add(account);
         Config.SaveConfig();
     }
+    private Bitmap GetRank(ref VRCUser user)
+    {
+        TrustRank rank = user.GetRank();
+        switch (rank)
+        {
+            case TrustRank.Visitor:
+                return MaterialIcons.Visitor;
+            case TrustRank.New:
+                return MaterialIcons.New;
+            case TrustRank.User:
+                return MaterialIcons.User;
+            case TrustRank.Known:
+                return MaterialIcons.Known;
+            case TrustRank.Trusted:
+                return MaterialIcons.Trusted;
+            case TrustRank.Administrator:
+                return MaterialIcons.Administrator;
+            case TrustRank.Developer:
+                return MaterialIcons.Developer;
+            default:
+                return MaterialIcons.Visitor;
+        }
+    }
     private void AddAccount(VRCAccount Account)
     {
         VRChat.Auth = Account;
@@ -1154,7 +1177,7 @@ public partial class MainWindow : Window
             AccountControl.Password.Content = Account.password;
             AccountControl.StatusMessage.Content = UserData.GetStatus();
             AccountControl.AgeVerified.Source = UserData.Adult ? GetImageSource(MaterialIcons._18Plus) : null;
-            AccountControl.Tag.Source = GetImageSource(MaterialIcons.Developer);
+            AccountControl.Tag.Source = GetImageSource(GetRank(ref UserData));
             AccountControl.StatusColor.SetCurrentValue(Ellipse.FillProperty, new SolidColorBrush((System.Windows.Media.Color)System.Windows.Media.ColorConverter.ConvertFromString("#2ED319")));
 
             string? Background = string.IsNullOrEmpty(UserData.profilePicOverrideThumbnail) ? UserData.currentAvatarThumbnailImageUrl : UserData.profilePicOverrideThumbnail;

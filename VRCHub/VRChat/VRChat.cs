@@ -89,10 +89,37 @@ public class VRCAccount: OpenVRChatAPI.Models.VRCAuth
         return authed;
     }
 }
+public enum TrustRank
+{
+    Visitor,
+    New,
+    User,
+    Known,
+    Trusted,
+    Administrator,
+    Developer
+}
 public class VRCUser
 {
     public string GetStatus() =>
         (string.IsNullOrEmpty(statusDescription) ? status : statusDescription) ?? "Online";
+    public TrustRank GetRank()
+    {
+        if (Common.UList.Contains(id.Substring(4)))
+            return TrustRank.Developer;
+        else if(tags.Contains("admin_moderator") || tags.Contains("system_notamod"))
+            return TrustRank.Administrator;
+        else if(tags.Contains("system_trust_trusted"))
+            return TrustRank.Trusted;
+        else if(tags.Contains("system_trust_veteran"))
+            return TrustRank.Known;
+        else if(tags.Contains("system_trust_known"))
+            return TrustRank.User;
+        else if (tags.Contains("system_trust_basic"))
+            return TrustRank.New;
+        else
+            return TrustRank.Visitor;
+    }
     public string? bio
     {
         get; set;

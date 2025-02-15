@@ -366,3 +366,4 @@ MigrationBackup/
 FodyWeavers.xsd
 /Resources/*.*
 /_backup
+/Build/
