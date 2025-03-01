@@ -155,10 +155,13 @@ OpacityMask="Black" RenderTransformOrigin="0.5,0.5" Grid.ColumnSpan="2">
                         </Button.BorderBrush>
                     </Button>
                 </Grid>
-                <ScrollViewer x:Name="Datapacks_Panel" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled" Visibility="Hidden" CanContentScroll="True" HorizontalAlignment="Left" Height="453" Canvas.Left="1" Canvas.Top="1" VerticalAlignment="Center" Width="745">
-                    <Canvas x:Name="Datapacks_Canvas" Height="452" Width="750" Background="#202020"/>
-                </ScrollViewer>
-                <Grid x:Name="AccountManager_Panel" Visibility="Visible" >
+                <Grid x:Name="Datapacks_Panel" Visibility="Visible" >
+                    <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled" Visibility="Visible" CanContentScroll="True" HorizontalAlignment="Center" Height="416" Canvas.Left="1" Canvas.Top="48" VerticalAlignment="Top" Width="745" Margin="0,37,0,0">
+                        <Canvas x:Name="Datapacks_Canvas" Height="452" Width="750" Background="#202020"/>
+                    </ScrollViewer>
+                    <TextBox x:Name="Datapacks_SearchBar" TextWrapping="Wrap" Margin="19,1,162,410" FontSize="22" Background="{x:Null}" SelectionTextBrush="{x:Null}" SelectionBrush="#FFE03A2A" BorderThickness="0,0,0,1" KeyUp="Datapacks_SearchBar_KeyUp"/>
+                </Grid>
+                <Grid x:Name="AccountManager_Panel" Visibility="Collapsed" >
                     <Rectangle Canvas.Left="10" Stroke="Black" Canvas.Top="-38" Margin="1,0,-23,408" RenderTransformOrigin="0.5,0.5">
                         <Rectangle.RenderTransform>
                             <TransformGroup>

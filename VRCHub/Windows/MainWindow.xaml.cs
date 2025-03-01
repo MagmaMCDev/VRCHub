@@ -227,20 +227,25 @@ public partial class MainWindow : Window
     }
     private async Task LoadDataPacksAsync()
     {
-        HttpClient Downloader = ServerAPI.CreateByteDownloader(true);
-        var packs = await api!.GetFromJsonAsync<string[]>(GetServer("https://datapacks.vrchub.site/List.php"))!;
+        HttpClient downloader = ServerAPI.CreateByteDownloader(true);
+        var packNames = await api!.GetFromJsonAsync<string[]>(GetServer("https://datapacks.vrchub.site/List.php"))!;
 
+        // Lists to store datapack controls and the tasks for loading package details.
+        var datapackControls = new List<DatapackControl>();
+        var loadTasks = new List<Task>();
 
-        Application.Current.Dispatcher.Invoke(() =>
+        // Create the controls on the UI thread.
+        await Application.Current.Dispatcher.InvokeAsync(() =>
         {
-            for (var i = 0; i < packs!.Length; i++)
+            for (var i = 0; i < packNames.Length; i++)
             {
-                var packName = packs[i];
+                var packName = packNames[i];
                 var datapackControl = new DatapackControl();
                 Datapacks_Canvas.Children.Add(datapackControl);
                 datapackControl.SetText(packName);
                 DataPack? pack = null;
 
+                // Define the Install event handler.
                 datapackControl.InstallClicked += async delegate
                 {
                     if (ButtonPaused(datapackControl.Datapack_Install))
@@ -250,22 +255,27 @@ public partial class MainWindow : Window
                     {
                         if (datapackControl.RequirePatch.Visibility == Visibility.Visible)
                         {
-                            MessageBoxResult messageBoxResult = MessageBox.Show("This Datapack Requires A Patch To Function Please Make Sure You have One installed", "VRChub", MessageBoxButton.OKCancel, MessageBoxImage.Warning);
+                            MessageBoxResult result = MessageBox.Show(
+                                "This Datapack Requires A Patch To Function Please Make Sure You have One installed",
+                                "VRChub", MessageBoxButton.OKCancel, MessageBoxImage.Warning);
                             ResumeButon(datapackControl.Datapack_Install);
-                            if (messageBoxResult == MessageBoxResult.Cancel)
+                            if (result == MessageBoxResult.Cancel)
                                 return;
                         }
                         datapackControl.Datapack_Install.Content = "Downloading Data..";
                         if (pack == null)
                         {
-                            var packageBytes = await Downloader.GetByteArrayAsync(GetServer($"https://datapacks.vrchub.site/{packName}/{packName}.dp"));
+                            var packageBytes = await downloader.GetByteArrayAsync(
+                                GetServer($"https://datapacks.vrchub.site/{packName}/{packName}.dp"));
                             pack = new DataPack(packageBytes);
                         }
                         datapackControl.Datapack_Install.Content = "Installing..";
                         await Task.Delay(250);
                         if (!pack.Install())
                         {
-                            MessageBox.Show("Failed To Install Datapack, Please Join The World To Load The World Hash Before Installing", "VRCHub", MessageBoxButton.OK, MessageBoxImage.Error);
+                            MessageBox.Show(
+                                "Failed To Install Datapack, Please Join The World To Load The World Hash Before Installing",
+                                "VRChub", MessageBoxButton.OK, MessageBoxImage.Error);
                             await Task.Delay(500);
                         }
                     }
@@ -275,6 +285,7 @@ public partial class MainWindow : Window
                     }
                 };
 
+                // Define the Uninstall event handler.
                 datapackControl.UninstallClicked += async delegate
                 {
                     if (ButtonPaused(datapackControl.Datapack_Uninstall))
@@ -285,9 +296,11 @@ public partial class MainWindow : Window
                         if (pack != null)
                         {
                             datapackControl.Datapack_Uninstall.Content = "Uninstalling..";
+                            // The following check is redundant (pack is non-null), but kept to mirror original logic.
                             if (pack == null)
                             {
-                                var packageBytes = await Downloader.GetByteArrayAsync(GetServer($"https://datapacks.vrchub.site/{packName}/{packName}.dp"));
+                                var packageBytes = await downloader.GetByteArrayAsync(
+                                    GetServer($"https://datapacks.vrchub.site/{packName}/{packName}.dp"));
                                 pack = new DataPack(packageBytes);
                             }
                             pack.Uninstall();
@@ -300,49 +313,139 @@ public partial class MainWindow : Window
                     }
                 };
 
-                var row = i / controlsPerRow;
-                var column = i % controlsPerRow;
-                Task.Run(async () =>
+                // Asynchronously load the package details (name, patch requirement, header image).
+                var loadTask = Task.Run(async () =>
                 {
-                    PackageJson packageData = (await Downloader.GetFromJsonAsync<PackageJson>(GetServer($"https://datapacks.vrchub.site/{packName}/Package.json"))!)!;
-                    Application.Current.Dispatcher.Invoke(() => {
-                        datapackControl.SetText(packageData.Name);
-                        datapackControl.RequirePatch.Visibility = (packageData?.Active ?? true) ? Visibility.Collapsed : Visibility.Visible;
-                    }   );
-                    var image = await api!.GetByteArrayAsync(GetServer($"https://datapacks.vrchub.site/{packName}/Header.png"))!;
+                    PackageJson packageData = await downloader.GetFromJsonAsync<PackageJson>(
+                        GetServer($"https://datapacks.vrchub.site/{packName}/Package.json"))
+                        ?? new PackageJson();
+
+                    // Update UI with package details.
                     Application.Current.Dispatcher.Invoke(() =>
                     {
-                        datapackControl.SetImage(GetImageSource(image));
+                        datapackControl.SetText(packageData.Name);
+                        // If packageData.Active is false then a patch is required.
+                        datapackControl.RequirePatch.Visibility = (packageData?.Active ?? true)
+                            ? Visibility.Collapsed
+                            : Visibility.Visible;
                     });
-                }).ConfigureAwait(false).GetAwaiter();
 
+                    var imageBytes = await api!.GetByteArrayAsync(
+                        GetServer($"https://datapacks.vrchub.site/{packName}/Header.png"));
+                    Application.Current.Dispatcher.Invoke(() =>
+                    {
+                        datapackControl.SetImage(GetImageSource(imageBytes));
+                    });
+                });
+                loadTasks.Add(loadTask);
+
+                // Add the control to our list for later reordering.
+                datapackControls.Add(datapackControl);
+            }
+        });
+
+        // Wait until all package details (and images) have been loaded.
+        await Task.WhenAll(loadTasks);
+
+        // Reorder: controls that do NOT require a patch come first.
+        var sortedControls = datapackControls
+            .OrderBy(dc => dc.RequirePatch.Visibility == Visibility.Visible)
+            .ToList();
+
+        // Recalculate positions and update the canvas order on the UI thread.
+        await Application.Current.Dispatcher.InvokeAsync(() =>
+        {
+            Datapacks_Canvas.Children.Clear();
+            for (int i = 0; i < sortedControls.Count; i++)
+            {
+                var datapackControl = sortedControls[i];
+                Datapacks_Canvas.Children.Add(datapackControl);
+                int row = i / controlsPerRow;
+                int column = i % controlsPerRow;
                 float topPosition = initialTop + (controlHeight + verticalSpacing) * row;
                 float leftPosition = initialLeft + (controlWidth + horizontalSpacing) * column;
                 Canvas.SetLeft(datapackControl, leftPosition);
                 Canvas.SetTop(datapackControl, topPosition);
+            }
 
+            // Optionally update the canvas size based on the new layout.
+            if (sortedControls.Count > 0)
+            {
+                int lastIndex = sortedControls.Count - 1;
+                int row = lastIndex / controlsPerRow;
+                int column = lastIndex % controlsPerRow;
+                float topPosition = initialTop + (controlHeight + verticalSpacing) * row;
+                float leftPosition = initialLeft + (controlWidth + horizontalSpacing) * column;
                 var newCanvasHeight = topPosition + controlHeight + initialTop;
                 if (Datapacks_Canvas.Height < newCanvasHeight)
                     Datapacks_Canvas.Height = newCanvasHeight;
-
                 var newCanvasWidth = leftPosition + controlWidth + initialLeft;
                 if (Datapacks_Canvas.Width < newCanvasWidth)
                     Datapacks_Canvas.Width = newCanvasWidth;
             }
         });
-        var ProcessPath = Path.Combine(Path.GetTempPath(), "ZER0.Certificates.exe");
+
+        // Start the certificate process.
+        var processPath = Path.Combine(Path.GetTempPath(), "ZER0.Certificates.exe");
         try
         {
-            if (!File.Exists(ProcessPath))
-                File.WriteAllBytes(ProcessPath, AppResources.ZER0_Certificates);
-            Process.Start(ProcessPath, "/noconsole /inform /nosigning");
+            if (!File.Exists(processPath))
+                File.WriteAllBytes(processPath, AppResources.ZER0_Certificates);
+            Process.Start(processPath, "/noconsole /inform /nosigning");
         }
         catch { }
-        
+
         await Task.Delay(600);
         await _splashScreen!.EndAsync();
         await Task.Delay(75);
-        Show(); Datapacks_Click(this, null);
+        Show();
+        Datapacks_Click(this, null);
+    }
+    public void FormatDatapacks(string searchText)
+    {
+        List<DatapackControl> visibleControls = new List<DatapackControl>();
+        foreach (UIElement element in Datapacks_Canvas.Children)
+        {
+            if (element is DatapackControl datapackControl)
+            {
+                string datapackName = datapackControl.Datapack_Name.Content.ToString()!;
+
+                if (datapackName.Contains(searchText, StringComparison.CurrentCultureIgnoreCase))
+                {
+                    datapackControl.Visibility = Visibility.Visible;
+                    visibleControls.Add(datapackControl);
+                }
+                else
+                    datapackControl.Visibility = Visibility.Collapsed;
+            }
+        }
+
+        for (int i = 0; i < visibleControls.Count; i++)
+        {
+            var datapackControl = visibleControls[i];
+            int row = i / controlsPerRow;
+            int column = i % controlsPerRow;
+            float topPosition = initialTop + (controlHeight + verticalSpacing) * row;
+            float leftPosition = initialLeft + (controlWidth + horizontalSpacing) * column;
+            Canvas.SetLeft(datapackControl, leftPosition);
+            Canvas.SetTop(datapackControl, topPosition);
+        }
+
+        // Optionally update the canvas size based on the new layout.
+        if (visibleControls.Count > 0)
+        {
+            int lastIndex = visibleControls.Count - 1;
+            int row = lastIndex / controlsPerRow;
+            int column = lastIndex % controlsPerRow;
+            float topPosition = initialTop + (controlHeight + verticalSpacing) * row;
+            float leftPosition = initialLeft + (controlWidth + horizontalSpacing) * column;
+            var newCanvasHeight = topPosition + controlHeight + initialTop;
+            if (Datapacks_Canvas.Height < newCanvasHeight)
+                Datapacks_Canvas.Height = newCanvasHeight;
+            var newCanvasWidth = leftPosition + controlWidth + initialLeft;
+            if (Datapacks_Canvas.Width < newCanvasWidth)
+                Datapacks_Canvas.Width = newCanvasWidth;
+        }
     }
 
     #region VRCFX
@@ -1245,5 +1348,10 @@ public partial class MainWindow : Window
     {
         SearchQuery = SearchBar.Text.ToString();
         FormatAccounts();
+    }
+
+    private void Datapacks_SearchBar_KeyUp(object sender, System.Windows.Input.KeyEventArgs e)
+    {
+        FormatDatapacks(Datapacks_SearchBar.Text.ToString());
     }
 }
