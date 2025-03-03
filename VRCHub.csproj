@@ -82,7 +82,7 @@
 
   <ItemGroup>
     <PackageReference Include="Hardcodet.NotifyIcon.Wpf" Version="1.1.0" />
-    <PackageReference Include="System.Drawing.Common" Version="10.0.0-preview.1.25080.3" />
+    <PackageReference Include="System.Drawing.Common" Version="9.0.2" />
     <Reference Include="MagmaMC.SharedLibrary">
       <HintPath>..\..\MagmaMc.SharedLibrary\publish\MagmaMC.SharedLibrary.dll</HintPath>
     </Reference>
