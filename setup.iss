@@ -2,7 +2,7 @@
 ; SEE THE DOCUMENTATION FOR DETAILS ON CREATING INNO SETUP SCRIPT FILES!
 
 #define MyAppName "VRCHub"
-#define MyAppVersion "1.0.2"
+#define MyAppVersion "1.0.3"
 #define MyAppPublisher "Zer0, MagmaMC"
 #define MyAppURL "https://vrchub.site"
 #define MyAppExeName "VRCHub.exe"

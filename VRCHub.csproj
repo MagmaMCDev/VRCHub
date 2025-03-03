@@ -11,7 +11,7 @@
     <DebugType>none</DebugType>
     <ApplicationIcon>Resources\VRCHUB.ico</ApplicationIcon>
     <SignToolCert>ZER0</SignToolCert>
-    <Version>1.0.2</Version>
+    <Version>1.0.3</Version>
     <FileVersion>$(Version)</FileVersion>
     <AssemblyVersion>$(Version).0</AssemblyVersion>
     <NeutralLanguage>en-US</NeutralLanguage>
@@ -82,7 +82,7 @@
 
   <ItemGroup>
     <PackageReference Include="Hardcodet.NotifyIcon.Wpf" Version="1.1.0" />
-    <PackageReference Include="System.Drawing.Common" Version="9.0.0-preview.6.24327.6" />
+    <PackageReference Include="System.Drawing.Common" Version="10.0.0-preview.1.25080.3" />
     <Reference Include="MagmaMC.SharedLibrary">
       <HintPath>..\..\MagmaMc.SharedLibrary\publish\MagmaMC.SharedLibrary.dll</HintPath>
     </Reference>
@@ -98,13 +98,13 @@
       <DocumentationFile>..\ZER0.VRChat.Patch\publish\ZER0.VRChat.Patch.xml</DocumentationFile>
     </Reference>
     <PackageReference Include="Analytics" Version="3.8.1" />
-    <PackageReference Include="Costura.Fody" Version="6.0.0-beta0000">
+    <PackageReference Include="Costura.Fody" Version="6.0.0">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
     <PackageReference Include="Json.NET.Aot" Version="9.0.1" />
     <PackageReference Include="MagmaMc.JEF" Version="5.0.1" />
-    <PackageReference Include="Microsoft.DotNet.ILCompiler" Version="9.0.0-rc.2.24473.5" />
+    <PackageReference Include="Microsoft.DotNet.ILCompiler" Version="10.0.0-preview.1.25080.5" />
   </ItemGroup>
 
   <ItemGroup>
