@@ -9,8 +9,7 @@ public class ServerAPI: IDisposable
     public static readonly string[] Servers = [
         "https://vrchub.site", 
         "https://api.vrchub.site/API/2/Status",
-        "https://datapacks.vrchub.site/List.php",
-        "https://software.vrchub.site/LatestBuild"
+        "https://datapacks.vrchub.site/List.php"
         ];
     public static bool usingProxy = false;
 

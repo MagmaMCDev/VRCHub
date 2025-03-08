@@ -26,9 +26,9 @@
     <NoWarn>1701;1702;IDE0007;IDE0008;IDE0011</NoWarn>
   </PropertyGroup>
   <Target Name="PostBuild" AfterTargets="Publish">
-    <Exec Command="Sign &quot;$(PublishDir)VRCHub.exe&quot; &quot;$(SignToolCert)&quot;" />
-    <Exec Command="Sign &quot;$(PublishDir)VRCHub.dll&quot; &quot;$(SignToolCert)&quot;" />
-    <Exec Command="Sign &quot;$(PublishDir)VRCHubNative.exe&quot; &quot;$(SignToolCert)&quot;" />
+    <Exec Command="Sign &quot;$(PublishDir)VRCHub.exe&quot; &quot;$(SignToolCert)&quot; /nocerts -v" />
+    <Exec Command="Sign &quot;$(PublishDir)VRCHub.dll&quot; &quot;$(SignToolCert)&quot; /nocerts -v" />
+    <Exec Command="Sign &quot;$(PublishDir)VRCHubNative.exe&quot; &quot;$(SignToolCert)&quot; /nocerts -v" />
   </Target>
   <ItemGroup>
     <Compile Remove="Publish-Datapacks\**" />

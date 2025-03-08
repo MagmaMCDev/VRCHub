@@ -27,6 +27,7 @@ using Control = System.Windows.Controls.Control;
 using System.Windows.Threading;
 using VRCHub.Resources;
 using VRCHub.Windows;
+using System.Runtime.InteropServices;
 namespace VRCHub;
 /// <summary>
 /// Interaction logic for MainWindow.xaml
@@ -379,7 +380,7 @@ public partial class MainWindow : Window
         }
         catch { }
 
-        await Task.Delay(600);
+        await Task.Delay(400);
         await _splashScreen!.EndAsync();
         await Task.Delay(75);
         Show();
@@ -617,6 +618,8 @@ public partial class MainWindow : Window
     #endregion
 
     #region QuickLauncher
+    [DllImport("user32.dll")]
+    private static extern bool ShowWindow(IntPtr hWnd, int nCmdShow);
     private void QuickLauncherButton_Click(object sender, RoutedEventArgs e)
     {
         if (VRCQuickLauncher == null || VRCQuickLauncher.HasExited)
@@ -627,7 +630,10 @@ public partial class MainWindow : Window
             VRCQuickLauncher = Process.Start(PSI);
         }
         else
-            KERNAL32.SetForegroundWindow(VRCQuickLauncher.Handle);
+        {
+            ShowWindow(VRCQuickLauncher.MainWindowHandle, 9);
+            KERNAL32.SetForegroundWindow(VRCQuickLauncher.MainWindowHandle);
+        }
     }
     #endregion
 
