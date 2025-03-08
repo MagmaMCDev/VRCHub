@@ -256,7 +256,7 @@ public partial class MainWindow : Window
                         if (datapackControl.RequirePatch.Visibility == Visibility.Visible)
                         {
                             MessageBoxResult result = MessageBox.Show(
-                                "This Datapack Requires A Patch To Function Please Make Sure You have One installed",
+                                "This Datapack requires a patch!\nIf you do not know what this means or do not have one do not create a ticket as you will be ignored!",
                                 "VRChub", MessageBoxButton.OKCancel, MessageBoxImage.Warning);
                             ResumeButon(datapackControl.Datapack_Install);
                             if (result == MessageBoxResult.Cancel)

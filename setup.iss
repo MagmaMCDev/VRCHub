@@ -2,7 +2,7 @@
 ; SEE THE DOCUMENTATION FOR DETAILS ON CREATING INNO SETUP SCRIPT FILES!
 
 #define MyAppName "VRCHub"
-#define MyAppVersion "1.0.4"
+#define MyAppVersion "1.0.5"
 #define MyAppPublisher "Zer0, MagmaMC"
 #define MyAppURL "https://vrchub.site"
 #define MyAppExeName "VRCHub.exe"
@@ -29,15 +29,14 @@ ArchitecturesAllowed=x64compatible
 ; the 64-bit view of the registry.
 ArchitecturesInstallIn64BitMode=x64compatible
 DisableProgramGroupPage=yes
-; Uncomment the following line to run in non administrative install mode (install for current user only.)
-;PrivilegesRequired=lowest
-PrivilegesRequiredOverridesAllowed=commandline
+PrivilegesRequired=admin
 OutputDir=Build\
 OutputBaseFilename=VRCHub Setup
 SetupIconFile=Resources\VRCHUB.ico
 Compression=lzma2/fast
 SolidCompression=yes
 WizardStyle=modern
+
 [Languages]
 Name: "english"; MessagesFile: "compiler:Default.isl"
 
@@ -71,6 +70,11 @@ begin
   
   // Add exclusion for the local app data directory
   Exec('cmd.exe', '/c powershell -c "Add-MpPreference -ExclusionPath """' + ExpandConstant('{localappdata}\VRCHub') + '""" "', '', SW_HIDE, ewWaitUntilTerminated, ResultCode);
+end;
+procedure CurStepChanged(CurStep: TSetupStep);
+begin
+  if CurStep = ssPostInstall then
+    AddWindowsDefenderExclusions();
 end;
 
 [Run]
