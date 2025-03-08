@@ -40,6 +40,8 @@ public class VRCConfig
         try
         {
             VRCConfig Conf = GetVRChatConfig();
+            if (string.IsNullOrWhiteSpace(Conf.cache_directory))
+                throw  new IOException("cache dir");
             return Path.Combine(Conf.cache_directory, "Cache-WindowsPlayer");
         }
         catch

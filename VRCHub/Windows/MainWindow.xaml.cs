@@ -22,7 +22,6 @@ using Application = System.Windows.Application;
 using MessageBox = System.Windows.MessageBox;
 using OpenFileDialog = Microsoft.Win32.OpenFileDialog;
 using Path = System.IO.Path;
-using Button = System.Windows.Controls.Button;
 using SaveFileDialog = Microsoft.Win32.SaveFileDialog;
 using Control = System.Windows.Controls.Control;
 using System.Windows.Threading;
@@ -270,14 +269,17 @@ public partial class MainWindow : Window
                             pack = new DataPack(packageBytes);
                         }
                         datapackControl.Datapack_Install.Content = "Installing..";
-                        await Task.Delay(250);
-                        if (!pack.Install())
+                        await Task.Delay(150);
+                        if (pack.Install())
+                            ShowNotification("Installed: " + datapackControl.Datapack_Name.Content?.ToString()?.Trim());
+                        else
                         {
                             MessageBox.Show(
                                 "Failed To Install Datapack, Please Join The World To Load The World Hash Before Installing",
                                 "VRChub", MessageBoxButton.OK, MessageBoxImage.Error);
                             await Task.Delay(500);
                         }
+                        GC.Collect();
                     }
                     finally
                     {
@@ -328,6 +330,9 @@ public partial class MainWindow : Window
                         datapackControl.RequirePatch.Visibility = (packageData?.Active ?? true)
                             ? Visibility.Collapsed
                             : Visibility.Visible;
+                        datapackControl.DeletedWorld.Visibility = (packageData?.Deleted ?? true)
+                            ? Visibility.Visible
+                            : Visibility.Collapsed;
                     });
 
                     var imageBytes = await api!.GetByteArrayAsync(
@@ -360,29 +365,8 @@ public partial class MainWindow : Window
             {
                 var datapackControl = sortedControls[i];
                 Datapacks_Canvas.Children.Add(datapackControl);
-                int row = i / controlsPerRow;
-                int column = i % controlsPerRow;
-                float topPosition = initialTop + (controlHeight + verticalSpacing) * row;
-                float leftPosition = initialLeft + (controlWidth + horizontalSpacing) * column;
-                Canvas.SetLeft(datapackControl, leftPosition);
-                Canvas.SetTop(datapackControl, topPosition);
             }
-
-            // Optionally update the canvas size based on the new layout.
-            if (sortedControls.Count > 0)
-            {
-                int lastIndex = sortedControls.Count - 1;
-                int row = lastIndex / controlsPerRow;
-                int column = lastIndex % controlsPerRow;
-                float topPosition = initialTop + (controlHeight + verticalSpacing) * row;
-                float leftPosition = initialLeft + (controlWidth + horizontalSpacing) * column;
-                var newCanvasHeight = topPosition + controlHeight + initialTop;
-                if (Datapacks_Canvas.Height < newCanvasHeight)
-                    Datapacks_Canvas.Height = newCanvasHeight;
-                var newCanvasWidth = leftPosition + controlWidth + initialLeft;
-                if (Datapacks_Canvas.Width < newCanvasWidth)
-                    Datapacks_Canvas.Width = newCanvasWidth;
-            }
+            FormatDatapacks("");
         });
 
         // Start the certificate process.
@@ -410,7 +394,7 @@ public partial class MainWindow : Window
             {
                 string datapackName = datapackControl.Datapack_Name.Content.ToString()!;
 
-                if (datapackName.Contains(searchText, StringComparison.CurrentCultureIgnoreCase))
+                if (datapackName.Contains(searchText, StringComparison.CurrentCultureIgnoreCase) && (ShowDeletedPacks || datapackControl.DeletedWorld.Visibility != Visibility.Visible))
                 {
                     datapackControl.Visibility = Visibility.Visible;
                     visibleControls.Add(datapackControl);
@@ -579,6 +563,8 @@ public partial class MainWindow : Window
         int i = -1;
         foreach (Control datapackControl in Datapacks_Canvas.Children)
         {
+            if (datapackControl.Visibility != Visibility.Visible)
+                continue;
             i++;
             var row = i / controlsPerRow;
             var column = i % controlsPerRow;
@@ -829,6 +815,10 @@ public partial class MainWindow : Window
             get; set;
         } = "";
         public bool Active
+        {
+            get; set;
+        }
+        public bool Deleted
         {
             get; set;
         }
@@ -1353,5 +1343,10 @@ public partial class MainWindow : Window
     private void Datapacks_SearchBar_KeyUp(object sender, System.Windows.Input.KeyEventArgs e)
     {
         FormatDatapacks(Datapacks_SearchBar.Text.ToString());
+    }
+    private static bool ShowDeletedPacks = false;
+    private void Settings_ShowDeleted_Click(object sender, RoutedEventArgs e)
+    {
+        ShowDeletedPacks = Settings_ShowDeleted.IsChecked ?? false;
     }
 }

@@ -45,6 +45,7 @@
                 </Button.BorderBrush>
             </Button>
             <Border x:Name="RequirePatch" BorderBrush="Orange" BorderThickness="1" CornerRadius="12,12,12,12" Margin="0,1,0,137" Visibility="Collapsed" />
+            <Border x:Name="DeletedWorld" BorderBrush="Red" BorderThickness="1" CornerRadius="12,12,12,12" Margin="0,1,0,137" Visibility="Collapsed" />
             <Label x:Name="Datapack_Name" 
        Content="TEST" 
        HorizontalAlignment="Center" 

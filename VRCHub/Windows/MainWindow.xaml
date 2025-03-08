@@ -155,7 +155,7 @@ OpacityMask="Black" RenderTransformOrigin="0.5,0.5" Grid.ColumnSpan="2">
                         </Button.BorderBrush>
                     </Button>
                 </Grid>
-                <Grid x:Name="Datapacks_Panel" Visibility="Visible" >
+                <Grid x:Name="Datapacks_Panel" Visibility="Collapsed" >
                     <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled" Visibility="Visible" CanContentScroll="True" HorizontalAlignment="Center" Height="416" Canvas.Left="1" Canvas.Top="48" VerticalAlignment="Top" Width="745" Margin="0,37,0,0">
                         <Canvas x:Name="Datapacks_Canvas" Height="452" Width="750" Background="#202020"/>
                     </ScrollViewer>
@@ -236,11 +236,11 @@ OpacityMask="Black" RenderTransformOrigin="0.5,0.5" Grid.ColumnSpan="2">
                         </Button.BorderBrush>
                     </Button>
                 </Grid>
-                <Grid x:Name="Settings_Panel" Height="452" VerticalAlignment="Top" Width="761" Visibility="Collapsed" Background="#202020">
+                <Grid x:Name="Settings_Panel" Height="452" VerticalAlignment="Top" Width="761" Visibility="Visible" Background="#202020">
                     <TextBox x:Name="Settings_VRCPath" HorizontalAlignment="Left" Height="26" Margin="144,25,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="580" FontSize="14" BorderBrush="Red" TextChanged="Settings_VRCPath_TextChanged" MouseDoubleClick="Settings_VRCPath_DoubleClicked" Background="Black" Foreground="White"/>
                     <Label Content="VRChat Location:" HorizontalAlignment="Left" Height="25" Margin="27,26,0,0" VerticalAlignment="Top" Width="114" Foreground="White"/>
-                    <Label Content="Send analytics:" HorizontalAlignment="Left" Height="25" Margin="27,56,0,0" VerticalAlignment="Top" Width="114" Foreground="White"/>
-                    <CheckBox x:Name="Settings_SendAnalytics" Content="" HorizontalAlignment="Left" Height="34" Margin="144,53,0,0" VerticalAlignment="Top" Width="27" FontSize="25" Background="Red" IsChecked="True" BorderBrush="Red" Foreground="White" Click="Settings_SendAnalytics_Clicked"/>
+                    <Label Content="Send analytics:" HorizontalAlignment="Left" Height="25" Margin="27,59,0,0" VerticalAlignment="Top" Width="114" Foreground="White"/>
+                    <CheckBox x:Name="Settings_SendAnalytics" Content="" HorizontalAlignment="Left" Height="34" Margin="144,56,0,0" VerticalAlignment="Top" Width="27" FontSize="25" Background="Red" IsChecked="True" BorderBrush="Red" Foreground="White" Click="Settings_SendAnalytics_Clicked"/>
                     <Label Content="Developed And Owned By ZER0" Height="25" Width="162" FontSize="10" VerticalAlignment="Bottom" RenderTransformOrigin="0,0.5" Margin="0,0,10,0" HorizontalAlignment="Right">
                         <Label.Foreground>
                             <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
@@ -249,7 +249,7 @@ OpacityMask="Black" RenderTransformOrigin="0.5,0.5" Grid.ColumnSpan="2">
                             </LinearGradientBrush>
                         </Label.Foreground>
                     </Label>
-                    <Button x:Name="Settings_BackupVRChat" Content="Backup VRChat Config" HorizontalAlignment="Left" Height="35" Margin="32,87,0,0" VerticalAlignment="Top" Width="165" Background="Black" Foreground="White" Click="BackupVRChatConfig">
+                    <Button Visibility="Collapsed" x:Name="Settings_BackupVRChat" Content="Backup VRChat Config" HorizontalAlignment="Left" Height="35" Margin="32,87,0,0" VerticalAlignment="Top" Width="165" Background="Black" Foreground="White" Click="BackupVRChatConfig">
                         <Button.BorderBrush>
                             <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
                                 <GradientStop Color="#FF3A0000"/>
@@ -257,7 +257,7 @@ OpacityMask="Black" RenderTransformOrigin="0.5,0.5" Grid.ColumnSpan="2">
                             </LinearGradientBrush>
                         </Button.BorderBrush>
                     </Button>
-                    <Button x:Name="Settings_LoadVRChatConfig" Content="Load VRChat Config" HorizontalAlignment="Left" Height="35" Margin="32,127,0,0" VerticalAlignment="Top" Width="165" Background="Black" Foreground="White" Click="LoadVRChatConfig">
+                    <Button Visibility="Collapsed" x:Name="Settings_LoadVRChatConfig" Content="Load VRChat Config" HorizontalAlignment="Left" Height="35" Margin="32,127,0,0" VerticalAlignment="Top" Width="165" Background="Black" Foreground="White" Click="LoadVRChatConfig">
                         <Button.BorderBrush>
                             <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
                                 <GradientStop Color="#FF3A0000"/>
@@ -265,7 +265,7 @@ OpacityMask="Black" RenderTransformOrigin="0.5,0.5" Grid.ColumnSpan="2">
                             </LinearGradientBrush>
                         </Button.BorderBrush>
                     </Button>
-                    <Button x:Name="Settings_ClearVRChatConfigBackup" Content="Clear VRChat Config Backup" HorizontalAlignment="Left" Height="35" Margin="32,167,0,0" VerticalAlignment="Top" Width="165" Background="Black" Click="ClearVRChatConfigBackup">
+                    <Button Visibility="Collapsed" x:Name="Settings_ClearVRChatConfigBackup" Content="Clear VRChat Config Backup" HorizontalAlignment="Left" Height="35" Margin="32,167,0,0" VerticalAlignment="Top" Width="165" Background="Black" Click="ClearVRChatConfigBackup">
                         <Button.BorderBrush>
                             <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
                                 <GradientStop Color="#FF3A0000"/>
@@ -281,6 +281,8 @@ OpacityMask="Black" RenderTransformOrigin="0.5,0.5" Grid.ColumnSpan="2">
                             </LinearGradientBrush>
                         </Label.Foreground>
                     </Label>
+                    <Label Content="Show Deleted:" HorizontalAlignment="Left" Height="25" Margin="27,93,0,0" VerticalAlignment="Top" Width="114" Foreground="White"/>
+                    <CheckBox x:Name="Settings_ShowDeleted" Content="" HorizontalAlignment="Left" Height="34" Margin="144,90,0,0" VerticalAlignment="Top" Width="27" FontSize="25" Background="Red" IsChecked="False" BorderBrush="Red" Foreground="White" Click="Settings_ShowDeleted_Click"/>
                 </Grid>
                 <Grid x:Name="Patch_Panel" Height="452" VerticalAlignment="Top" Width="761" Visibility="Collapsed" Background="#202020">
                     <Label Content="Patch VRChat Bring Back Dataswaps" HorizontalAlignment="Left" Height="39" VerticalAlignment="Top" Width="354" FontSize="18" Foreground="White"/>
