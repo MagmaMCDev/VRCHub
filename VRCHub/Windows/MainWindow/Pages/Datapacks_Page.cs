@@ -14,6 +14,15 @@ namespace VRCHub;
 
 public partial class MainWindow
 {
+    private const ushort controlHeight = 165;
+    private const ushort controlWidth = 235;
+    private const ushort verticalSpacing = 10;
+    private const ushort horizontalSpacing = 10;
+    private const ushort initialTop = 10;
+    private const ushort initialLeft = 10;
+    private const byte controlsPerRow = 3;
+    public string SearchQuery = "";
+
     private async Task LoadDataPacksAsync()
     {
         HttpClient downloader = ServerAPI.CreateByteDownloader(true);

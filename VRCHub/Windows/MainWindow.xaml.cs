@@ -29,69 +29,14 @@ namespace VRCHub;
 /// </summary>
 public partial class MainWindow : Window
 {
-    private Process? VRCQuickLauncher;
-    private static readonly Random random = new();
-
-    private const ushort controlHeight = 165;
-    private const ushort controlWidth = 235;
-    private const ushort verticalSpacing = 10;
-    private const ushort horizontalSpacing = 10;
-    private const ushort initialTop = 10;
-    private const ushort initialLeft = 10;
-    private const byte controlsPerRow = 3;
-    public string SearchQuery = "";
-
-    private SplashScreen? _splashScreen;
-
-    private static void NotifyDownloadStarted()
-    {
-        NotifyIcon Notify = new()
-        {
-            Visible = true,
-            Icon = SystemIcons.Warning,
-            BalloonTipTitle = "Update Started",
-            BalloonTipText = "This May Take Some Time Depending On Your System Specs",
-        };
-        Notify.ShowBalloonTip(3000);
-        Notify.BalloonTipClosed += (sender, args) => Notify.Dispose();
-    }
-    public MainWindow()
-    {
-        SetupConsole(Environment.GetCommandLineArgs());
-        StartAnalytics();
-        Hide();
-        InitilizeServerAPI();
-        InitializeSplashScreen();
-        InitializeMainWindowAsync();
-        SetupEvents();
-    }
+    #region ServerAPI
+    private bool ServerInitilized = false;
     private static ServerAPI? api;
     internal static ServerAPI API => api!;
     internal static string GetServer(string server) => ServerAPI.GetServer(server);
     private void InitilizeServerAPI()
     {
         api = new ServerAPI();
-    }
-
-    private bool ServerInitilized = false;
-    private async void InitializeSplashScreen()
-    {
-        string Base = SplashScreen.BaseText;
-        SplashScreen.BaseText = $"Checking Server Status 0/{ServerAPI.Servers.Length}";
-        _splashScreen = SplashScreen.Create();
-        await Task.Run(() =>
-        {
-            byte index = 0;
-            foreach (var server in ServerAPI.Servers)
-            {
-                index++;
-                CheckServer(server, index);
-                _splashScreen.SetText($"Checking Server Status {index}/{ServerAPI.Servers.Length}");
-            }
-            SplashScreen.BaseText = Base;
-            _splashScreen.StartTextAnimation();
-            ServerInitilized = true;
-        }).WaitAsync(new CancellationToken());
     }
     private void CheckServer(string server, byte index)
     {
@@ -134,6 +79,39 @@ public partial class MainWindow : Window
             }
         }
         Application.Current.Dispatcher.Invoke(_splashScreen!.StartFadeIn);
+    }
+    #endregion
+
+    private SplashScreen? _splashScreen;
+    public MainWindow()
+    {
+        SetupConsole(Environment.GetCommandLineArgs());
+        StartAnalytics();
+        Hide();
+        InitilizeServerAPI();
+        InitializeSplashScreen();
+        InitializeMainWindowAsync();
+        SetupEvents();
+    }
+
+    private async void InitializeSplashScreen()
+    {
+        string Base = SplashScreen.BaseText;
+        SplashScreen.BaseText = $"Checking Server Status 0/{ServerAPI.Servers.Length}";
+        _splashScreen = SplashScreen.Create();
+        await Task.Run(() =>
+        {
+            byte index = 0;
+            foreach (var server in ServerAPI.Servers)
+            {
+                index++;
+                CheckServer(server, index);
+                _splashScreen.SetText($"Checking Server Status {index}/{ServerAPI.Servers.Length}");
+            }
+            SplashScreen.BaseText = Base;
+            _splashScreen.StartTextAnimation();
+            ServerInitilized = true;
+        }).WaitAsync(new CancellationToken());
     }
     private async void InitializeMainWindowAsync()
     {
@@ -185,11 +163,9 @@ public partial class MainWindow : Window
         }
     }
 
-    private void DiscordButton_Click(object sender, RoutedEventArgs? e)
+    private void SetupEvents()
     {
-        if (Config.SendAnalytics)
-            Analytics.Client.Track(Environment.MachineName, nameof(DiscordButton_Click));
-        OpenURL("https://dc.vrchub.site");
+        AccountProfile.NotificationEvent += ShowNotification;
     }
     public static void OpenURL(string URL)
     {
@@ -201,64 +177,14 @@ public partial class MainWindow : Window
         Process.Start(PSI);
     }
 
-    private void SetupEvents()
-    {
-        AccountProfile.NotificationEvent += ShowNotification;
-    }
-    private bool NotificationDebounce = true;
-
-    private DispatcherTimer? delay;
-    static readonly Thickness startMargin = new(992, 435, -362, 0);
-    static readonly Thickness endMargin = new(630, 435, 0, 0);
-    static readonly ThicknessAnimation StartAnimation = new()
-    {
-        From = startMargin,
-        To = endMargin,
-        Duration = TimeSpan.FromSeconds(0.5),
-        EasingFunction = new CubicEase { EasingMode = EasingMode.EaseOut }
-    };
-    static readonly ThicknessAnimation EndAnimation = new()
-    {
-        From = endMargin,
-        To = startMargin,
-        Duration = TimeSpan.FromSeconds(0.5),
-        EasingFunction = new CubicEase { EasingMode = EasingMode.EaseIn }
-    };
-
-    public void ShowNotification(string message)
-    {
-        if (delay == null)
-        {
-            delay = new()
-            {
-                Interval = TimeSpan.FromSeconds(1)
-            };
-            delay.Tick += (s, e) =>
-            {
-                Notification.BeginAnimation(Control.MarginProperty, EndAnimation);
-                delay.Stop();
-                NotificationDebounce = true;
-            };
-        }
-        if (!NotificationDebounce)
-        {
-            Notification.Message.Content = message;
-            Notification.Margin = startMargin;
-            delay.Stop();
-            delay.Start();
-            return;
-        }
-
-        NotificationDebounce = false;
-        Notification.Message.Content = message;
-        Notification.Margin = startMargin;
-
-        Notification.BeginAnimation(Control.MarginProperty, StartAnimation);
-        delay.Start();
-    }
-
     private void OSCTools_Button_Click(object sender, RoutedEventArgs e)
     {
 
+    }
+    private void DiscordButton_Click(object sender, RoutedEventArgs? e)
+    {
+        if (Config.SendAnalytics)
+            Analytics.Client.Track(Environment.MachineName, nameof(DiscordButton_Click));
+        OpenURL("https://dc.vrchub.site");
     }
 }

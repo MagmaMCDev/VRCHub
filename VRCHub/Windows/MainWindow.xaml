@@ -249,30 +249,6 @@ OpacityMask="Black" RenderTransformOrigin="0.5,0.5" Grid.ColumnSpan="2">
                             </LinearGradientBrush>
                         </Label.Foreground>
                     </Label>
-                    <Button Visibility="Collapsed" x:Name="Settings_BackupVRChat" Content="Backup VRChat Config" HorizontalAlignment="Left" Height="35" Margin="32,87,0,0" VerticalAlignment="Top" Width="165" Background="Black" Foreground="White" Click="BackupVRChatConfig">
-                        <Button.BorderBrush>
-                            <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
-                                <GradientStop Color="#FF3A0000"/>
-                                <GradientStop Color="#FFFF0B0B" Offset="1"/>
-                            </LinearGradientBrush>
-                        </Button.BorderBrush>
-                    </Button>
-                    <Button Visibility="Collapsed" x:Name="Settings_LoadVRChatConfig" Content="Load VRChat Config" HorizontalAlignment="Left" Height="35" Margin="32,127,0,0" VerticalAlignment="Top" Width="165" Background="Black" Foreground="White" Click="LoadVRChatConfig">
-                        <Button.BorderBrush>
-                            <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
-                                <GradientStop Color="#FF3A0000"/>
-                                <GradientStop Color="#FFFF0B0B" Offset="1"/>
-                            </LinearGradientBrush>
-                        </Button.BorderBrush>
-                    </Button>
-                    <Button Visibility="Collapsed" x:Name="Settings_ClearVRChatConfigBackup" Content="Clear VRChat Config Backup" HorizontalAlignment="Left" Height="35" Margin="32,167,0,0" VerticalAlignment="Top" Width="165" Background="Black" Click="ClearVRChatConfigBackup">
-                        <Button.BorderBrush>
-                            <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
-                                <GradientStop Color="#FF3A0000"/>
-                                <GradientStop Color="#FFFF0B0B" Offset="1"/>
-                            </LinearGradientBrush>
-                        </Button.BorderBrush>
-                    </Button>
                     <Label x:Name="Version" Content="V" Height="25" Width="91" FontSize="8" VerticalAlignment="Bottom" RenderTransformOrigin="0,0.5" Margin="0,0,669,-6" HorizontalAlignment="Right">
                         <Label.Foreground>
                             <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
@@ -333,14 +309,6 @@ OpacityMask="Black" RenderTransformOrigin="0.5,0.5" Grid.ColumnSpan="2">
             </Button.BorderBrush>
         </Button>
         <Button x:Name="DatapackCreator" Content="Datapack Creator" HorizontalAlignment="Left" Height="30" Margin="17,124,0,0" VerticalAlignment="Top" Width="105" Background="#FF272727" Foreground="White" Click="DatapackCreator_Click">
-            <Button.BorderBrush>
-                <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
-                    <GradientStop Color="#FF770000"/>
-                    <GradientStop Color="Red" Offset="1"/>
-                </LinearGradientBrush>
-            </Button.BorderBrush>
-        </Button>
-        <Button x:Name="SplashScreenButton_Copy1" Content="Patch Game" HorizontalAlignment="Left" Height="30" Margin="17,194,0,0" VerticalAlignment="Top" Width="105" Background="#FF272727" Foreground="White" Click="PatchGame_Click" Visibility="Collapsed">
             <Button.BorderBrush>
                 <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
                     <GradientStop Color="#FF770000"/>

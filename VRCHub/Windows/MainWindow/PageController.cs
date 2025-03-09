@@ -12,7 +12,6 @@ public partial class MainWindow
         Splashscreen_Panel,
         Settings_Panel,
         DatapackCreator_Panel,
-        Patch_Panel,
         MelonLoader_Panel,
         AccountManager_Panel,
     ];

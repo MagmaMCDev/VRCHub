@@ -8,6 +8,7 @@ namespace VRCHub;
 
 public partial class MainWindow
 {
+    private Process? VRCQuickLauncher;
     [DllImport("user32.dll")]
     private static extern bool ShowWindow(IntPtr hWnd, int nCmdShow);
     private void QuickLauncherButton_Click(object sender, RoutedEventArgs e)
