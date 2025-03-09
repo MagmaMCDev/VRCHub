@@ -1,28 +1,14 @@
 ﻿using System.Diagnostics;
-using System.Drawing;
 using System.IO;
-using System.IO.Compression;
-using System.Net.Http;
-using System.Net.Http.Json;
 using System.Windows;
-using System.Windows.Controls;
 using System.Windows.Forms;
-using System.Windows.Media.Animation;
-using ZER0.VRChat.Patch;
 using Segment;
+using VRCHub.Resources;
 using static VRCHub.Common;
 using static VRCHub.ButtonManager;
 
 using Application = System.Windows.Application;
 using MessageBox = System.Windows.MessageBox;
-using OpenFileDialog = Microsoft.Win32.OpenFileDialog;
-using Path = System.IO.Path;
-using SaveFileDialog = Microsoft.Win32.SaveFileDialog;
-using Control = System.Windows.Controls.Control;
-using System.Windows.Threading;
-using VRCHub.Resources;
-using VRCHub.Windows;
-using System.Runtime.InteropServices;
 namespace VRCHub;
 /// <summary>
 /// Interaction logic for MainWindow.xaml
@@ -125,21 +111,22 @@ public partial class MainWindow : Window
             VRCFX_Promotion1.Source = GetImageSource(AppResources.VRCFX_Example1);
             VRCFX_Promotion2.Source = GetImageSource(AppResources.VRCFX_Example2);
             VRCSpoofer_Promotion1.Source = GetImageSource(AppResources.Spoofer_Example1);
+            MelonLoader_Image.Source = GetImageSource(AppResources.MelonLoader_Loading);
 
             Config.LoadConfig();
 
             Settings_SendAnalytics.IsChecked = Config.SendAnalytics;
             Settings_VRCPath.Text = Config.VRChatInstallPath;
-            if (Config.SendAnalytics)
-                Analytics.Client.Track(Environment.MachineName, "Application Loaded");
             Config.SaveConfig();
 
             bool exists = File.Exists(Config.VRChatInstallPath);
             VRCFXButton.IsEnabled = exists;
             VRCSpooferButton.IsEnabled = exists;
             DatapacksButton.IsEnabled = exists;
+            DatapackCreator.IsEnabled = exists;
             SplashScreenButton.IsEnabled = exists;
-            QuickLauncherButton.IsEnabled = exists;
+            AccountManagerButton.IsEnabled = exists;
+            MelonLoader_Button.IsEnabled = exists;
 
             if (!exists)
             {
@@ -151,8 +138,10 @@ public partial class MainWindow : Window
 
             UpdateSplashScreen();
 
-            // Data packs loading
             await LoadDataPacksAsync();
+
+            if (Config.SendAnalytics)
+                Analytics.Client.Track(Environment.MachineName, "Application Loaded");
         }
         finally
         {
@@ -176,15 +165,15 @@ public partial class MainWindow : Window
         };
         Process.Start(PSI);
     }
-
-    private void OSCTools_Button_Click(object sender, RoutedEventArgs e)
-    {
-
-    }
     private void DiscordButton_Click(object sender, RoutedEventArgs? e)
     {
         if (Config.SendAnalytics)
             Analytics.Client.Track(Environment.MachineName, nameof(DiscordButton_Click));
         OpenURL("https://dc.vrchub.site");
+    }
+
+    private void VRCSpoofer_Documentation(object sender, RoutedEventArgs e)
+    {
+        OpenURL("https://zer0-team.gitbook.io/");
     }
 }

@@ -16,12 +16,14 @@ public partial class MainWindow
     private void Settings_VRCPath_TextChanged(object sender, TextChangedEventArgs e)
     {
         Config.VRChatInstallPath = Settings_VRCPath.Text;
-        var exists = File.Exists(Config.VRChatInstallPath);
+        bool exists = File.Exists(Config.VRChatInstallPath);
         VRCFXButton.IsEnabled = exists;
         VRCSpooferButton.IsEnabled = exists;
         DatapacksButton.IsEnabled = exists;
+        DatapackCreator.IsEnabled = exists;
         SplashScreenButton.IsEnabled = exists;
-        QuickLauncherButton.IsEnabled = exists;
+        AccountManagerButton.IsEnabled = exists;
+        MelonLoader_Button.IsEnabled = exists;
         if (exists) UpdateSplashScreen();
         Config.SaveConfig();
     }

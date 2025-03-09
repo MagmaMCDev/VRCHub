@@ -93,10 +93,6 @@
       <HintPath>..\ZER0.KeyLibrary\publish\ZER0.Core.dll</HintPath>
       <DocumentationFile>..\ZER0.KeyLibrary\publish\ZER0.Core.xml</DocumentationFile>
     </Reference>
-    <Reference Include="ZER0.VRChat.Patch">
-      <HintPath>..\ZER0.VRChat.Patch\publish\ZER0.VRChat.Patch.dll</HintPath>
-      <DocumentationFile>..\ZER0.VRChat.Patch\publish\ZER0.VRChat.Patch.xml</DocumentationFile>
-    </Reference>
     <PackageReference Include="Analytics" Version="3.8.1" />
     <PackageReference Include="Costura.Fody" Version="6.0.0">
       <PrivateAssets>all</PrivateAssets>
@@ -105,6 +101,7 @@
     <PackageReference Include="Json.NET.Aot" Version="9.0.1" />
     <PackageReference Include="MagmaMc.JEF" Version="5.0.1" />
     <PackageReference Include="Microsoft.DotNet.ILCompiler" Version="10.0.0-preview.1.25080.5" />
+	<PackageReference Include="VRCOscLib" Version="1.4.3" />
   </ItemGroup>
 
   <ItemGroup>
@@ -167,6 +164,10 @@
     <Page Update="AccountProfile.xaml">
       <SubType>Designer</SubType>
     </Page>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="VRCHub\OSCTools\" />
   </ItemGroup>
 
 </Project>

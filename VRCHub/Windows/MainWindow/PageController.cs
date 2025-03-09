@@ -14,6 +14,7 @@ public partial class MainWindow
         DatapackCreator_Panel,
         MelonLoader_Panel,
         AccountManager_Panel,
+        OSCTools_Panel
     ];
 
     public void Page_Select(string Page)
