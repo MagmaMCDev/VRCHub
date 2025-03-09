@@ -11,7 +11,7 @@
     <DebugType>none</DebugType>
     <ApplicationIcon>Resources\VRCHUB.ico</ApplicationIcon>
     <SignToolCert>ZER0</SignToolCert>
-    <Version>1.1.0</Version>
+    <Version>1.2.0</Version>
     <FileVersion>$(Version)</FileVersion>
     <AssemblyVersion>$(Version).0</AssemblyVersion>
     <NeutralLanguage>en-US</NeutralLanguage>
@@ -31,26 +31,34 @@
     <Exec Command="Sign &quot;$(PublishDir)VRCHubNative.exe&quot; &quot;$(SignToolCert)&quot; /nocerts -v" />
   </Target>
   <ItemGroup>
+    <Compile Remove="AssetLoggerPlugin\**" />
     <Compile Remove="Publish-Datapacks\**" />
     <Compile Remove="VRCDataMod\**" />
+    <Compile Remove="VRCHubAutoUpdater\**" />
     <Compile Remove="VRCHubNative\**" />
     <Compile Remove="Website\**" />
     <Compile Remove="x64\**" />
     <Compile Remove="_backup\**" />
+    <EmbeddedResource Remove="AssetLoggerPlugin\**" />
     <EmbeddedResource Remove="Publish-Datapacks\**" />
     <EmbeddedResource Remove="VRCDataMod\**" />
+    <EmbeddedResource Remove="VRCHubAutoUpdater\**" />
     <EmbeddedResource Remove="VRCHubNative\**" />
     <EmbeddedResource Remove="Website\**" />
     <EmbeddedResource Remove="x64\**" />
     <EmbeddedResource Remove="_backup\**" />
+    <None Remove="AssetLoggerPlugin\**" />
     <None Remove="Publish-Datapacks\**" />
     <None Remove="VRCDataMod\**" />
+    <None Remove="VRCHubAutoUpdater\**" />
     <None Remove="VRCHubNative\**" />
     <None Remove="Website\**" />
     <None Remove="x64\**" />
     <None Remove="_backup\**" />
+    <Page Remove="AssetLoggerPlugin\**" />
     <Page Remove="Publish-Datapacks\**" />
     <Page Remove="VRCDataMod\**" />
+    <Page Remove="VRCHubAutoUpdater\**" />
     <Page Remove="VRCHubNative\**" />
     <Page Remove="Website\**" />
     <Page Remove="x64\**" />

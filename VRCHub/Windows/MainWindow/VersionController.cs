@@ -2,7 +2,6 @@
 using System.Drawing;
 using System.IO;
 using System.Net.Http;
-using System.Windows;
 using System.Windows.Forms;
 using static VRCHub.Common;
 using Application = System.Windows.Application;
