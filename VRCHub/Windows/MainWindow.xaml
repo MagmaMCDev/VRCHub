@@ -116,7 +116,7 @@ OpacityMask="Black" RenderTransformOrigin="0.5,0.5" Grid.ColumnSpan="2">
                         </Button.BorderBrush>
                     </Button>
                 </Grid>
-                <Grid x:Name="VRCSpoofer_Panel" Visibility="Visible" HorizontalAlignment="Center" Height="436" VerticalAlignment="Center" Width="745" Background="#202020">
+                <Grid x:Name="VRCSpoofer_Panel" Visibility="Collapsed" HorizontalAlignment="Center" Height="436" VerticalAlignment="Center" Width="745" Background="#202020">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="100*"/>
                         <ColumnDefinition Width="49*"/>
@@ -169,7 +169,7 @@ OpacityMask="Black" RenderTransformOrigin="0.5,0.5" Grid.ColumnSpan="2">
                     </ScrollViewer>
                     <TextBox x:Name="Datapacks_SearchBar" TextWrapping="Wrap" Margin="19,1,162,410" FontSize="22" Background="{x:Null}" SelectionTextBrush="{x:Null}" SelectionBrush="#FFE03A2A" BorderThickness="0,0,0,1" KeyUp="Datapacks_SearchBar_KeyUp"/>
                 </Grid>
-                <Grid x:Name="AccountManager_Panel" Visibility="Collapsed" >
+                <Grid x:Name="AccountManager_Panel" Visibility="Visible" >
                     <Rectangle Canvas.Left="10" Stroke="Black" Canvas.Top="-38" Margin="1,0,-23,408" RenderTransformOrigin="0.5,0.5">
                         <Rectangle.RenderTransform>
                             <TransformGroup>

@@ -16,7 +16,7 @@
                 <Rectangle HorizontalAlignment="Left" Height="1" Margin="9,30,0,0" Stroke="Red" VerticalAlignment="Top" Width="254" Fill="Red"/>
                 <Rectangle HorizontalAlignment="Left" Height="1" Margin="9,52,0,0" Stroke="Red" VerticalAlignment="Top" Width="254" Fill="Red"/>
                 <Label x:Name="Username" Content="[Content:UserName]" HorizontalAlignment="Left" Height="31" VerticalAlignment="Top" Width="253" FontSize="16" Foreground="White" RenderTransformOrigin="0.5,0.5" MouseUp="Username_Click" Margin="5,4,0,0"/>
-                <Label x:Name="Password" Content="[Content:Password]" HorizontalAlignment="Left" Height="30" VerticalAlignment="Top" Width="193" Margin="36,107,0,0" FontSize="14" Foreground="White" RenderTransformOrigin="0.5,0.5" MouseUp="Password_Click">
+                <Label x:Name="Password" Content="[Content:Password]" HorizontalAlignment="Left" Height="30" VerticalAlignment="Top" Width="190" Margin="34,107,0,0" FontSize="14" Foreground="White" RenderTransformOrigin="0.5,0.5" MouseUp="Password_Click">
                     <Label.Effect>
                         <BlurEffect Radius="10"/>
                     </Label.Effect>
@@ -27,6 +27,7 @@
                 <Label x:Name="StatusMessage" Content="[Content:Status]" HorizontalAlignment="Left" Height="26" VerticalAlignment="Top" Width="127" Margin="17,27,0,0" Foreground="White" RenderTransformOrigin="0.5,0.5" FontSize="12"/>
                 <Image x:Name="Tag" HorizontalAlignment="Left" Height="23" Margin="182,30,0,0" VerticalAlignment="Top" Width="87" Source="/Resources/TrustRanks/Administrator.png"/>
                 <Image x:Name="AgeVerified" HorizontalAlignment="Left" Height="22" Margin="137,31,0,0" VerticalAlignment="Top" Width="46" Source="/Resources/TrustRanks/18Plus.png"/>
+                <Button x:Name="LaunchButton" Content="Launch" HorizontalAlignment="Left" Height="23" Margin="224,111,0,0" VerticalAlignment="Top" Width="66" Background="Black" BorderBrush="Red" Foreground="White" Click="Button_Click"/>
             </Grid>
         </Border>
     </Border>

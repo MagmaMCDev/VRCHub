@@ -3,6 +3,10 @@ using OpenVRChatAPI;
 using VRCAuth2 = OpenVRChatAPI.Models.VRCAuth;
 using static VRCHub.SimpleLogger;
 
+using VRChat.API.Api;
+using VRChat.API.Client;
+using VRChat.API.Model;
+
 namespace VRCHub.Windows;
 /// <summary>
 /// Interaction logic for VRChatLoginWindow.xaml
@@ -142,27 +146,39 @@ public partial class VRChatLoginWindow : Window
     /// </summary>
     private void HandleTwoFactorLogin()
     {
-        var auth = VRCAPI.Login(Username, Password, CodeInput.Text);
-        if (auth == null)
-        {
-            SetMessage("Password is incorrect!");
-            return;
-        }
+        Configuration config = new();
+        config.Username = Username;
+        config.Password = Password;
 
-        if (string.IsNullOrEmpty(auth.Auth))
-        {
-            SetMessage("Sorry, we do not support email one-time codes. Please add 2FA to your account.");
-            ResetInputFields();
-            return;
-        }
+        config.UserAgent = "AccountManager/0.0.1 ZER0Team";
+        ApiClient client = new ApiClient();
+        AuthenticationApi authApi = new AuthenticationApi(client, client, config);
 
-        if (string.IsNullOrEmpty(auth.TwoFactorAuth))
+        try
+        {
+            if (authApi.GetCurrentUserWithHttpInfo().RawContent.Contains("emailOtp"))
+                authApi.Verify2FAEmailCode(new TwoFactorEmailCode(CodeInput.Text));
+            else
+                authApi.Verify2FA(new TwoFactorAuthCode(CodeInput.Text));
+
+            CurrentUser currentUser = authApi.GetCurrentUser();
+        }
+        catch
         {
             SetMessage("Code is invalid!");
             return;
         }
-        SetMessage("");
 
+        SetMessage("");
+        VRCAuth auth = new();
+        foreach(var cookie in ApiClient.CookieContainer.GetAllCookies().ToList())
+        {
+            if (cookie.Name == "auth")
+                auth.Auth = cookie.Value;
+            else if (cookie.Name == "twoFactorAuth")
+                auth.TwoFactorAuth = cookie.Value;
+
+        }
         VRCAPI.SetAuth(auth);
         Debug("Wrote VRChat Auth!");
 
@@ -175,7 +191,7 @@ public partial class VRChatLoginWindow : Window
 
         // Successful login; store auth data and close the window.
         UserAuth = auth;
-        UserData = VRCAPI.GetUser();
+        UserData = VRCAPI.GetUser()!;
         Warn($"Username: {UserData.username}");
         Warn($"ID: {UserData.id}");
         Warn($"Adult: {UserData.Adult}");

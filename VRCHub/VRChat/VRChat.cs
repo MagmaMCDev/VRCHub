@@ -13,9 +13,7 @@ using System.Text;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using MagmaMC.SharedLibrary;
-using OpenVRChatAPI;
 using OpenVRChatAPI.Models;
-
 namespace VRCHub;
 
 #pragma warning disable IDE1006 // Naming Styles
@@ -108,7 +106,7 @@ public class VRCAccount: OpenVRChatAPI.Models.VRCAuth
         ClientHandler.CookieContainer.Add(VRCAPI.APIWebsite, new Cookie("twoFactorAuth", twoFactorAuth));
         HttpClient Client = new(ClientHandler);
         Client.BaseAddress = VRCAPI.APIBase;
-        Client.DefaultRequestHeaders.Add("User-Agent", VRChat.User_Agent);
+        Client.DefaultRequestHeaders.Add("User-Agent", OpenVRChatAPI.VRChat.User_Agent);
         return Client;
     }
     public bool Validate()
@@ -252,7 +250,7 @@ public static class VRCAPI
         handler.AllowAutoRedirect = true;
         HttpClient HTTPClient = new HttpClient(handler);
         HTTPClient.BaseAddress = APIBase;
-        HTTPClient.DefaultRequestHeaders.Add("User-Agent", VRChat.User_Agent);
+        HTTPClient.DefaultRequestHeaders.Add("User-Agent", OpenVRChatAPI.VRChat.User_Agent);
         HTTPClient.DefaultRequestHeaders.Add("Authorization", new AuthHeader(username, password).Value);
         HttpResponseMessage content = HTTPClient.GetAsync("auth/user").GetAwaiter().GetResult();
         string Response = content.Content.ReadAsStringAsync().GetAwaiter().GetResult().ToLower();
@@ -363,9 +361,9 @@ public static class VRCAPI
     public static bool LoggedIn => CheckAuth();
     public static bool CheckAuth()
     {
-        if (VRChat.Auth == null || 
-            string.IsNullOrWhiteSpace(VRChat.Auth.auth) || 
-            string.IsNullOrWhiteSpace(VRChat.Auth.twoFactorAuth))
+        if (OpenVRChatAPI.VRChat.Auth == null || 
+            string.IsNullOrWhiteSpace(OpenVRChatAPI.VRChat.Auth.auth) || 
+            string.IsNullOrWhiteSpace(OpenVRChatAPI.VRChat.Auth.twoFactorAuth))
             return false;
         HttpClient Client = GetHttpClient();
         HttpResponseMessage content = Client.GetAsync("auth/user").GetAwaiter().GetResult();
@@ -381,11 +379,11 @@ public static class VRCAPI
             HttpClientHandler ClientHandler = new HttpClientHandler();
             ClientHandler.AllowAutoRedirect = true;
             ClientHandler.CookieContainer = new CookieContainer();
-            ClientHandler.CookieContainer.Add(APIWebsite, new Cookie("auth", VRChat.Auth.auth));
-            ClientHandler.CookieContainer.Add(APIWebsite, new Cookie("twoFactorAuth", VRChat.Auth.twoFactorAuth));
+            ClientHandler.CookieContainer.Add(APIWebsite, new Cookie("auth", OpenVRChatAPI.VRChat.Auth.auth));
+            ClientHandler.CookieContainer.Add(APIWebsite, new Cookie("twoFactorAuth", OpenVRChatAPI.VRChat.Auth.twoFactorAuth));
             HttpClient Client = new(ClientHandler);
             Client.BaseAddress = APIBase;
-            Client.DefaultRequestHeaders.Add("User-Agent", VRChat.User_Agent);
+            Client.DefaultRequestHeaders.Add("User-Agent", OpenVRChatAPI.VRChat.User_Agent);
             return Client;
         }
     }
@@ -465,8 +463,8 @@ public static class VRCAPI
 
     public static void SetAuth(OpenVRChatAPI.Models.VRCAuth auth)
     {
-        VRChat.Auth = auth;
-        VRChat.RenewHTTPClient();
+        OpenVRChatAPI.VRChat.Auth = auth;
+        OpenVRChatAPI.VRChat.RenewHTTPClient();
         foreach(var item in _httpClientBag)
             item.Dispose();
         _httpClientBag.Clear();

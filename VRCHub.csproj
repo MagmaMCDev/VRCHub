@@ -83,6 +83,7 @@
   <ItemGroup>
     <PackageReference Include="Hardcodet.NotifyIcon.Wpf" Version="1.1.0" />
     <PackageReference Include="System.Drawing.Common" Version="9.0.2" />
+    <PackageReference Include="VRChat.API" Version="1.19.1" />
     <Reference Include="MagmaMC.SharedLibrary">
       <HintPath>..\..\MagmaMc.SharedLibrary\publish\MagmaMC.SharedLibrary.dll</HintPath>
     </Reference>

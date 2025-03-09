@@ -8,6 +8,8 @@ using System.Windows.Forms;
 using UserControl = System.Windows.Controls.UserControl;
 using static VRCHub.Common;
 using VRCHub.Resources;
+using System.Diagnostics;
+using System.Text;
 namespace VRCHub;
 public delegate void NotificationEventHandler(string message);
 /// <summary>
@@ -60,5 +62,42 @@ public partial class AccountProfile : UserControl
             Clipboard.SetText((string)Email.Content);
             NotificationEvent?.Invoke("Copied Email to clipboard!");
         } catch { }
+    }
+    private bool Launching = false;
+    private async void Button_Click(object sender, System.Windows.RoutedEventArgs e)
+    {
+        string User = Username.Content!.ToString()!;
+        if (ButtonManager.ButtonPaused(LaunchButton) || Launching)
+            return;
+        Launching = true;
+        ButtonManager.PauseButton(LaunchButton, "Launching");
+        ProcessStartInfo processStartInfo = new(Path.Combine(new FileInfo(Config.VRChatInstallPath).Directory!.FullName, "launch.exe"));
+        processStartInfo.Arguments = "--profile=" + QuickIntHash(User) + " --no-vr";
+        SimpleLogger.Debug(processStartInfo.Arguments);
+        Process.Start(processStartInfo);
+        await Task.Delay(2500);
+        ButtonManager.ResumeButon(LaunchButton);
+        await Task.Delay(1500);
+        Launching = false;
+    }
+    public static uint QuickIntHash(string input)
+    {
+        const uint FNVOffsetBasis = 2166136261;
+        const uint FNVPrime = 16777619;
+
+        var hash = FNVOffsetBasis;
+
+        var inputBytes = Encoding.UTF8.GetBytes(input);
+
+        foreach (var b in inputBytes)
+        {
+            hash ^= b;
+            hash *= FNVPrime;
+        }
+
+        if (hash < 1000000000)
+            hash += 1000000000;
+
+        return hash;
     }
 }
