@@ -284,40 +284,6 @@ OpacityMask="Black" RenderTransformOrigin="0.5,0.5" Grid.ColumnSpan="2">
                     <Label Content="Show Deleted:" HorizontalAlignment="Left" Height="25" Margin="27,93,0,0" VerticalAlignment="Top" Width="114" Foreground="White"/>
                     <CheckBox x:Name="Settings_ShowDeleted" Content="" HorizontalAlignment="Left" Height="34" Margin="144,90,0,0" VerticalAlignment="Top" Width="27" FontSize="25" Background="Red" IsChecked="False" BorderBrush="Red" Foreground="White" Click="Settings_ShowDeleted_Click"/>
                 </Grid>
-                <Grid x:Name="Patch_Panel" Height="452" VerticalAlignment="Top" Width="761" Visibility="Collapsed" Background="#202020">
-                    <Label Content="Patch VRChat Bring Back Dataswaps" HorizontalAlignment="Left" Height="39" VerticalAlignment="Top" Width="354" FontSize="18" Foreground="White"/>
-                    <Label Content="Key" HorizontalAlignment="Left" Height="26" Margin="10,44,0,0" VerticalAlignment="Top" Width="82" Foreground="White"/>
-                    <TextBox x:Name="Patch_Key" HorizontalAlignment="Left" Height="26" Margin="92,44,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="492" FontSize="14" BorderBrush="Red" TextChanged="Patch_Key_TextChanged" />
-                    <Button x:Name="PatchGame_Button" Content="Patch Game" HorizontalAlignment="Left" Height="30" Margin="92,84,0,0" VerticalAlignment="Top" Width="144" Background="#FF272727" Foreground="White" Click="PatchGame_Button_Click" FontSize="14">
-                        <Button.BorderBrush>
-                            <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
-                                <GradientStop Color="#FF770000"/>
-                                <GradientStop Color="Red" Offset="1"/>
-                            </LinearGradientBrush>
-                        </Button.BorderBrush>
-                    </Button>
-                    <Button x:Name="UnpatchGame_Button" Content="Unpatch Game" HorizontalAlignment="Left" Height="30" Margin="254,84,0,0" VerticalAlignment="Top" Width="144" Background="#FF272727" Foreground="White" Click="UnpatchGame_Button_Click" FontSize="14">
-                        <Button.BorderBrush>
-                            <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
-                                <GradientStop Color="#FF770000"/>
-                                <GradientStop Color="Red" Offset="1"/>
-                            </LinearGradientBrush>
-                        </Button.BorderBrush>
-                    </Button>
-                    <Label Content="Status:" HorizontalAlignment="Left" Height="26" Margin="10,114,0,0" VerticalAlignment="Top" Width="49" Foreground="White"/>
-                    <Label x:Name="Patch_Status" Content="" HorizontalAlignment="Left" Height="26" Margin="64,114,0,0" VerticalAlignment="Top" Width="172" Foreground="White"/>
-                    <ProgressBar x:Name="Patch_Progress"
-                     Height="30"
-                     Margin="10,412,10,10"
-                     Maximum="100"
-                     Minimum="0"
-                     Value="0"
-                        Background="#FF2D2D2D"
-                     Foreground="#FFD700"
-                        BorderBrush="#FFBB0000"
-                     BorderThickness="1">
-                    </ProgressBar>
-                </Grid>
                 <Grid x:Name="MelonLoader_Panel" Height="452" Width="761" Visibility="Collapsed" Background="#202020" HorizontalAlignment="Center" VerticalAlignment="Center">
                     <Label Content="MelonLoader For VRChat " HorizontalAlignment="Left" Height="39" VerticalAlignment="Top" Width="354" FontSize="18" Foreground="White"/>
                     <Button x:Name="MeloadLoaderInstall_Button" Content="Install" HorizontalAlignment="Left" Height="30" Margin="10,82,0,0" VerticalAlignment="Top" Width="144" Background="#FF272727" Foreground="White" Click="MelonLoader_Button_Click" FontSize="14">
@@ -342,7 +308,7 @@ OpacityMask="Black" RenderTransformOrigin="0.5,0.5" Grid.ColumnSpan="2">
                 </Grid>
             </Canvas>
         </Border>
-        <Button x:Name="QuickLauncherButton" Content="Quick Launcher" HorizontalAlignment="Left" Height="30" Margin="17,264,0,0" VerticalAlignment="Top" Width="105" Background="#FF272727" Foreground="White" Click="QuickLauncherButton_Click">
+        <Button x:Name="QuickLauncherButton" Content="Quick Launcher" HorizontalAlignment="Left" Height="30" Margin="17,300,0,0" VerticalAlignment="Top" Width="105" Background="#FF272727" Foreground="White" Click="QuickLauncherButton_Click">
             <Button.BorderBrush>
                 <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
                     <GradientStop Color="#FF770000"/>
@@ -358,7 +324,7 @@ OpacityMask="Black" RenderTransformOrigin="0.5,0.5" Grid.ColumnSpan="2">
                 </LinearGradientBrush>
             </Button.BorderBrush>
         </Button>
-        <Button x:Name="SettingsButton" Content="Settings" HorizontalAlignment="Left" Height="30" Margin="17,299,0,0" VerticalAlignment="Top" Width="105" Background="#FF272727" Foreground="White" Click="SettingsButton_Click">
+        <Button x:Name="SettingsButton" Content="Settings" HorizontalAlignment="Left" Height="30" Margin="17,335,0,0" VerticalAlignment="Top" Width="105" Background="#FF272727" Foreground="White" Click="SettingsButton_Click">
             <Button.BorderBrush>
                 <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
                     <GradientStop Color="#FF770000"/>
@@ -399,5 +365,13 @@ OpacityMask="Black" RenderTransformOrigin="0.5,0.5" Grid.ColumnSpan="2">
             </Button.BorderBrush>
         </Button>
         <local:NotificationCenter x:Name="Notification" Margin="992,435,-362,0"/>
+        <Button x:Name="OSCTools_Button" Content="OSC Tools" HorizontalAlignment="Left" Height="30" Margin="17,264,0,0" VerticalAlignment="Top" Width="105" Background="#FF272727" Foreground="White" Click="OSCTools_Button_Click">
+            <Button.BorderBrush>
+                <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                    <GradientStop Color="#FF770000"/>
+                    <GradientStop Color="Red" Offset="1"/>
+                </LinearGradientBrush>
+            </Button.BorderBrush>
+        </Button>
     </Grid>
 </Window>
