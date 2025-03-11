@@ -10,8 +10,6 @@ public partial class MainWindow
 {
     private void VRCFXButton_Click(object sender, RoutedEventArgs? e)
     {
-        if (Config.SendAnalytics)
-            Analytics.Client.Page(Environment.MachineName, "VRCFX Viewed");
         Page_Select("VRCFX");
     }
     private async void VRCFX_DownloadButton_Click(object sender, RoutedEventArgs? e)
@@ -19,8 +17,6 @@ public partial class MainWindow
         if (ButtonPaused(VRCFX_DownloadButton))
             return;
 
-        if (Config.SendAnalytics)
-            Analytics.Client.Track(Environment.MachineName, "VRCFX Downloaded");
         PauseButton(VRCFX_DownloadButton, "Installing");
         ShowNotification("Started Download For VRCFX!");
         await Task.Run(() =>
@@ -49,8 +45,6 @@ public partial class MainWindow
 
     private void VRCFX_GetLicenseButton_Click(object sender, RoutedEventArgs? e)
     {
-        if (Config.SendAnalytics)
-            Analytics.Client.Track(Environment.MachineName, "VRCFX Get License");
         MessageBox.Show("You can Purchase a key by creating a ticket in the discord.");
     }
 }

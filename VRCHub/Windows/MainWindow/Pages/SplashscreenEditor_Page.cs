@@ -19,8 +19,6 @@ public partial class MainWindow
     }
     private void SplashScreenButton_Click(object sender, RoutedEventArgs e)
     {
-        if (Config.SendAnalytics)
-            Analytics.Client.Page(Environment.MachineName, "SplashScreens Viewed");
         Page_Select("SplashScreen");
     }
     private void SplashScreenResetButton_Click(object sender, RoutedEventArgs e)

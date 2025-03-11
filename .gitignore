@@ -12,6 +12,7 @@
 /Website/
 /Publish-Datapacks/
 _*.*
+_/
 Fody*.*
 # User-specific files (MonoDevelop/Xamarin Studio)
 *.userprefs
@@ -367,3 +368,4 @@ FodyWeavers.xsd
 /Resources/*.*
 /_backup
 /Build/
+VRCHubTaskScheduler/

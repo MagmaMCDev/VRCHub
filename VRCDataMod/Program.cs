@@ -147,6 +147,9 @@ namespace VRCDataMod
                             string targetFilePath = Path.Combine(lastEditedDirectory.FullName, "__data");
                             File.WriteAllBytes(targetFilePath, data);
 
+                            File.WriteAllText(Path.Combine(lastEditedDirectory.FullName, "WorldData.csv"),
+                                $"name,version\n{dataPackage.WorldName.Replace(" ", "").ToLower()},{dataPackage.Version.Trim()}");
+
                             AnsiConsole.MarkupLine($"[GREEN]Pack installed successfully![/]");
                             Thread.Sleep(2000);
                         }

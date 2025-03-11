@@ -24,11 +24,15 @@
   
   <PropertyGroup>
     <NoWarn>1701;1702;IDE0007;IDE0008;IDE0011</NoWarn>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
   <Target Name="PostBuild" AfterTargets="Publish">
-    <Exec Command="Sign &quot;$(PublishDir)VRCHub.exe&quot; &quot;$(SignToolCert)&quot; /nocerts -v" />
-    <Exec Command="Sign &quot;$(PublishDir)VRCHub.dll&quot; &quot;$(SignToolCert)&quot; /nocerts -v" />
-    <Exec Command="Sign &quot;$(PublishDir)VRCHubNative.exe&quot; &quot;$(SignToolCert)&quot; /nocerts -v" />
+	  <Exec Command="Sign &quot;$(PublishDir)VRCHub.exe&quot; &quot;$(SignToolCert)&quot; /nocerts -v" />
+	  <Exec Command="Sign &quot;$(PublishDir)VRCHub.dll&quot; &quot;$(SignToolCert)&quot; /nocerts -v" />
+	  <Exec Command="Sign &quot;$(PublishDir)VRCDataMod.exe&quot; &quot;$(SignToolCert)&quot; /nocerts -v" />
+	  <Exec Command="Sign &quot;$(PublishDir)VRCDataMod.dll&quot; &quot;$(SignToolCert)&quot; /nocerts -v" />
+	  <Exec Command="Sign &quot;$(PublishDir)plugins\VRCHubAutoUpdater.exe&quot; &quot;$(SignToolCert)&quot; /nocerts -v" />
+	  <Exec Command="Sign &quot;$(PublishDir)plugins\AssetLoggerPlugin.exe&quot; &quot;$(SignToolCert)&quot; /nocerts -v" />
   </Target>
   <ItemGroup>
     <Compile Remove="AssetLoggerPlugin\**" />
@@ -90,6 +94,7 @@
 
   <ItemGroup>
     <PackageReference Include="Hardcodet.NotifyIcon.Wpf" Version="1.1.0" />
+    <PackageReference Include="Sentry" Version="5.3.0" />
     <PackageReference Include="System.Drawing.Common" Version="9.0.2" />
     <PackageReference Include="VRChat.API" Version="1.19.1" />
     <Reference Include="MagmaMC.SharedLibrary">

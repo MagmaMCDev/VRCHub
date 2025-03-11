@@ -13,6 +13,9 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="LibSerials">
+      <UniqueIdentifier>{3848d454-7bbc-4b03-b7b2-5dd7043d85d0}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="resource.h">
@@ -23,6 +26,21 @@
     </ClInclude>
     <ClInclude Include="Common.h">
       <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="LibSerials\SMBIOS.h">
+      <Filter>LibSerials</Filter>
+    </ClInclude>
+    <ClInclude Include="LibSerials\StringUtils.h">
+      <Filter>LibSerials</Filter>
+    </ClInclude>
+    <ClInclude Include="LibSerials\UtilityFunctions.h">
+      <Filter>LibSerials</Filter>
+    </ClInclude>
+    <ClInclude Include="LibSerials\HardwareInfo.h">
+      <Filter>LibSerials</Filter>
+    </ClInclude>
+    <ClInclude Include="LibSerials\LibSerials.h">
+      <Filter>LibSerials</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -50,6 +68,15 @@
     </ClCompile>
     <ClCompile Include="Common.cpp">
       <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="LibSerials\StringUtils.cpp">
+      <Filter>LibSerials</Filter>
+    </ClCompile>
+    <ClCompile Include="LibSerials\HardwareInfo.cpp">
+      <Filter>LibSerials</Filter>
+    </ClCompile>
+    <ClCompile Include="LibSerials\LibSerials.cpp">
+      <Filter>LibSerials</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

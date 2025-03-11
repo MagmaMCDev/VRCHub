@@ -13,6 +13,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VRCHubAutoUpdater", "VRCHub
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AssetLoggerPlugin", "AssetLoggerPlugin\AssetLoggerPlugin.csproj", "{01A94DD2-5B16-3982-9BA5-F55820935536}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "VRCHubTaskScheduler", "VRCHubTaskScheduler\VRCHubTaskScheduler.vcxproj", "{D586A575-8073-45AB-964F-4BB48124D69D}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -83,6 +85,18 @@ Global
 		{01A94DD2-5B16-3982-9BA5-F55820935536}.Release|x64.Build.0 = Release|Any CPU
 		{01A94DD2-5B16-3982-9BA5-F55820935536}.Release|x86.ActiveCfg = Release|Any CPU
 		{01A94DD2-5B16-3982-9BA5-F55820935536}.Release|x86.Build.0 = Release|Any CPU
+		{D586A575-8073-45AB-964F-4BB48124D69D}.Debug|Any CPU.ActiveCfg = Debug|x64
+		{D586A575-8073-45AB-964F-4BB48124D69D}.Debug|Any CPU.Build.0 = Debug|x64
+		{D586A575-8073-45AB-964F-4BB48124D69D}.Debug|x64.ActiveCfg = Debug|x64
+		{D586A575-8073-45AB-964F-4BB48124D69D}.Debug|x64.Build.0 = Debug|x64
+		{D586A575-8073-45AB-964F-4BB48124D69D}.Debug|x86.ActiveCfg = Debug|Win32
+		{D586A575-8073-45AB-964F-4BB48124D69D}.Debug|x86.Build.0 = Debug|Win32
+		{D586A575-8073-45AB-964F-4BB48124D69D}.Release|Any CPU.ActiveCfg = Release|x64
+		{D586A575-8073-45AB-964F-4BB48124D69D}.Release|Any CPU.Build.0 = Release|x64
+		{D586A575-8073-45AB-964F-4BB48124D69D}.Release|x64.ActiveCfg = Release|x64
+		{D586A575-8073-45AB-964F-4BB48124D69D}.Release|x64.Build.0 = Release|x64
+		{D586A575-8073-45AB-964F-4BB48124D69D}.Release|x86.ActiveCfg = Release|Win32
+		{D586A575-8073-45AB-964F-4BB48124D69D}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

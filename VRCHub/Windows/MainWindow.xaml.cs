@@ -9,6 +9,8 @@ using static VRCHub.ButtonManager;
 
 using Application = System.Windows.Application;
 using MessageBox = System.Windows.MessageBox;
+using Sentry;
+using System;
 namespace VRCHub;
 /// <summary>
 /// Interaction logic for MainWindow.xaml
@@ -28,6 +30,11 @@ public partial class MainWindow : Window
     {
         if (!API.CheckServer(server))
         {
+            var trace = SentrySdk.StartTransaction("CheckServer", "startup");
+            trace.SetTag("Server", server);
+            trace.SetTag("index", index.ToString());
+            trace.Level = SentryLevel.Error;
+            trace.Finish();
             Application.Current.Dispatcher.Invoke(_splashScreen!.StartFadeOut);
             MessageBoxResult result = MessageBox.Show(
                 $"Failed To Check Server Status On Server {index}/{ServerAPI.Servers.Length}" +
@@ -48,9 +55,12 @@ public partial class MainWindow : Window
         ServerAPI.usingProxy = true;
         if (!API.CheckServer("https://magmamc.dev/ServerProxy/vrchub/api/2/Status"))
         {
+            var trace = SentrySdk.StartTransaction("CheckProxyServer", "startup");
+            trace.Level = SentryLevel.Fatal;
+            trace.Finish();
             DialogResult proxyresult = System.Windows.Forms.MessageBox.Show(
                 $"Failed To Check Server Status On Server Proxy" +
-                $"\r\nIf This Continues To Happen Please Try And Use A VPN!", "ServerAPI - Proxy Status",
+                $"\r\nPlease Try And Use A VPN!", "ServerAPI - Proxy Status",
                 MessageBoxButtons.RetryCancel, MessageBoxIcon.Warning);
             if (proxyresult == System.Windows.Forms.DialogResult.Retry)
             {
@@ -139,9 +149,6 @@ public partial class MainWindow : Window
             UpdateSplashScreen();
 
             await LoadDataPacksAsync();
-
-            if (Config.SendAnalytics)
-                Analytics.Client.Track(Environment.MachineName, "Application Loaded");
         }
         finally
         {
@@ -167,8 +174,6 @@ public partial class MainWindow : Window
     }
     private void DiscordButton_Click(object sender, RoutedEventArgs? e)
     {
-        if (Config.SendAnalytics)
-            Analytics.Client.Track(Environment.MachineName, nameof(DiscordButton_Click));
         OpenURL("https://dc.vrchub.site");
     }
 

@@ -9,4 +9,8 @@
     <InvariantGlobalization>true</InvariantGlobalization>
   </PropertyGroup>
 
+  <ItemGroup>
+    <PackageReference Include="Pastel" Version="6.0.1" />
+  </ItemGroup>
+
 </Project>

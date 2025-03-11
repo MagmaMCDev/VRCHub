@@ -98,6 +98,9 @@ public class DataPack
             var data = GetDataBytes();
             var targetFilePath = Path.Combine(lastEditedDirectory.FullName, "__data");
             File.WriteAllBytes(targetFilePath, data);
+
+            File.WriteAllText(Path.Combine(lastEditedDirectory.FullName, "WorldData.csv"),
+                $"name,version\n{Package.WorldName.Replace(" ", "").ToLower()},{Package.Version.Trim()}");
             return true;
         }
         catch (Exception ex)

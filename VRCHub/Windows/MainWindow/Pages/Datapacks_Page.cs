@@ -237,8 +237,6 @@ public partial class MainWindow
     }
     private void Datapacks_Click(object sender, RoutedEventArgs? e)
     {
-        if (Config.SendAnalytics)
-            Analytics.Client.Page(Environment.MachineName, "Datapacks Viewed");
         Page_Select("Datapacks");
         int i = -1;
         foreach (Control datapackControl in Datapacks_Canvas.Children)

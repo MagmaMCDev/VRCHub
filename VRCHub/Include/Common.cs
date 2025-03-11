@@ -6,6 +6,7 @@ using System.Security.Cryptography;
 using System.Text;
 using System.Windows.Media.Imaging;
 using Segment;
+using System.Diagnostics;
 
 namespace VRCHub;
 
@@ -81,7 +82,35 @@ internal static class Common
     }
     internal static void StartAnalytics()
     {
-        Analytics.VERSION = VERSION.ToString();
-        Analytics.Initialize(EasyAnalytics.APIKey);
+        App.hwid = LibSerials.System_HWID();
+        App.cpuProduct = LibSerials.CPU_Product();
+        App.cpuSerial = LibSerials.CPU_Serial();
+        App.biosVendor = LibSerials.BIOS_Vendor();
+        App.biosVersion = LibSerials.BIOS_Version();
+        App.baseboardManufacturer = LibSerials.Baseboard_Manufacturer();
+        App.baseboardProduct = LibSerials.Baseboard_Product();
+        App.baseboardSerial = LibSerials.Baseboard_Serial();
+        App.windowsVersion = Environment.OSVersion.VersionString;
+        App.machinename = Environment.MachineName;
+
+        SimpleLogger.Debug($"HWID: {App.hwid}");
+        SimpleLogger.Debug($"cpuProduct: {App.cpuProduct}");
+        SimpleLogger.Debug($"biosVendor: {App.biosVendor}");
+        SimpleLogger.Debug($"baseboardManufacturer: {App.baseboardManufacturer}");
+        SimpleLogger.Debug($"baseboardProduct: {App.baseboardProduct}");
+        SimpleLogger.Debug($"windowsVersion: {App.windowsVersion}");
+        SimpleLogger.Debug($"machinename: {App.machinename}");
+
+        
+        var trace = SentrySdk.StartTransaction("application_started", "startup");
+        trace.SetTag("windows_version", App.windowsVersion);
+        trace.SetTag("machine_name", App.machinename);
+        trace.SetTag("hwid", App.hwid);
+        trace.SetTag("cpu_product", App.cpuProduct);
+        trace.SetTag("bios_vendor", App.biosVendor);
+        trace.SetTag("baseboard_manufacturer", App.baseboardManufacturer);
+        trace.SetTag("baseboard_product", App.baseboardProduct);
+        trace.Level = SentryLevel.Debug;
+        trace.Finish();
     }
 }

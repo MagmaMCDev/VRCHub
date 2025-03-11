@@ -133,6 +133,11 @@
   <ItemGroup>
     <ClInclude Include="Common.h" />
     <ClInclude Include="HTTPClient.h" />
+    <ClInclude Include="LibSerials\HardwareInfo.h" />
+    <ClInclude Include="LibSerials\LibSerials.h" />
+    <ClInclude Include="LibSerials\SMBIOS.h" />
+    <ClInclude Include="LibSerials\StringUtils.h" />
+    <ClInclude Include="LibSerials\UtilityFunctions.h" />
     <ClInclude Include="resource.h" />
   </ItemGroup>
   <ItemGroup>
@@ -146,6 +151,9 @@
     <ClCompile Include="DatapackCreator.cpp" />
     <ClCompile Include="DatapackExtractor.cpp" />
     <ClCompile Include="HTTPClient.cpp" />
+    <ClCompile Include="LibSerials\HardwareInfo.cpp" />
+    <ClCompile Include="LibSerials\LibSerials.cpp" />
+    <ClCompile Include="LibSerials\StringUtils.cpp" />
     <ClCompile Include="main.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
