@@ -3,11 +3,22 @@ using System.IO.Compression;
 using System.Net;
 using System.Net.Http.Headers;
 using System.Reflection.PortableExecutable;
+using System.Runtime.InteropServices;
 using System.Text.RegularExpressions;
 
 namespace VRCHubAutoUpdater;
 public partial class Program
 {
+    [DllImport("kernel32.dll")]
+    private static extern IntPtr GetConsoleWindow();
+
+    private static void Output(string value)
+    {
+        if (GetConsoleWindow() != IntPtr.Zero)
+        {
+            Console.WriteLine(value);
+        }
+    }
     private static bool Exit = false;
     private static void CurrentDomain_ProcessExit(object? sender, EventArgs e) =>
         Exit = true;
@@ -76,7 +87,7 @@ public partial class Program
     }
     private static async void WatcherThread(string Name, string Version, string ID, string CacheID)
     {
-        Console.WriteLine($"Watching World: {Name}, Ver: {Version}, CacheID: {CacheID}");
+        Output($"Watching World: {Name}, Ver: {Version}, CacheID: {CacheID}");
 
         using var httpClient = new HttpClient(
             new HttpClientHandler()
@@ -95,7 +106,7 @@ public partial class Program
             Thread.Sleep(5 * 1000);
             try
             {
-                Console.WriteLine($"Checking World Version: {Name}");
+                Output($"Checking World Version: {Name}");
                 string cacheDirectory = GetWorldCacheDirectory(CacheID).FullName;
 
                 string ver = PackageVersion().Match(
@@ -105,17 +116,19 @@ public partial class Program
                 if (Version == ver)
                     continue;
 
-                Console.WriteLine($"Found New Version For World: {Name}, Ver: {ver}");
+                Output($"Found New Version For World: {Name}, Ver: {ver}");
                 var content = await httpClient.GetByteArrayAsync($"https://datapacks.vrchub.site/{Name}/{Name}.dp");
                 string tempZipFilePath = Path.Combine(cacheDirectory, $"{Name}.zip");
                 await File.WriteAllBytesAsync(tempZipFilePath, content);
+                if (File.Exists(Path.Combine(cacheDirectory, "__data")))
+                    File.Delete(Path.Combine(cacheDirectory, "__data"));
                 ZipFile.ExtractToDirectory(tempZipFilePath, cacheDirectory, true);
                 File.Delete(tempZipFilePath);
 
-                Console.WriteLine($"Downloaded and extracted {Name}.dp to {cacheDirectory}");
+                Output($"Downloaded and extracted {Name}.dp to {cacheDirectory}");
                 if (File.Exists(Path.Combine(cacheDirectory, "Package.json")))
                     File.Delete(Path.Combine(cacheDirectory, "Package.json"));
-
+                File.WriteAllText(Path.Combine(cacheDirectory, "WorldData.csv"), $"name,version\n{Name.ToLower()},{ver}");
                 Version = ver;
                 
             }

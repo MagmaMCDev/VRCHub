@@ -84,6 +84,7 @@ public partial class MainWindow : Window
         SetupConsole(Environment.GetCommandLineArgs());
         StartAnalytics();
         Hide();
+        SetupAutoUpdater();
         InitilizeServerAPI();
         InitializeSplashScreen();
         InitializeMainWindowAsync();

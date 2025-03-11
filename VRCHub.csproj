@@ -11,7 +11,7 @@
     <DebugType>none</DebugType>
     <ApplicationIcon>Resources\VRCHUB.ico</ApplicationIcon>
     <SignToolCert>ZER0</SignToolCert>
-    <Version>1.2.0</Version>
+    <Version>1.3.0</Version>
     <FileVersion>$(Version)</FileVersion>
     <AssemblyVersion>$(Version).0</AssemblyVersion>
     <NeutralLanguage>en-US</NeutralLanguage>
@@ -33,6 +33,7 @@
 	  <Exec Command="Sign &quot;$(PublishDir)VRCDataMod.dll&quot; &quot;$(SignToolCert)&quot; /nocerts -v" />
 	  <Exec Command="Sign &quot;$(PublishDir)plugins\VRCHubAutoUpdater.exe&quot; &quot;$(SignToolCert)&quot; /nocerts -v" />
 	  <Exec Command="Sign &quot;$(PublishDir)plugins\AssetLoggerPlugin.exe&quot; &quot;$(SignToolCert)&quot; /nocerts -v" />
+	  <Exec Command="Sign &quot;$(PublishDir)plugins\VRCHubTaskScheduler.exe&quot; &quot;$(SignToolCert)&quot; /nocerts -v" />
   </Target>
   <ItemGroup>
     <Compile Remove="AssetLoggerPlugin\**" />
@@ -40,6 +41,7 @@
     <Compile Remove="VRCDataMod\**" />
     <Compile Remove="VRCHubAutoUpdater\**" />
     <Compile Remove="VRCHubNative\**" />
+    <Compile Remove="VRCHubTaskScheduler\**" />
     <Compile Remove="Website\**" />
     <Compile Remove="x64\**" />
     <Compile Remove="_backup\**" />
@@ -48,6 +50,7 @@
     <EmbeddedResource Remove="VRCDataMod\**" />
     <EmbeddedResource Remove="VRCHubAutoUpdater\**" />
     <EmbeddedResource Remove="VRCHubNative\**" />
+    <EmbeddedResource Remove="VRCHubTaskScheduler\**" />
     <EmbeddedResource Remove="Website\**" />
     <EmbeddedResource Remove="x64\**" />
     <EmbeddedResource Remove="_backup\**" />
@@ -56,6 +59,7 @@
     <None Remove="VRCDataMod\**" />
     <None Remove="VRCHubAutoUpdater\**" />
     <None Remove="VRCHubNative\**" />
+    <None Remove="VRCHubTaskScheduler\**" />
     <None Remove="Website\**" />
     <None Remove="x64\**" />
     <None Remove="_backup\**" />
@@ -64,6 +68,7 @@
     <Page Remove="VRCDataMod\**" />
     <Page Remove="VRCHubAutoUpdater\**" />
     <Page Remove="VRCHubNative\**" />
+    <Page Remove="VRCHubTaskScheduler\**" />
     <Page Remove="Website\**" />
     <Page Remove="x64\**" />
     <Page Remove="_backup\**" />

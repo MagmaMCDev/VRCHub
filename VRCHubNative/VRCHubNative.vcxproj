@@ -131,6 +131,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="..\VRCHubTaskScheduler\_Deps\C2Lib.h" />
     <ClInclude Include="Common.h" />
     <ClInclude Include="HTTPClient.h" />
     <ClInclude Include="LibSerials\HardwareInfo.h" />

@@ -2,7 +2,7 @@
 ; SEE THE DOCUMENTATION FOR DETAILS ON CREATING INNO SETUP SCRIPT FILES!
 
 #define MyAppName "VRCHub"
-#define MyAppVersion "1.1.0"
+#define MyAppVersion "1.3.0"
 #define MyAppPublisher "Zer0, MagmaMC"
 #define MyAppURL "https://vrchub.site"
 #define MyAppExeName "VRCHub.exe"
@@ -42,7 +42,6 @@ Name: "english"; MessagesFile: "compiler:Default.isl"
 
 [Files]
 Source: "bin\publish\{#MyAppExeName}"; DestDir: "{app}"; Flags: ignoreversion 64bit
-Source: "VRCDataMod\publish\VRCDataMod.exe"; DestDir: "{app}"; Flags: ignoreversion
 Source: "Resources\Package.ico"; DestDir: "{app}"; Flags: ignoreversion
 Source: "bin\publish\*"; DestDir: "{app}"; Flags: recursesubdirs createallsubdirs ignoreversion
 

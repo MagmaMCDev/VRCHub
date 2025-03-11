@@ -178,7 +178,11 @@ internal partial class AssetLogger
         };
         Parallel.ForEach(existingFiles, options, file =>
         {
-            ProcessBundleFile(file, false).Wait();
+            try
+            {
+                ProcessBundleFile(file, false).Wait();
+            }
+            catch { }
         });
 
         await Task.Yield();
@@ -198,6 +202,7 @@ internal partial class AssetLogger
         {
             return;
         }
+
 
         // avatars are "normally" smaller than worlds even though avatars can still be like 200MB 💀
         if (AsyncFileReader.IsAvatar(bundleFile, out var avatarId))
