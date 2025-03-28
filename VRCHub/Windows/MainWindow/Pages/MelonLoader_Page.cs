@@ -31,6 +31,7 @@ public partial class MainWindow
             try
             {
                 File.Delete(Path.Combine(new FileInfo(Config.VRChatInstallPath).Directory!.FullName, "Version.dll"));
+                File.Delete(Path.Combine(new FileInfo(Config.VRChatInstallPath).Directory!.FullName, "dxgi.dll"));
                 MessageBox.Show("Uninstalled Melon Loader Sucessfully");
             }
             catch { }

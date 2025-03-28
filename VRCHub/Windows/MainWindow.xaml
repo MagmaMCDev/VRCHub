@@ -20,34 +20,32 @@
                     </LinearGradientBrush>
                 </Setter.Value>
             </Setter>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Grid>
+                            <Border x:Name="border" Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="1.5" CornerRadius="4">
+                                <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                            </Border>
+                        </Grid>
 
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsEnabled" Value="False">
+                                <Setter TargetName="border" Property="Background" Value="#FF555555"/>
+                                <Setter TargetName="border" Property="BorderBrush" Value="#FF777777"/>
+                                <Setter Property="Foreground" Value="#FFAAAAAA"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
         </Style>
     </Window.Resources>
     <Grid x:Name="BaseWindow" Background="#202020">
-        <Button x:Name="VRCFXButton" Content="VRCFX" HorizontalAlignment="Left" Height="30" Margin="17,19,0,0" VerticalAlignment="Top" Width="105" Background="#FF272727" Foreground="White" Click="VRCFXButton_Click" >
-            <Button.BorderBrush>
-                <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
-                    <GradientStop Color="#FF770000"/>
-                    <GradientStop Color="Red" Offset="1"/>
-                </LinearGradientBrush>
-            </Button.BorderBrush>
-        </Button>
-        <Button x:Name="VRCSpooferButton" Content="HWID Spoofer" HorizontalAlignment="Left" Height="30" Margin="17,54,0,0" VerticalAlignment="Top" Width="105" Background="#FF272727" Foreground="White" Click="VRCSpooferButton_Click">
-            <Button.BorderBrush>
-                <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
-                    <GradientStop Color="#FF770000"/>
-                    <GradientStop Color="Red" Offset="1"/>
-                </LinearGradientBrush>
-            </Button.BorderBrush>
-        </Button>
-        <Button x:Name="DatapacksButton" Content="Datapacks" HorizontalAlignment="Left" Height="30" Margin="17,89,0,0" VerticalAlignment="Top" Width="105" Background="#FF272727" Foreground="White" Click="Datapacks_Click">
-            <Button.BorderBrush>
-                <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
-                    <GradientStop Color="#FF770000"/>
-                    <GradientStop Color="Red" Offset="1"/>
-                </LinearGradientBrush>
-            </Button.BorderBrush>
-        </Button>
+        <Button x:Name="VRCFXButton" Content="VRCFX" HorizontalAlignment="Left" Height="30" Margin="17,19,0,0" VerticalAlignment="Top" Width="105" Background="#FF272727" Foreground="White" Click="VRCFXButton_Click" />
+
+        <Button x:Name="VRCSpooferButton" Content="HWID Spoofer" HorizontalAlignment="Left" Height="30" Margin="17,54,0,0" VerticalAlignment="Top" Width="105" Background="#FF272727" Foreground="White" Click="VRCSpooferButton_Click" />
+        <Button x:Name="DatapacksButton" Content="Datapacks" HorizontalAlignment="Left" Height="30" Margin="17,89,0,0" VerticalAlignment="Top" Width="105" Background="#FF272727" Foreground="White" Click="Datapacks_Click" />
         <Button x:Name="Discord" Content="Discord" HorizontalAlignment="Left" Height="30" Margin="17,0,0,19" VerticalAlignment="Bottom" Width="105" Background="#FF272727" Foreground="White" Click="DiscordButton_Click">
             <Button.BorderBrush>
                 <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
@@ -169,7 +167,7 @@ OpacityMask="Black" RenderTransformOrigin="0.5,0.5" Grid.ColumnSpan="2">
                     </ScrollViewer>
                     <TextBox x:Name="Datapacks_SearchBar" TextWrapping="Wrap" Margin="19,1,162,410" FontSize="22" Background="{x:Null}" SelectionTextBrush="{x:Null}" SelectionBrush="#FFE03A2A" BorderThickness="0,0,0,1" KeyUp="Datapacks_SearchBar_KeyUp"/>
                 </Grid>
-                <Grid x:Name="AccountManager_Panel" Visibility="Visible" >
+                <Grid x:Name="AccountManager_Panel" Visibility="Collapsed" >
                     <Rectangle Canvas.Left="10" Stroke="Black" Canvas.Top="-38" Margin="1,0,-23,408" RenderTransformOrigin="0.5,0.5">
                         <Rectangle.RenderTransform>
                             <TransformGroup>
@@ -268,7 +266,7 @@ OpacityMask="Black" RenderTransformOrigin="0.5,0.5" Grid.ColumnSpan="2">
                     <Label Content="Show Deleted:" HorizontalAlignment="Left" Height="25" Margin="27,93,0,0" VerticalAlignment="Top" Width="114" Foreground="White"/>
                     <CheckBox x:Name="Settings_ShowDeleted" Content="" HorizontalAlignment="Left" Height="34" Margin="144,90,0,0" VerticalAlignment="Top" Width="27" FontSize="25" Background="Red" IsChecked="False" BorderBrush="Red" Foreground="White" Click="Settings_ShowDeleted_Click"/>
                 </Grid>
-                <Grid x:Name="MelonLoader_Panel" Height="452" Width="761" Visibility="Collapsed" Background="#202020" HorizontalAlignment="Center" VerticalAlignment="Center">
+                <Grid x:Name="MelonLoader_Panel" Height="452" Width="761" Visibility="Visible" Background="#202020" HorizontalAlignment="Center" VerticalAlignment="Center">
                     <Border BorderBrush="Red" BorderThickness="1" HorizontalAlignment="Left" Height="279" Margin="130,74,0,0" VerticalAlignment="Top" Width="491"/>
                     <Image x:Name="MelonLoader_Image" HorizontalAlignment="Left" Height="277" Width="488" Margin="131,75,0,0" VerticalAlignment="Top" RenderTransformOrigin="0,0" Stretch="Fill"/>
                     <Label Content="MelonLoader For VRChat " HorizontalAlignment="Center" Height="31" VerticalAlignment="Top" Width="354" FontSize="18" Foreground="White" HorizontalContentAlignment="Center" Margin="0,6,0,0"/>
@@ -321,65 +319,18 @@ OpacityMask="Black" RenderTransformOrigin="0.5,0.5" Grid.ColumnSpan="2">
                         </Button.BorderBrush>
                     </Button>
                     <Label Content="(beta)" HorizontalAlignment="Left" Height="31" VerticalAlignment="Top" Width="47" FontSize="14" Foreground="White" HorizontalContentAlignment="Center" Margin="421,0,0,0"/>
+                    <Rectangle HorizontalAlignment="Left" Height="4" Margin="10,94,0,0" VerticalAlignment="Top" Width="213" Fill="Red"/>
                 </Grid>
             </Canvas>
         </Border>
-        <Button x:Name="QuickLauncherButton" Content="Quick Launcher" HorizontalAlignment="Left" Height="30" Margin="17,300,0,0" VerticalAlignment="Top" Width="105" Background="#FF272727" Foreground="White" Click="QuickLauncherButton_Click">
-            <Button.BorderBrush>
-                <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
-                    <GradientStop Color="#FF770000"/>
-                    <GradientStop Color="Red" Offset="1"/>
-                </LinearGradientBrush>
-            </Button.BorderBrush>
-        </Button>
-        <Button x:Name="SplashScreenButton" HorizontalAlignment="Left" Height="30" Margin="17,194,0,0" VerticalAlignment="Top" Width="105" Background="#FF272727" Foreground="White" Click="SplashScreenButton_Click" Content="Splash Screen">
-            <Button.BorderBrush>
-                <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
-                    <GradientStop Color="#FF770000"/>
-                    <GradientStop Color="Red" Offset="1"/>
-                </LinearGradientBrush>
-            </Button.BorderBrush>
-        </Button>
-        <Button x:Name="SettingsButton" Content="Settings" HorizontalAlignment="Left" Height="30" Margin="17,335,0,0" VerticalAlignment="Top" Width="105" Background="#FF272727" Foreground="White" Click="SettingsButton_Click">
-            <Button.BorderBrush>
-                <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
-                    <GradientStop Color="#FF770000"/>
-                    <GradientStop Color="Red" Offset="1"/>
-                </LinearGradientBrush>
-            </Button.BorderBrush>
-        </Button>
-        <Button x:Name="DatapackCreator" Content="Datapack Creator" HorizontalAlignment="Left" Height="30" Margin="17,124,0,0" VerticalAlignment="Top" Width="105" Background="#FF272727" Foreground="White" Click="DatapackCreator_Click">
-            <Button.BorderBrush>
-                <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
-                    <GradientStop Color="#FF770000"/>
-                    <GradientStop Color="Red" Offset="1"/>
-                </LinearGradientBrush>
-            </Button.BorderBrush>
-        </Button>
-        <Button x:Name="MelonLoader_Button" Content="Melon Loader" HorizontalAlignment="Left" Height="30" Margin="17,229,0,0" VerticalAlignment="Top" Width="105" Background="#FF272727" Foreground="White" Click="MelonLoader_Page_Click">
-            <Button.BorderBrush>
-                <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
-                    <GradientStop Color="#FF770000"/>
-                    <GradientStop Color="Red" Offset="1"/>
-                </LinearGradientBrush>
-            </Button.BorderBrush>
-        </Button>
-        <Button x:Name="AccountManagerButton" Content="Account Manager" HorizontalAlignment="Left" Height="30" Margin="17,159,0,0" VerticalAlignment="Top" Width="105" Background="#FF272727" Foreground="White" Click="AccountManager_Click">
-            <Button.BorderBrush>
-                <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
-                    <GradientStop Color="#FF770000"/>
-                    <GradientStop Color="Red" Offset="1"/>
-                </LinearGradientBrush>
-            </Button.BorderBrush>
-        </Button>
+        <Button x:Name="QuickLauncherButton" Content="Quick Launcher" HorizontalAlignment="Left" Height="30" Margin="17,333,0,0" VerticalAlignment="Top" Width="105" Background="#FF272727" Foreground="White" Click="QuickLauncherButton_Click" />
+        <Button x:Name="SplashScreenButton" HorizontalAlignment="Left" Height="30" Margin="17,194,0,0" VerticalAlignment="Top" Width="105" Background="#FF272727" Foreground="White" Click="SplashScreenButton_Click" Content="Splash Screen" />
+        <Button x:Name="SettingsButton" Content="Settings" HorizontalAlignment="Left" Height="30" Margin="17,368,0,0" VerticalAlignment="Top" Width="105" Background="#FF272727" Foreground="White" Click="SettingsButton_Click" />
+        <Button x:Name="DatapackCreator" Content="Datapack Creator" HorizontalAlignment="Left" Height="30" Margin="17,124,0,0" VerticalAlignment="Top" Width="105" Background="#FF272727" Foreground="White" Click="DatapackCreator_Click" />
+        <Button x:Name="MelonLoader_Button" Content="MelonLoader" HorizontalAlignment="Left" Height="30" Margin="17,229,0,0" VerticalAlignment="Top" Width="105" Background="#FF272727" Foreground="White" Click="MelonLoader_Page_Click" />
+        <Button x:Name="AccountManagerButton" Content="Account Manager" HorizontalAlignment="Left" Height="30" Margin="17,159,0,0" VerticalAlignment="Top" Width="105" Background="#FF272727" Foreground="White" Click="AccountManager_Click" />
         <local:NotificationCenter x:Name="Notification" Margin="992,435,-362,0"/>
-        <Button x:Name="OSCTools_Button" Content="OSC Tools" HorizontalAlignment="Left" Height="30" Margin="17,264,0,0" VerticalAlignment="Top" Width="105" Background="#FF272727" Foreground="White" Click="OSCTools_Button_Click">
-            <Button.BorderBrush>
-                <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
-                    <GradientStop Color="#FF770000"/>
-                    <GradientStop Color="Red" Offset="1"/>
-                </LinearGradientBrush>
-            </Button.BorderBrush>
-        </Button>
+        <Button x:Name="OSCTools_Button" Content="OSC Tools" HorizontalAlignment="Left" Height="30" Margin="17,298,0,0" VerticalAlignment="Top" Width="105" Background="#FF272727" Foreground="White" Click="OSCTools_Button_Click" />
+        <Button x:Name="EACEmulation_Button" Content="EAC Emulation" HorizontalAlignment="Left" Height="30" Margin="17,264,0,0" VerticalAlignment="Top" Width="105" Background="#FF272727" Foreground="White" IsEnabled="False" />
     </Grid>
 </Window>

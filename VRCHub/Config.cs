@@ -19,7 +19,7 @@ public static class Config
     /// Send Analytics About App Usage
     /// </summary>
     public static bool SendAnalytics { get; set; } = true;
-    public static RegKey[]? VRChatRegBackup { get; set; }
+    public static ushort VRCOSCPort { get; set; }
     public static List<VRCUser> AccountsCache
     {
         get; set;
@@ -49,12 +49,12 @@ public static class Config
             {
                 var json = File.ReadAllText(ConfigFilename);
                 var config = JsonSerializer.Deserialize<ConfigData>(json, JsonConfig);
-                Console.WriteLine(json);
+                SimpleLogger.Debug(json);
                 if (config != null)
                 {
                     VRChatInstallPath = config.VRC_Path ?? VRChatInstallPath;
                     SendAnalytics = config.SendAnalytics;
-                    VRChatRegBackup = config.VRChatRegBackup;
+                    VRCOSCPort = config.VRCOSCPort;
 #pragma warning disable CS8619
                     SavedAccounts = (config.SavedAccounts ?? [])
                         .Select(base64Compressed =>
@@ -94,7 +94,7 @@ public static class Config
             {
                 VRC_Path = VRChatInstallPath,
                 SendAnalytics = SendAnalytics,
-                VRChatRegBackup = VRChatRegBackup
+                VRCOSCPort = VRCOSCPort
             };
             config.SavedAccounts = new string[SavedAccounts?.Count ?? 0];
             int index = 0;
@@ -152,7 +152,7 @@ public static class Config
         {
             get; set;
         } = null;
-        public RegKey[]? VRChatRegBackup { get; set; } = null;
+        public ushort VRCOSCPort { get; set; } = 9000;
     }
 }
 public class RegKey

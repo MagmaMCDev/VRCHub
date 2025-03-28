@@ -13,7 +13,11 @@ public partial class MainWindow
         string RunTask = $"/run /tn VRCHub";
 
         if (IsTaskInstalled("VRCHub"))
+        {
+            if (!IsTaskRunning("VRCHub"))
+                Process.Start("schtasks", RunTask).WaitForExit();
             return;
+        }
         if (!IsRunAsAdmin())
         {
             RelaunchAsAdmin();
@@ -86,6 +90,30 @@ public partial class MainWindow
         catch
         {
             // If querying fails (for instance, if the task doesn’t exist), assume it is not installed.
+            return false;
+        }
+    }
+    /// <summary>
+    /// Checks if a scheduled task with the given name is currently running.
+    /// </summary>
+    private static bool IsTaskRunning(string taskName)
+    {
+        ProcessStartInfo psi = new ProcessStartInfo("schtasks", "/query /tn \"" + taskName + "\"")
+        {
+            UseShellExecute = false,
+            RedirectStandardOutput = true,
+            CreateNoWindow = true
+        };
+
+        try
+        {
+            using Process process = Process.Start(psi)!;
+            string output = process.StandardOutput.ReadToEnd();
+            process.WaitForExit();
+            return output.Contains("Running");
+        }
+        catch
+        {
             return false;
         }
     }

@@ -2,6 +2,7 @@
 using System.IO;
 using System.Runtime.InteropServices;
 using System.Windows;
+using BuildSoft.VRChat.Osc;
 using BuildSoft.VRChat.Osc.Chatbox;
 using Microsoft.VisualBasic.Logging;
 using VRCHub.Resources;

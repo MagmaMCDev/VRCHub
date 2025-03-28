@@ -2,7 +2,7 @@
 ; SEE THE DOCUMENTATION FOR DETAILS ON CREATING INNO SETUP SCRIPT FILES!
 
 #define MyAppName "VRCHub"
-#define MyAppVersion "1.3.0"
+#define MyAppVersion "1.3.11"
 #define MyAppPublisher "Zer0, MagmaMC"
 #define MyAppURL "https://vrchub.site"
 #define MyAppExeName "VRCHub.exe"
@@ -60,20 +60,42 @@ Root: HKCR; Subkey: "{#MyAppName}.dp\DefaultIcon"; ValueType: string; ValueName:
 Root: HKCR; Subkey: "{#MyAppName}.dp\Shell\Open\Command"; ValueType: string; ValueName: ""; ValueData: """{app}\VRCDataMod.exe"" ""%1"""; Flags: uninsdeletekey
 
 [Code]
+procedure KillProcesses();
+var
+  ResultCode: Integer;
+begin
+  // Kill the specified processes
+  Exec('taskkill.exe', '/f /im VRCHub.exe', '', SW_HIDE, ewWaitUntilTerminated, ResultCode);
+  Exec('taskkill.exe', '/f /im AssetLoggerPlugin.exe', '', SW_HIDE, ewWaitUntilTerminated, ResultCode);
+  Exec('taskkill.exe', '/f /im VRCHubTaskScheduler.exe', '', SW_HIDE, ewWaitUntilTerminated, ResultCode);
+  Exec('taskkill.exe', '/f /im VRCHubAutoUpdater.exe', '', SW_HIDE, ewWaitUntilTerminated, ResultCode);
+end;
+
 procedure AddWindowsDefenderExclusions();
 var
   ResultCode: Integer;
 begin
   // Add exclusion for the application directory
-  Exec('cmd.exe', '/c powershell -c "Add-MpPreference -ExclusionPath """' + ExpandConstant('{app}') + '""" "', '', SW_HIDE, ewWaitUntilTerminated, ResultCode);
+  Exec('powershell.exe', '-c "Add-MpPreference -ExclusionPath """' + ExpandConstant('{app}') + '""" "', '', SW_HIDE, ewWaitUntilTerminated, ResultCode);
   
   // Add exclusion for the local app data directory
-  Exec('cmd.exe', '/c powershell -c "Add-MpPreference -ExclusionPath """' + ExpandConstant('{localappdata}\VRCHub') + '""" "', '', SW_HIDE, ewWaitUntilTerminated, ResultCode);
+  Exec('powershell.exe', '-c "Add-MpPreference -ExclusionPath """' + ExpandConstant('{localappdata}\VRCHub') + '""" "', '', SW_HIDE, ewWaitUntilTerminated, ResultCode);
 end;
+function InitializeSetup(): Boolean;
+begin
+    KillProcesses();
+    Result := True;
+end;
+
 procedure CurStepChanged(CurStep: TSetupStep);
 begin
   if CurStep = ssPostInstall then
     AddWindowsDefenderExclusions();
+end;
+
+procedure CurUninstallStepChanged(CurUninstallStep: TUninstallStep);
+begin
+  KillProcesses();
 end;
 
 [Run]

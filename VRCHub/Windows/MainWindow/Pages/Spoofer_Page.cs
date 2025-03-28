@@ -14,8 +14,6 @@ public partial class MainWindow
     }
     private void VRCSpoofer_GetLicenseButton_Click(object sender, RoutedEventArgs? e)
     {
-        OpenURL("https://hdzero.mysellix.io/pay/005854-950d2e0567-b6a173");
-
     }
     private async void VRCSpoofer_DownloadButton_Click(object sender, RoutedEventArgs? e)
     {

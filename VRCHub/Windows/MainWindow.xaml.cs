@@ -22,7 +22,7 @@ public partial class MainWindow : Window
     private static ServerAPI? api;
     internal static ServerAPI API => api!;
     internal static string GetServer(string server) => ServerAPI.GetServer(server);
-    private void InitilizeServerAPI()
+    private void InitializeServerAPI()
     {
         api = new ServerAPI();
     }
@@ -85,7 +85,7 @@ public partial class MainWindow : Window
         StartAnalytics();
         Hide();
         SetupAutoUpdater();
-        InitilizeServerAPI();
+        InitializeServerAPI();
         InitializeSplashScreen();
         InitializeMainWindowAsync();
         SetupEvents();
@@ -117,6 +117,7 @@ public partial class MainWindow : Window
         try
         {
             await CheckApplicationVersion();
+            await CheckGameVersion();
 
             Version.Content += VERSION.ToString();
             VRCFX_Promotion1.Source = GetImageSource(AppResources.VRCFX_Example1);
@@ -158,6 +159,14 @@ public partial class MainWindow : Window
             if (Environment.OSVersion.Platform == PlatformID.Win32NT)
                 KERNAL32.SetProcessWorkingSetSize32Bit(Process.GetCurrentProcess().Handle, -1, -1);
         }
+        Closing += CloseFix;
+    }
+
+    private void CloseFix(object? sender, System.ComponentModel.CancelEventArgs e)
+    {
+        Config.SaveConfig();
+        OSCTools_DisableAll(null, null);
+        Application.Current.Shutdown();
     }
 
     private void SetupEvents()
